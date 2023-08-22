@@ -5,11 +5,10 @@ import RootLayout from '../layouts/root.laypout'
 import Landing from '../pages/landing.page'
 import Login from '../pages/login.page'
 import Register from '../pages/register.page'
+import Error from '../pages/error.page'
 // import Admin from '../pages/admin'
 
 // import ProtectedRoute from '../pages/protected'
-
-import Error from '../components/error'
 
 const router = createBrowserRouter([
   {

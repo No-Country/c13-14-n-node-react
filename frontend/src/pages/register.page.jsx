@@ -41,19 +41,19 @@ export default function RegisterPage () {
     if (name === 'name' && (error === 'minLength' || error === 'maxLength')) error = 'nameLength'
     if (name === 'password' && (error === 'minLength' || error === 'maxLength')) error = 'passwordLength'
     if (name === 'confirm' && error === 'validate') error = 'noMatch'
-    return dictionaryWord('register.' + error)
+    return dictionaryWord('registerPage.' + error)
   }
 
   return (
     <section className='max-w-sm mx-auto'>
       <h2 className='text-center text-3xl font-bold my-10'>
-        {dictionaryWord('register.title')}
+        {dictionaryWord('registerPage.title')}
       </h2>
 
       <form onSubmit={handleSubmit(onSubmit)}>
           <InputForm
               id='name'
-              label={dictionaryWord('register.name')}
+              label={dictionaryWord('registerPage.name')}
               register={register}
               validations={nameValidations}
               messageError={messageError}
@@ -61,7 +61,7 @@ export default function RegisterPage () {
           <InputForm
               id='email'
               type='email'
-              label={dictionaryWord('register.email')}
+              label={dictionaryWord('registerPage.email')}
               register={register}
               validations={emailValidation}
               messageError={messageError}
@@ -69,7 +69,7 @@ export default function RegisterPage () {
           <InputForm
               id='password'
               type='password'
-              label={dictionaryWord('register.password')}
+              label={dictionaryWord('registerPage.password')}
               register={register}
               validations={passwordValidation}
               messageError={messageError}
@@ -77,13 +77,13 @@ export default function RegisterPage () {
           <InputForm
               id='confirm'
               type='password'
-              label={dictionaryWord('register.confirm')}
+              label={dictionaryWord('registerPage.confirm')}
               register={register}
               validations={{ validate: validatePasswordConfirmation }}
               messageError={messageError}
           />
           <ButtonForm
-            label={dictionaryWord('register.button')}
+            label={dictionaryWord('registerPage.button')}
             onClick={handleSubmit}
           />
       </form>

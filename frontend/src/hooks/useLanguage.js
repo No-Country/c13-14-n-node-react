@@ -3,7 +3,7 @@ import en from '../translations/en'
 
 import { setLanguage as setLanguageSlice } from '../reducers/language.slice'
 import { useSelector, useDispatch } from 'react-redux'
-import { APP_SESSION } from '../config/constants'
+import { APP_LANGUAGE } from '../config/constants'
 
 export default function useLanguage () {
   const { selected, dictionary } = useSelector(state => state.language)
@@ -19,7 +19,7 @@ export default function useLanguage () {
     const selected = value
     const dictionary = selected === 'es' ? es : en
     dispatch(setLanguageSlice({ selected, dictionary }))
-    window.localStorage.setItem(APP_SESSION, value)
+    window.localStorage.setItem(APP_LANGUAGE, value)
   }
 
   return { selected, setLanguage, dictionaryWord }
