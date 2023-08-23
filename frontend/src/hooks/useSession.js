@@ -1,28 +1,44 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { setSession, unsetSession } from '../reducers/session.slice'
-import { APP_SESSION } from '../config/constants'
+import { setSession as setSessionSlice } from '../reducers/session.slice'
+import { APP_KEY_TOKEN, APP_URL_ADMIN } from '../config/constants'
+import { loginService, validateAuthService, validateUserService } from '../services/auth.service'
+import { useNavigate } from 'react-router-dom'
 
 export default function useSession () {
-  const { email, fullName } = useSelector(state => state.session)
+  const session = useSelector(state => state.session)
+  const navigate = useNavigate()
 
   const dispatch = useDispatch()
 
-  const login = (passport, save = true) => {
-    dispatch(setSession(passport))
-    save && saveSession(passport)
+  const setSession = (session) => {
+    const { token } = session
+    dispatch(setSessionSlice(token ? session : null))
+    token
+      ? window.localStorage.setItem(APP_KEY_TOKEN, token)
+      : window.localStorage.removeItem(APP_KEY_TOKEN)
+    token && navigate(APP_URL_ADMIN)
   }
 
-  const logout = () => {
-    dispatch(unsetSession())
-    saveSession('')
+  const authToken = async (token) => {
+    const session = await validateAuthService(token)
+    session && setSession(session)
   }
 
-  const saveSession = (passport) => {
-    const stringPassport = JSON.stringify(passport)
-    window.localStorage.setItem(APP_SESSION, stringPassport)
+  const validateUser = async (token) => {
+    const session = await validateUserService(token)
+    if (!session) return
+    setSession(session)
   }
 
-  const hasLogged = !!email
+  const login = async (passport) => {
+    const session = await loginService(passport)
+    if (!session) return
+    setSession(session)
+  }
 
-  return { fullName, email, login, logout, hasLogged }
+  const logout = () => setSession({})
+
+  const hasSession = !!session
+
+  return { session, login, logout, authToken, validateUser, hasSession }
 }

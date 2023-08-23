@@ -1,10 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
-  email: '',
-  name: '',
-  token: null
-}
+const initialState = null
 
 const sessionSlice = createSlice({
   name: 'session',
