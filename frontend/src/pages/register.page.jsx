@@ -1,93 +1,83 @@
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
-
+import { Link, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { fieldsSteps } from '../config/fields'
 import useLanguage from '../hooks/useLanguage'
-import { sendRegistrationData } from '../services/auth.service'
-import { nameValidations, emailValidation, passwordValidation } from '../validations/register.validator'
+import { registerService } from '../services/auth.service'
 
-import InputForm from '../components/form/input'
-import ButtonForm from '../components/form/button'
-import { APP_URL_VALIDATE } from '../config/constants'
+import { APP_URL_LOGIN } from '../config/constants'
+import Logo from '../components/logo'
+
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
 
 export default function RegisterPage () {
-  const navigate = useNavigate
+  const navigate = useNavigate()
+  const [step, setStep] = useState(1)
   const { dictionaryWord } = useLanguage()
   const { register, handleSubmit, formState: { errors }, watch } = useForm()
 
-  const onSubmit = (data) => {
-    sendRegistrationData(data)
-      .then(res => {
-        // Si la respuesta es valida ir al formulario de validacion
-        res && navigate(APP_URL_VALIDATE)
-      })
-      .catch(error => {
-        //! Tratar el error
-        console.log(error)
-      })
+  const handleClick = () => {
+    const value = step === 1 ? 2 : 1
+    setStep(value)
   }
 
-  const validatePasswordConfirmation = (value) => {
-    const password = watch('password')
-    if (value !== password) {
-      return 'nomatch'
-    }
-    return true
-  }
-
-  const messageError = (name) => {
-    const filedErrors = errors[name]
-    if (!filedErrors) return null
-    let error = filedErrors.type
-    if (name === 'name' && (error === 'minLength' || error === 'maxLength')) error = 'nameLength'
-    if (name === 'password' && (error === 'minLength' || error === 'maxLength')) error = 'passwordLength'
-    if (name === 'confirm' && error === 'validate') error = 'noMatch'
-    return dictionaryWord('registerPage.' + error)
+  const onSubmit = async (data) => {
+    const res = await registerService(data)
+    //! Temporal para la demo
+    res && navigate(APP_URL_LOGIN)
   }
 
   return (
-    <section className='max-w-sm mx-auto'>
-      <h2 className='text-center text-3xl font-bold my-10'>
-        {dictionaryWord('registerPage.title')}
-      </h2>
+    <section className='d-flex flex-column justify-content-center align-items-center w-350 m-auto '>
+      <div className='register-hader mt-3'>
+        <Logo fill='black' width='160px' height='37px'/>
+        <h2 className='text-center text-3xl font-bold my-10'>
+          {dictionaryWord('registerPage.title' + step)}
+        </h2>
+      </div>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        {fieldsSteps.map(item =>
+          item.step === step &&
+          <Form.Group id={item.name} className='mb-4' key={item.name}>
+            <Form.Label>{dictionaryWord('registerPage.' + item.name)}</Form.Label>
+          <Form.Control
+            type={item.type}
+            placeholder={dictionaryWord(`registerPage.${item.name}Placeholder`)}
+            {...register(item.name)}
+            />
+          </Form.Group>
+        )}
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-          <InputForm
-              id='name'
-              label={dictionaryWord('registerPage.name')}
-              register={register}
-              validations={nameValidations}
-              messageError={messageError}
-          />
-          <InputForm
-              id='email'
-              type='email'
-              label={dictionaryWord('registerPage.email')}
-              register={register}
-              validations={emailValidation}
-              messageError={messageError}
-          />
-          <InputForm
-              id='password'
-              type='password'
-              label={dictionaryWord('registerPage.password')}
-              register={register}
-              validations={passwordValidation}
-              messageError={messageError}
-          />
-          <InputForm
-              id='confirm'
-              type='password'
-              label={dictionaryWord('registerPage.confirm')}
-              register={register}
-              validations={{ validate: validatePasswordConfirmation }}
-              messageError={messageError}
-          />
-          <ButtonForm
-            label={dictionaryWord('registerPage.button')}
-            onClick={handleSubmit}
-          />
-      </form>
+        <div>
+          <p className='mt-4 fs-14'>
+            {dictionaryWord('registerPage.tycOne')}
+            <Link
+              to='#'>{dictionaryWord('registerPage.tycTwo')}
+            </Link>
+            {dictionaryWord('registerPage.tycTree')}
+            <Link
+              to='#'>{dictionaryWord('registerPage.tycFour')}
+            </Link>
+          </p>
+        </div>
+        { step === 2 && (
+          <Button
+            type='submit'
+            className='w-full mt-2'
+          >
+            Registrarme
+          </Button>
+        )}
+        <Button
+          variant={ step === 2 ? 'outline-primary' : 'primary'}
+          onClick={handleClick}
+          className='w-full mt-3'
+        >
+          {step === 1 ? 'Continuar' : 'volver'}
+        </Button>
 
+      </Form>
     </section>
   )
 }
