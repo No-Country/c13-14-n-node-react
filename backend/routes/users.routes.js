@@ -16,6 +16,7 @@ const {
   deleteUser,
   login,
   checkToken,
+  validateTokenSession,
 } = require('../controllers/users.controller');
 
 const router = express.Router();
@@ -23,6 +24,8 @@ const router = express.Router();
 router.post('/', createUser);
 
 router.post('/login', login);
+
+router.get('/validateToken/:token', validateTokenSession);
 
 // Apply protectToken middleware
 router.use(protectToken);

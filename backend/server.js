@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const { app } = require('./app');
 
-MONGO_URL = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.qutdcjx.mongodb.net/${process.env.DB}?retryWrites=true&w=majority`
+MONGO_URL = process.env.DB_URL
 
 // Establish connection to MongoDB Atlas
 mongoose.connect(MONGO_URL);

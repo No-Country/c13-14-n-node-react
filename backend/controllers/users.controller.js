@@ -1,6 +1,18 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const nodemailer = require("nodemailer");
+
+const transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  port: 587,
+  auth: {
+    user: process.env.MAIL_NODEMAILER,
+    pass: process.env.PASS_NODEMAILER
+  }
+});
+
+
 
 // require('crypto').randomBytes(64).toString('hex')
 
@@ -22,22 +34,43 @@ const getAllUsers = catchAsync(async (req, res, next) => {
 });
 
 const createUser = catchAsync(async (req, res, next) => {
-  const { name, age, email, password, role, hobbies } = req.body;
+  const { name, email, password } = req.body;
+
+  const validate = await User.findOne({ email }) || null;
+
+  if(validate!==null){
+    return res.status(409).json({ message: "User exist" });
+  }
 
   const salt = await bcrypt.genSalt(12);
   const hashPassword = await bcrypt.hash(password, salt);
 
   const newUser = await User.create({
     name,
-    age,
     email,
     password: hashPassword,
-    role,
-    hobbies,
+    status: false
   });
+
+  const token = jwt.sign({id: newUser.name, email: newUser.email}, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRES_IN});
 
   // Remove password from response
   newUser.password = undefined;
+
+  const mailOptions = {
+    from: process.env.MAIL_NODEMAILER,
+    to: newUser.email,
+    subject: '¡Bienvenido a UniLink!',
+    text: `http://localhost:4000/api/v1/users/validateToken/${token}`
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error('Error al enviar el correo:', error);
+    } else {
+      console.log('Correo enviado:', info.response);
+    }
+  });
 
   res.status(201).json({ newUser });
 });
@@ -97,6 +130,30 @@ const checkToken = catchAsync(async (req, res, next) => {
   res.status(200).json({ user: req.sessionUser });
 });
 
+const validateTokenSession = catchAsync(async (req, res, next) =>{
+  
+  const token = req.params.token;
+  
+  if(!token){
+    return res.status(401).json({ message: 'Token missing' });
+  }
+
+  try{
+
+    const decodeToken = jwt.verify(token, process.env.JWT_SECRET)
+
+    const validateUser = User.updateOne({ email: decodeToken.email }, {status: true})
+    .then(res.status(200).json({message: 'Cuenta activada'}))
+    .catch(res.status(404).json({message: 'Usuario no encontrado'}))
+
+    console.log(validateUser.user)
+    
+  } catch (error) {
+    res.status(401).json({message: 'Invalid token'});
+  }
+
+});
+
 module.exports = {
   getAllUsers,
   createUser,
@@ -105,4 +162,5 @@ module.exports = {
   deleteUser,
   login,
   checkToken,
+  validateTokenSession,
 };
