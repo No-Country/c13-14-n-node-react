@@ -18,7 +18,7 @@ export const loginService = async (passport) => {
     return res.data
   } catch (error) {
     //! FALTA MANEJO DE ERRORES
-    console.log(error.messge)
+    console.log(error.message)
     return {}
   }
 }
