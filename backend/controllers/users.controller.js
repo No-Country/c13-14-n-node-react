@@ -135,21 +135,19 @@ const validateTokenSession = catchAsync(async (req, res, next) =>{
   const token = req.params.token;
   
   if(!token){
-    return res.status(401).json({ message: 'Token missing' });
+    return res.status(401).json({ message: 'Token missing' }); // res.redirect(url);
   }
 
   try{
 
-    const decodeToken = jwt.verify(token, process.env.JWT_SECRET)
+    const decodeToken = jwt.verify(token, process.env.JWT_SECRET);
 
     const validateUser = User.updateOne({ email: decodeToken.email }, {status: true})
-    .then(res.status(200).json({message: 'Cuenta activada'}))
-    .catch(res.status(404).json({message: 'Usuario no encontrado'}))
-
-    console.log(validateUser.user)
+    .then(res.status(200).json({message: 'Cuenta activada'})) // res.redirect(url);
+    .catch(res.status(404).json({message: 'Usuario no encontrado'})) // res.redirect(url);
     
   } catch (error) {
-    res.status(401).json({message: 'Invalid token'});
+    res.status(401).json({message: 'Invalid token'}); // res.redirect(url);
   }
 
 });
