@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 import './index.css'
 
+// React-bootstrap
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 // Router
 import router from './router'
 
