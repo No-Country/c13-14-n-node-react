@@ -11,11 +11,7 @@ export const KEY_LOADER = 'loader'
 const API_URL_BASE = 'http://3.21.158.160/api/v1'
 
 export const API_URL_LOGIN = API_URL_BASE + '/users/login'
-<<<<<<< HEAD
 export const API_URL_REGISTER = API_URL_BASE + '/users'
-=======
-export const API_URL_REGISTER = API_URL_BASE + '/auth/register'
->>>>>>> 1a2c7356c24d8c825fbce3e910bf4bebc4145672
 export const API_URL_SESSION = API_URL_BASE + '/auth/session'
 export const API_URL_VALIDATE = API_URL_BASE + '/auth/validate'
 
