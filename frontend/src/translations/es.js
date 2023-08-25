@@ -33,6 +33,9 @@ const dictionary = {
     email: 'Email',
     password: 'Contraseña',
     button: 'Iniciar sesión',
+    crearCuenta: 'ya tienes cuenta?',
+    linkRegistro: 'registrate aca',
+    passwordForgot:'olvide mi contrasena',
     // Validaciones
     required: 'El campo es requerido',
     worngEmail: 'Por favor ingresa un correo electrónico válido.',
