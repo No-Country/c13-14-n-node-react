@@ -15,9 +15,9 @@ const dictionary = {
     email: 'Email',
     emailPlaceholder: 'Ingresa tu correo electrónico',
     password: 'Contraseña',
-    passwordPlaceholder: 'Ingresa tu correo electrónico',
+    passwordPlaceholder: 'Ingresa una contraseña',
     confirm: 'Confirmar',
-    confirmPlaceholder: 'Volvé a ingresar tu contraseña',
+    confirmPlaceholder: 'Confirma tu contraseña',
     tycOne: 'Al crear tu cuenta, aceptas nuestros ',
     tycTwo: 'Términos y condiciones',
     tycTree: ', y confirmas que has leído nuestra ',
@@ -36,7 +36,7 @@ const dictionary = {
     // Validaciones
     required: 'El campo es requerido',
     worngEmail: 'Por favor ingresa un correo electrónico válido.',
-    wrongPassword: 'La contraseña es inválida.',
+    wrongPassword: 'La contraseña es inválida.'
   },
   errorPage: {
     button: 'Volver'
