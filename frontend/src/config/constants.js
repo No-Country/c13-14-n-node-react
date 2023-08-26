@@ -4,11 +4,14 @@ export const DEFAULT_LANGUAGE = 'es'
 export const APP_KEY_LANGUAGE = 'APP_KEY_LANGUAGE'
 export const APP_KEY_TOKEN = 'APP_KEY_TOKEN'
 
-// Config API_URLS
-const API_URL_BASE = 'http://localhost:3000/api'
+// Keys del estadoglobal
+export const KEY_LOADER = 'loader'
 
-export const API_URL_LOGIN = API_URL_BASE + '/auth/login'
-export const API_URL_REGISTER = API_URL_BASE + '/auth/register'
+// Config API_URLS
+const API_URL_BASE = 'http://3.21.158.160/api/v1'
+
+export const API_URL_LOGIN = API_URL_BASE + '/users/login'
+export const API_URL_REGISTER = API_URL_BASE + '/users'
 export const API_URL_SESSION = API_URL_BASE + '/auth/session'
 export const API_URL_VALIDATE = API_URL_BASE + '/auth/validate'
 
