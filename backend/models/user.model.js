@@ -5,9 +5,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  age: {
-    type: Number,
-  },
   email: {
     type: String,
     required: true,
@@ -27,7 +24,7 @@ const userSchema = new mongoose.Schema({
     default: true,
     required: true,
   },
-  hobbies: [String],
+
 });
 
 const User = mongoose.model('User', userSchema);
