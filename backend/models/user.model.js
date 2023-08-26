@@ -14,14 +14,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  role: {
-    type: String,
-    required: true,
-    default: 'client',
-  },
   status: {
     type: Boolean,
-    default: true,
+    default: false,
     required: true,
   },
 
