@@ -25,20 +25,10 @@
   height: 50px;
 }
 
-.register-hader{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 3rem;
-  width: 370px;
-  height: 160px;
-  text-align: center;
-}
-
 .w-350 {
   max-width: 350px;
 }
+
 
 .fs-14{
   font-size: 14px;
@@ -51,3 +41,63 @@
 .mt-100{
   margin-top: 100px;
 }
+
+.form-btn{
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  height: 50px;
+}
+
+.form-m-width{
+  max-width: 420px;
+}
+
+.form-header{
+  font-family: 'Lato', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 38px;
+  letter-spacing: 0em;
+  text-align: center;
+  width: Fill (351px);
+  height: Hug (38px);
+  gap: 12px
+
+}
+
+.form-item{
+  width: Fill (351px);
+  height: Hug (32px);
+  padding: 0px 0px 8px 0px;
+  gap: 4px
+}
+
+.form-label{
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.form-control::placeholder {
+  color: #6C757D;
+  font-family: 'Lato', sans-serif;
+  font-size: 16px
+}
+
+.form-text-info{
+  font-family: 'Lato', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+

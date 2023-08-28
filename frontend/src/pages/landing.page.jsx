@@ -9,26 +9,26 @@ import Logo from '../components/logo'
 import { APP_URL_LOGIN, APP_URL_REGISTER } from '../config/constants'
 
 export default function LandinPage () {
-  const { dictionaryWord } = useLanguage()
+  const { dictionaryWord } = useLanguage('landingPage')
   const navigate = useNavigate()
   return (
      <section className='bg-landing'>
       <div className='d-flex flex-column gap-5'>
         <Logo/>
-        <h1>{dictionaryWord('landingPage.welcome')}</h1>
+        <h1>{dictionaryWord('welcome')}</h1>
       </div>
       <div className='d-flex flex-column gap-3 '>
         <Button
           className='btn-landing'
           onClick={() => navigate(APP_URL_REGISTER)}
         >
-          {dictionaryWord('landingPage.register')}
+          {dictionaryWord('register')}
         </Button>
         <Button
           onClick={() => navigate(APP_URL_LOGIN)}
           variant="outline-light" className='btn-landing'
           >
-          {dictionaryWord('landingPage.login')}
+          {dictionaryWord('login')}
         </Button>
       </div>
     </section>
@@ -42,7 +42,7 @@ export default function LandinPage () {
       <Row className='text-white text-center landing-container'>
           <Row className='w-100 landing-header'>
             <Logo/>
-            <h1>{dictionaryWord('landingPage.welcome')}</h1>
+            <h1>{dictionaryWord('welcome')}</h1>
           </Row>
           <Row className='d-flew gap-4'>
 

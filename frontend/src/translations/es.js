@@ -4,9 +4,6 @@ const dictionary = {
     register: 'Crear cuenta',
     login: 'Iniciar sesión'
   },
-  loginPage: {
-    title: 'Inicia sesión'
-  },
   registerPage: {
     title1: 'Crea tu cuenta',
     title2: 'Establece tu contraseña',
@@ -22,11 +19,12 @@ const dictionary = {
     tycTwo: 'Términos y condiciones',
     tycTree: ', y confirmas que has leído nuestra ',
     tycFour: 'Política de privacidad',
-    button: 'Enviar',
-    required: 'El campo es requerido',
-    nameLength: 'Debe tener entre 4 y 20 caracteres',
-    passwordLength: 'Debe tener entre 4 y 10 caracteres',
-    noMatch: 'Las contraseñas no coinciden'
+    buttonStep1: 'Continuar',
+    buttonStep2: 'Crear mi cuenta',
+    invalidEmail: 'Email no válido',
+    invalidName: 'Nombre inválido',
+    invalidPassword: 'Debe tener entre 4 y 10 caracteres y almenos una letra y un número',
+    invalidConfirm: 'Las contraseñas no coinciden'
   },
   loginPage: {
     title: 'Inicia sesión',

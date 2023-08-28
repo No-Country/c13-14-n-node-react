@@ -1,83 +1,105 @@
-import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import { fieldsSteps } from '../config/fields'
-import useLanguage from '../hooks/useLanguage'
-import { registerService } from '../services/auth.service'
 
-import { APP_URL_LOGIN } from '../config/constants'
+import useLanguage from '../hooks/useLanguage'
+
+import useForm from '../hooks/useForm'
+import { formRegisterFields } from '../forms/register.form'
+
+import { APP_URL_LANDING, APP_URL_LOGIN } from '../config/constants'
 import Logo from '../components/logo'
 
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
 export default function RegisterPage () {
-  const navigate = useNavigate()
+  const { dictionaryWord } = useLanguage('registerPage')
   const [step, setStep] = useState(1)
-  const { dictionaryWord } = useLanguage()
-  const { register, handleSubmit, formState: { errors }, watch } = useForm()
+  const [disabled, setDisabled] = useState(true)
+
+  const { fields, handleChange, handleKeyDown, errors } = useForm(formRegisterFields)
+
+  const navigate = useNavigate()
 
   const handleClick = () => {
-    const value = step === 1 ? 2 : 1
-    setStep(value)
+
   }
 
-  const onSubmit = async (data) => {
-    const res = await registerService(data)
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    event.stopPropagation()
+    console.log('estoy aca')
+    // const res = await registerService(data)
     //! Temporal para la demo
-    res && navigate(APP_URL_LOGIN)
+    // res && navigate(APP_URL_LOGIN)
   }
 
   return (
-    <section className='d-flex flex-column justify-content-center align-items-center w-350 m-auto '>
-      <div className='register-hader mt-3'>
-        <Logo fill='black' width='160px' height='37px'/>
-        <h2 className='text-center text-3xl font-bold my-10'>
-          {dictionaryWord('registerPage.title' + step)}
-        </h2>
-      </div>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        {fieldsSteps.map(item =>
-          item.step === step &&
-          <Form.Group id={item.name} className='mb-4' key={item.name}>
-            <Form.Label>{dictionaryWord('registerPage.' + item.name)}</Form.Label>
-          <Form.Control
-            type={item.type}
-            placeholder={dictionaryWord(`registerPage.${item.name}Placeholder`)}
-            {...register(item.name)}
-            />
-          </Form.Group>
-        )}
+    <Container >
+      <Row className='min-vh-100 ' >
+        <Col md={6} className='d-flex justify-content-center align-items-center'>
+          <Link to={APP_URL_LANDING}>
+            <Logo fill='black' width='160px' height='37px'/>
+          </Link>
+        </Col>
+        <Col md={6} className='d-flex justify-content-center align-items-start align-items-md-center'>
+          <Row className='flex-column form-m-width' >
+              <Col>
+                <h2 className='form-header my-4 '>
+                  {dictionaryWord(`title${step}`)}
+                </h2>
+              </Col>
+              <Col >
+                <Form onSubmit={handleSubmit}>
+                  {fields.map(item =>
+                    item.step === step &&
+                    <Form.Group id={item.name} className='mb-4' key={item.name}>
+                      <Form.Label>{dictionaryWord('' + item.name)}</Form.Label>
+                    <Form.Control
+                      name={item.name}
+                      type={item.type}
+                      value= {item.value}
+                      className={!!errors[item.name] && 'red-border'}
+                      onChange={handleChange}
+                      /* onKeyDown={handleKeyDown} */
+                      placeholder={dictionaryWord(`${item.name}Placeholder`)}
+                      required
+                      />
+                    </Form.Group>
+                  )}
 
-        <div>
-          <p className='mt-4 fs-14'>
-            {dictionaryWord('registerPage.tycOne')}
-            <Link
-              to='#'>{dictionaryWord('registerPage.tycTwo')}
-            </Link>
-            {dictionaryWord('registerPage.tycTree')}
-            <Link
-              to='#'>{dictionaryWord('registerPage.tycFour')}
-            </Link>
-          </p>
-        </div>
-        { step === 2 && (
-          <Button
-            type='submit'
-            className='w-full mt-2'
-          >
-            Registrarme
-          </Button>
-        )}
-        <Button
-          variant={ step === 2 ? 'outline-primary' : 'primary'}
-          onClick={handleClick}
-          className='w-full mt-3'
-        >
-          {step === 1 ? 'Continuar' : 'volver'}
-        </Button>
+                  <div>
+                    <p className='mt-4 form-text-info'>
+                      {dictionaryWord('tycOne')}
+                      <Link
+                        to='#'>{dictionaryWord('tycTwo')}
+                      </Link>
+                      {dictionaryWord('tycTree')}
+                      <Link
+                        to='#'>{dictionaryWord('tycFour')}
+                      </Link>
+                    </p>
+                  </div>
 
-      </Form>
-    </section>
+                   <Button
+                    onClick={handleClick}
+                    className='form-btn w-full mt-3'
+                    disabled = {disabled}
+                  >
+                    { dictionaryWord(`buttonStep${step}`)}
+                  </Button>
+                  <Form.Control.Feedback type="invalid">
+                    Por favor ingresa un correo electrónico válido.
+                  </Form.Control.Feedback>
+                  {/* error && <p className='text-red'>{dictionaryWord(error)}</p> */}
+                </Form>
+              </Col>
+          </Row>
+        </Col>
+      </Row>
+    </Container>
   )
 }

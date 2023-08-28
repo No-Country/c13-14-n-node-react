@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col'
 
 import useLanguage from '../hooks/useLanguage'
 import { loginService } from '../services/auth.service'
-import { emailValidation } from '../validations/register.validator'
+import { emailValidation } from '../validations/form.auth'
 
 import Logo from '../components/logo'
 import Form from 'react-bootstrap/Form'
@@ -16,7 +16,7 @@ import { APP_URL_ADMIN } from '../config/constants'
 
 export default function RegisterPage () {
   const navigate = useNavigate()
-  const { dictionaryWord } = useLanguage()
+  const { dictionaryWord } = useLanguage('loginPage')
   const {
     register,
     handleSubmit,
@@ -40,7 +40,7 @@ export default function RegisterPage () {
             <Col>
             <div className='w-350'>
               <h2 className='text-center text-3xl font-bold my-10'>
-                {dictionaryWord('loginPage.title')}
+                {dictionaryWord('title')}
               </h2>
               <Form onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group id='email'>
