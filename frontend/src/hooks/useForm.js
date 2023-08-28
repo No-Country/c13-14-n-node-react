@@ -5,9 +5,9 @@ export default function useForm (inicialFields) {
   const [errors, setErrors] = useState({})
 
   const changeField = (name, value) => {
-    const field = fields.find(item => item.name === name)
-    field.value = value
-    console.log([...fields, field])
+    const newFields = fields.map(item =>{
+      item
+    })
     setFields([...fields, field])
   }
 
