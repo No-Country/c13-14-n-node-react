@@ -130,8 +130,11 @@ const login = catchAsync(async (req, res, next) => {
   });
 
   // Compare password with db
-  if (!user || !(await bcrypt.compare(password, user.password))) {
-    return next(new AppError('Invalid credentials', 400));
+
+  if(!user){
+    return res.status(401).json({ message: "Invalid email" });
+  }else if(!(await bcrypt.compare(password, user.password))){
+    return res.status(401).json({ message: "Invalid password" });
   }
 
   // Generate JWT
@@ -180,11 +183,11 @@ const validateTokenSession = catchAsync(async (req, res, next) =>{
         }
       });
 
-      res.status(200).json({message: 'Cuenta activada'})
+      res.status(200).json({message: 'Account activated'})
     }) // res.redirect(url);
     .catch(error=>{
       console.log(error)
-      res.status(404).json({message: 'Usuario no encontrado'})
+      res.status(404).json({message: 'User not found'})
     }) // res.redirect(url);
     
   } catch (error) {
