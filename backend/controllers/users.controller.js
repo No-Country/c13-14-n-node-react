@@ -36,10 +36,28 @@ const getAllUsers = catchAsync(async (req, res, next) => {
 const createUser = catchAsync(async (req, res, next) => {
   const { name, email, password } = req.body;
 
-  const validate = await User.findOne({ email }) || null;
+  const validate = await User.findOne({ email, name }) || null;
+
+  const validEmail =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{3,254})+$/;
+
+  const validPassword = /^(?=.*[a-zA-Z])(?=.*\d).{5,10}$/;
+
+  const validName = /^[a-zA-Z\s]{5,}$/;
 
   if(validate!==null){
     return res.status(409).json({ message: "User exist" });
+  }
+
+  if(!(validEmail.test(email))){
+    return res.status(409).json({ message: "Email not Valid" });
+  }
+
+  if(!(validPassword.test(password))){
+    return res.status(409).json({ message: "Password not Valid" });
+  }
+
+  if(!(validName.test(name))){
+    return res.status(409).json({ message: "Name not Valid" });
   }
 
   const salt = await bcrypt.genSalt(12);
@@ -60,7 +78,7 @@ const createUser = catchAsync(async (req, res, next) => {
   const mailOptions = {
     from: process.env.MAIL_NODEMAILER,
     to: newUser.email,
-    subject: '¡Bienvenido a UniLink!',
+    subject: 'Activa tu cuenta',
     text: `http://localhost:4000/api/v1/users/validateToken/${token}`
   };
 
@@ -112,8 +130,11 @@ const login = catchAsync(async (req, res, next) => {
   });
 
   // Compare password with db
-  if (!user || !(await bcrypt.compare(password, user.password))) {
-    return next(new AppError('Invalid credentials', 400));
+
+  if(!user){
+    return res.status(401).json({ message: "Invalid email" });
+  }else if(!(await bcrypt.compare(password, user.password))){
+    return res.status(401).json({ message: "Invalid password" });
   }
 
   // Generate JWT
@@ -142,12 +163,35 @@ const validateTokenSession = catchAsync(async (req, res, next) =>{
 
     const decodeToken = jwt.verify(token, process.env.JWT_SECRET);
 
+    console.log(decodeToken);
+
     const validateUser = User.updateOne({ email: decodeToken.email }, {status: true})
-    .then(res.status(200).json({message: 'Cuenta activada'})) // res.redirect(url);
-    .catch(res.status(404).json({message: 'Usuario no encontrado'})) // res.redirect(url);
+    .then(()=>{
+
+      const mailOptions = {
+        from: process.env.MAIL_NODEMAILER,
+        to: decodeToken.email,
+        subject: `¡Bienvenido ${decodeToken.id}!`,
+        text: `Su Cuenta fue activada con exito!`
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error('Error al enviar el correo:', error);
+        } else {
+          console.log('Correo enviado:', info.response);
+        }
+      });
+
+      res.status(200).json({message: 'Account activated'})
+    }) // res.redirect(url);
+    .catch(error=>{
+      console.log(error)
+      res.status(404).json({message: 'User not found'})
+    }) // res.redirect(url);
     
   } catch (error) {
-    res.status(401).json({message: 'Invalid token'}); // res.redirect(url);
+    return res.status(401).json({message: 'Invalid token'}); // res.redirect(url);
   }
 
 });
