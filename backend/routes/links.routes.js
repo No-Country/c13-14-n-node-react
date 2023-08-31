@@ -1,4 +1,5 @@
 const express = require('express');
+const { checkToken } = require('../controllers/users.controller');
 
 
 // Controladores
@@ -12,8 +13,8 @@ const {
 
 const router = express.Router();
 
+// router.use(checkToken);
 router.get('/', getAllLinks);
-
 router.post('/', createLink);
 
 router

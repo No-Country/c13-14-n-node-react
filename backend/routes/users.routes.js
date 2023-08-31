@@ -1,4 +1,5 @@
 const express = require('express');
+const { checkValidations } = require('express-validator');
 
 // Middlewares
 const {

@@ -16,14 +16,17 @@ const linkSchema = new mongoose.Schema({
     unique: true,
   },
   icon: {
-    type: String,
+    type: String, //Por definir
+    required: true,
   },
   status: {
     type: Boolean,
-    required: true,
+    default: false,
+    required: true
   },
   order: {
     type: Number,
+    required: true,
   },
 });
 
