@@ -32,8 +32,8 @@ export default function useSession () {
 
   const login = async (passport) => {
     const session = await loginService(passport)
-    if (!session) return
     setSession(session)
+    if (session) return true
   }
 
   const logout = () => setSession({})

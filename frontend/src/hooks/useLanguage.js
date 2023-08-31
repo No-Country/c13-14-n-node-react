@@ -10,6 +10,7 @@ export default function useLanguage (key) {
   const dispatch = useDispatch()
 
   const dictionaryWord = (value) => {
+    if (!key) return '<undefined>'
     if (!dictionary[key]) return '<undefined>'
     return dictionary[key][value] || '<undefined>'
   }

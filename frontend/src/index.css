@@ -16,17 +16,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 3rem;
   text-align: center;
 }
 
 .btn-landing{
-  width: 351px;
   height: 50px;
 }
 
-.w-350 {
-  max-width: 350px;
+.w-400 {
+  max-width: 400px;
 }
 
 
@@ -52,9 +50,6 @@
   height: 50px;
 }
 
-.form-m-width{
-  max-width: 420px;
-}
 
 .form-header{
   font-family: 'Lato', sans-serif;
@@ -63,15 +58,13 @@
   line-height: 38px;
   letter-spacing: 0em;
   text-align: center;
-  width: Fill (351px);
-  height: Hug (38px);
   gap: 12px
-
 }
 
+.w-420{
+  max-width: 420px;
+}
 .form-item{
-  width: Fill (351px);
-  height: Hug (32px);
   padding: 0px 0px 8px 0px;
   gap: 4px
 }

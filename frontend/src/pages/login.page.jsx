@@ -13,6 +13,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/esm/Button'
 
 import { APP_URL_ADMIN } from '../config/constants'
+import useSession from '../hooks/useSession'
 
 export default function RegisterPage () {
   const navigate = useNavigate()
@@ -22,7 +23,8 @@ export default function RegisterPage () {
     handleSubmit,
     formState: { errors }
   } = useForm()
-
+  const { login } = useSession()
+  
   const onSubmit = async (data) => {
     const res = await loginService(data)
     console.log(res.token)

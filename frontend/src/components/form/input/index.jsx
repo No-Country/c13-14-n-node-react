@@ -1,25 +1,30 @@
-export default function InputForm ({ label, id, type = 'text', onChange, register, validations, messageError }) {
-  const error = validations ? messageError(id) : null
+import { useState } from 'react'
+import Form from 'react-bootstrap/Form'
+
+export default function InputForm ({ label, type = 'text', name, onChange, placeholder, required, value, onBlur, isValid, isInvalid }) {
+  const [showPassword, setShowPassword] = useState(false)
+
   return (
-    <div className="mb-4">
-        <label htmlFor={id}>{label}</label>
-        <input
-          id={id}
-          type={type}
-          name={id}
-          onChange={onChange}
-          className={`border p-2 w-full transition-all duration-300 rounded-sm ${
-            error
-              ? 'border-red-600 focus:border-red-600'
-              : 'border-gray-300 focus:border-blue-500'
-          }`}
-          { ...register(id, validations)}
-        />
-        {error &&
-          <span className='text-red-600 text-sm italic'>
-            {error}
-          </span>
+   <Form.Group id={name} className='mb-4' key={name}>
+      <Form.Label>{label}</Form.Label>
+      <Form.Control
+        id= {'id_' + name}
+        name={name}
+        type={ showPassword ? 'text' : type}
+        value= {value}
+        onChange={onChange}
+        placeholder={placeholder}
+        onBlur = {onBlur}
+        required = {required}
+        isValid = {isValid}
+        isInvalid = {isInvalid}
+      >
+        {
+        /*   type === 'password' &&
+          <i onClick={() => setShowPassword(!showPassword)} className={showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'}></i> */
         }
-      </div>
+        <i className='fas fa-eye-slash'></i>
+      </Form.Control>
+    </Form.Group>
   )
 }
