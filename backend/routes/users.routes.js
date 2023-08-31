@@ -18,10 +18,11 @@ const {
   checkToken,
   validateTokenSession,
 } = require('../controllers/users.controller');
+const { createUserValidations, checkValidations } = require('../middlewares/validations.middlewares');
 
 const router = express.Router();
 
-router.post('/', createUser);
+router.post('/', createUserValidations, checkValidations, createUser);
 
 router.post('/login', login);
 
