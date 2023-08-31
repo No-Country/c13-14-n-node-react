@@ -5,14 +5,14 @@ import { setLanguage as setLanguageSlice } from '../reducers/language.slice'
 import { useSelector, useDispatch } from 'react-redux'
 import { APP_KEY_LANGUAGE } from '../config/constants'
 
-export default function useLanguage () {
+export default function useLanguage (key) {
   const { selected, dictionary } = useSelector(state => state.language)
   const dispatch = useDispatch()
 
-  const dictionaryWord = (key) => {
-    const keys = key.split('.')
-    if (!dictionary[keys[0]]) return '<undefined>'
-    return dictionary[keys[0]][keys[1]] || '<undefined>'
+  const dictionaryWord = (value) => {
+    if (!key) return '<undefined>'
+    if (!dictionary[key]) return '<undefined>'
+    return dictionary[key][value] || '<undefined>'
   }
 
   const setLanguage = (value) => {

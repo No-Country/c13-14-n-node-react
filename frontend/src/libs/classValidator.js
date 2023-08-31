@@ -1,6 +1,5 @@
 export default class Validator {
-  constructor (name, value) {
-    this.name = name
+  constructor (value) {
     this.value = value
     this._errors = []
   }
@@ -27,6 +26,12 @@ export default class Validator {
   isMin (min) {
     const res = this.value >= min
     !res && this._errors.push('notMin')
+    return res
+  }
+
+  notSpaces () {
+    const res = this.value.includes(' ')
+    res && this._errors.push('containSpaces')
     return res
   }
 
@@ -57,9 +62,22 @@ export default class Validator {
     return res
   }
 
+  notContainSymbols () {
+    const regex = /\W/
+    const res = regex.test(this.value)
+    res && this._errors.push('containSymbol')
+    return res
+  }
+
   isLongMin (long) {
     const res = this.value.length >= long
     !res && this._errors.push('notMinLong')
+    return res
+  }
+
+  isLongMax (long) {
+    const res = this.value.length <= long
+    !res && this._errors.push('notMaxLong')
     return res
   }
 
@@ -81,6 +99,6 @@ export default class Validator {
   resolved () {
     return this.isValidated()
       ? true
-      : { name: this.name, errors: this._errors }
+      : { errors: this._errors }
   }
 }
