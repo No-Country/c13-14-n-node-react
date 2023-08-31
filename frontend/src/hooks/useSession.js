@@ -11,8 +11,9 @@ export default function useSession () {
   const dispatch = useDispatch()
 
   const setSession = (session) => {
+    console.log(session)
     const { token } = session
-    dispatch(setSessionSlice(token ? session : null))
+    dispatch(setSessionSlice(session))
     token
       ? window.localStorage.setItem(APP_KEY_TOKEN, token)
       : window.localStorage.removeItem(APP_KEY_TOKEN)
@@ -33,12 +34,10 @@ export default function useSession () {
   const login = async (passport) => {
     const session = await loginService(passport)
     setSession(session)
-    if (session) return true
+    return !!session
   }
 
   const logout = () => setSession({})
 
-  const hasSession = !!session
-
-  return { session, login, logout, authToken, validateUser, hasSession }
+  return { session, login, logout, authToken, validateUser }
 }

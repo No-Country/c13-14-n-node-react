@@ -94,3 +94,16 @@
 }
 
 
+.w-toogle{
+  width: 350px;
+}
+
+.smartphone {
+  width: 200px;
+  height: 400px;
+  border: 2px solid #000;
+  border-radius: 10px;
+  position: relative;
+  margin: 20px auto;
+  background: #333;
+}

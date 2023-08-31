@@ -38,26 +38,3 @@ export default function LandinPage () {
     </Container>
   )
 }
-
-/* <div className='d-flex flex-column gap-5'>
-        <Logo/>
-        <h1>{dictionaryWord('welcome')}</h1>
-      </div>
-      <div className='d-flex flex-column gap-3 '>
-      </div> */
-
-/* <Container
-        fluid
-        className='d-flex align-items-center justify-content-center vh-100 gap-6 bg-landing'
-        >
-      <Row className='text-white text-center landing-container'>
-          <Row className='w-100 landing-header'>
-            <Logo/>
-            <h1>{dictionaryWord('welcome')}</h1>
-          </Row>
-          <Row className='d-flew gap-4'>
-
-          </Row>
-      </Row>
-    </Container>
- */

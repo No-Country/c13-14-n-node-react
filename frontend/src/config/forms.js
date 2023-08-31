@@ -1,31 +1,15 @@
-export const registerFields = [
+export const registerStepOne = [
   {
     name: 'email',
-    type: 'email',
-    require: true,
-    default: null,
-    step: 1
+    type: 'email'
   },
   {
     name: 'password',
-    type: 'password',
-    default: null,
-    error: null,
-    step: 1
+    type: 'password'
   },
   {
     name: 'confirm',
-    type: 'password',
-    default: null,
-    error: null,
-    step: 1
-  },
-  {
-    name: 'profile',
-    type: 'text',
-    default: null,
-    error: null,
-    step: 2
+    type: 'password'
   }
 ]
 

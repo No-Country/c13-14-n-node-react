@@ -15,12 +15,13 @@ const dictionary = {
     passwordPlaceholder: 'Ingresa una contraseña',
     confirm: 'Confirmar',
     confirmPlaceholder: 'Confirma tu contraseña',
-    profile: 'Perfil',
+    profile: 'Nombre perfil',
     profilePlaceholder: 'uni.link/tu-perfil',
     tycOne: 'Al crear tu cuenta, aceptas nuestros ',
     tycTwo: 'Términos y condiciones',
     tycTree: ', y confirmas que has leído nuestra ',
     tycFour: 'Política de privacidad',
+    buttonHome: 'Volver',
     buttonStep1: 'Continuar',
     buttonStep2: 'Volver',
     buttonSubmit: 'Crear mi cuenta y perfil',
@@ -37,8 +38,14 @@ const dictionary = {
   loginPage: {
     title: 'Inicia sesión',
     email: 'Email',
+    emailPlaceholder: 'Ingresa tu correo electrónico',
     password: 'Contraseña',
-    button: 'Iniciar sesión'
+    passwordPlaceholder: 'Ingresa tu contraseña',
+    buttonLogin: 'Iniciar sesión',
+    buttonHome: 'Volver'
+  },
+  messageBox: {
+    button: 'Aceptar'
   },
   errorPage: {
     button: 'Volver'
