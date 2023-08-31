@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import AdminNavbar from '../components/Navbar'
+import Navbar from '../components/Navbar'
 import { Col, Container, Row } from 'react-bootstrap'
 import LinkList from '../components/LinksList'
 
@@ -8,7 +8,7 @@ export default function AdminPage () {
 
   return (
     <section className='flex-grow min-vh-100'>
-        <AdminNavbar setTab={setTab}/>
+        <Navbar setTab={setTab}/>
         <Container className='d-flex justify-content-center align-items-center mt-5'>
           <Row>
             <Col sm={12} md={7}>
