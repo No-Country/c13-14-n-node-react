@@ -7,24 +7,21 @@ const profileSchema = new mongoose.Schema({
       },
       status: {
         type: Boolean,
+        default: false,
         required: true
       },
       body: {
         type: String,
         required: true,
       },
-    //   status: {
-    //     type: Boolean,
-    //     default: true,
-    //   },
-      create_at: {
-        type: Date,
-        default: Date.now ,
+      themeProfileId: {
+        type: Object,
+        require: true
       },
-      themeProfield: {
-        type: String,
-        default: true,
-      },
+      lastInitProfile: {
+        type: Boolean,
+        require: true
+      }
 });
 
 const Profile = mongoose.model('Profile', profileSchema);
