@@ -4,12 +4,9 @@ const dictionary = {
     register: 'Crear cuenta',
     login: 'Iniciar sesión'
   },
-  loginPage: {
-    title: 'Inicia sesión'
-  },
   registerPage: {
     title1: 'Crea tu cuenta',
-    title2: 'Establece tu contraseña',
+    title2: 'Crea tu perfil',
     name: 'Nombre de usuario',
     namePlaceholder: 'Ingresa tu apodo o seudónimo',
     email: 'Email',
@@ -18,25 +15,37 @@ const dictionary = {
     passwordPlaceholder: 'Ingresa una contraseña',
     confirm: 'Confirmar',
     confirmPlaceholder: 'Confirma tu contraseña',
+    profile: 'Nombre perfil',
+    profilePlaceholder: 'uni.link/tu-perfil',
     tycOne: 'Al crear tu cuenta, aceptas nuestros ',
     tycTwo: 'Términos y condiciones',
     tycTree: ', y confirmas que has leído nuestra ',
     tycFour: 'Política de privacidad',
-    button: 'Enviar',
-    required: 'El campo es requerido',
-    nameLength: 'Debe tener entre 4 y 20 caracteres',
-    passwordLength: 'Debe tener entre 4 y 10 caracteres',
-    noMatch: 'Las contraseñas no coinciden'
+    buttonHome: 'Volver',
+    buttonStep1: 'Continuar',
+    buttonStep2: 'Volver',
+    buttonSubmit: 'Crear mi cuenta y perfil',
+    buttonOmit: 'Omitir perfil y crear cuenta'
+  },
+  authMessage: {
+    invalidEmail: 'Email no válido',
+    requiredEmail: 'Email es requerido',
+    requiredPassword: 'Contraseña es requerida',
+    invalidPassword: 'Debe tener entre 4 y 10 caracteres y almenos una letra y un número',
+    requiredConfirm: 'Condirmación es requerida',
+    invalidConfirm: 'Las contraseñas no coinciden'
   },
   loginPage: {
     title: 'Inicia sesión',
     email: 'Email',
+    emailPlaceholder: 'Ingresa tu correo electrónico',
     password: 'Contraseña',
-    button: 'Iniciar sesión',
-    // Validaciones
-    required: 'El campo es requerido',
-    worngEmail: 'Por favor ingresa un correo electrónico válido.',
-    wrongPassword: 'La contraseña es inválida.'
+    passwordPlaceholder: 'Ingresa tu contraseña',
+    buttonLogin: 'Iniciar sesión',
+    buttonHome: 'Volver'
+  },
+  messageBox: {
+    button: 'Aceptar'
   },
   errorPage: {
     button: 'Volver'

@@ -1,85 +1,94 @@
+import { Container, Form, Button, Row, Col } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
-import { useNavigate, Link } from 'react-router-dom'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+import { yupResolver } from '@hookform/resolvers/yup'
 
-import useLanguage from '../hooks/useLanguage'
-import { loginService } from '../services/auth.service'
-import { emailValidation } from '../validations/register.validator'
+import { loginValidationSchema } from '../validations/auth.shcema'
 
 import Logo from '../components/logo'
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/esm/Button'
+import useLanguage from '../hooks/useLanguage'
+import { useNavigate } from 'react-router-dom'
+import { APP_URL_ADMIN, APP_URL_LANDING } from '../config/constants'
+import useSession from '../hooks/useSession'
+import { useState } from 'react'
 
-import { APP_URL_ADMIN } from '../config/constants'
-
-export default function RegisterPage () {
+export default function LoginPage () {
+  const { dictionaryWord } = useLanguage('loginPage')
+  const [showError, setShowError] = useState(false)
+  const { login } = useSession()
   const navigate = useNavigate()
-  const { dictionaryWord } = useLanguage()
+
   const {
     register,
     handleSubmit,
-    formState: { errors }
-  } = useForm()
+    formState: { errors, dirtyFields }
+  } = useForm({
+    resolver: yupResolver(loginValidationSchema),
+    mode: 'onBlur'
+  })
 
   const onSubmit = async (data) => {
-    const res = await loginService(data)
-    console.log(res.token)
-    //! Temporal para la demo
-    res?.token && navigate(APP_URL_ADMIN)
+    const res = await login(data)
+    !res
+      ? setShowError(res)
+      : navigate(APP_URL_ADMIN)
   }
 
   return (
-    <section className='max-w-sm mx-auto'>
-      <Container >
-        <Row className='mt-5'>
-            <Col className='d-flex flex-column justify-content-center align-items-center w-350 m-auto'>
-              <Logo height='37px' width='160px' fill='black' />
-            </Col>
-            <Col>
-            <div className='w-350'>
-              <h2 className='text-center text-3xl font-bold my-10'>
-                {dictionaryWord('loginPage.title')}
-              </h2>
-              <Form onSubmit={handleSubmit(onSubmit)}>
-                <Form.Group id='email'>
+    <Container className='min-vh-100'>
+      <Row className='min-vh-100'>
+        <Col sm={12} md={6} className='d-flex justify-content-center align-items-center' >
+          <Logo height='37px' width='160px' fill='black' />
+        </Col>
+        <Col sm={12} md={6} xl={4} className='d-flex justify-content-center align-items-md-center' >
+          <Form noValidate onSubmit={handleSubmit(onSubmit)} className='w-100' >
+              <div className='w-100'>
+                <h1 className='form-header mb-4' >{dictionaryWord('title')}</h1>
+
+                <Form.Group className="mb-3" controlId="formGroupEmail">
                   <Form.Label>Email</Form.Label>
                   <Form.Control
-                    validations={emailValidation}
-                    type='email'
-                    placeholder='Ingresa tu correo electrónico'
+                    type="email"
+                    placeholder={dictionaryWord('emailPlaceholder')}
                     {...register('email')}
+                    isInvalid={!!errors.email}
+                    isValid = {!errors.email && dirtyFields.email}
                   />
                 </Form.Group>
-                <Form.Group id='password'>
-                 <Form.Label>Contraseña</Form.Label>
-                  <Form.Control
-                    type='password'
-                    placeholder='Ingresa tu contraseña'
-                    {...register('password')}
-                  />
-                </Form.Group>
-                <Button
-                  type="sumbit"
-                  className='w-full mt-3'
-                  variant='primary'
-                >
-                  Iniciar sesión
-                </Button>
-              </Form>
 
-              <p className='text-center text-3xl font-bold my-10 mt-3'>
-                {' '}
-                <a href='/'> olvide mi contrasena</a>
-              </p>
-              <p className='text-center text-3xl font-bold my-10'>
-                Aun no tienes cuenta? <a href='/register'>registrate aca</a>
-              </p>
-            </div>
-            </Col>
-        </Row>
-      </Container>
-    </section>
+                <Form.Group className="mb-3" controlId="formGroupPassword">
+                  <Form.Label>{dictionaryWord('password')}</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder={dictionaryWord('passwordPlaceholder')}
+                    {...register('password')}
+                    isInvalid={!!errors.password}
+                    isValid = {!errors.password && dirtyFields.password}
+                  />
+                </Form.Group>
+
+                <div className="d-grid my-5 gap-3">
+                  <Button
+                    type='submit'
+                    className='form-btn'
+                    variant="primary"
+                    disabled={!(dirtyFields.email && dirtyFields.password && !errors.email && !errors.password)}
+                  >
+                    {dictionaryWord('buttonLogin')}
+                  </Button>
+                  <Button
+                    className='form-btn'
+                    variant="outline-primary"
+                    onClick={() => navigate(APP_URL_LANDING)}
+                  >
+                    {dictionaryWord('buttonHome')}
+                  </Button>
+                </div>
+              </div>
+
+          </Form>
+        </Col>
+      </Row>
+      {showError && <p>No se pudo iniciar sesion</p>}
+    </Container>
   )
 }
