@@ -1,7 +1,7 @@
 export default function Look() {
     return (
         <div>
-            Hola m
+            Hola mundo
         </div>
     )
 } 
