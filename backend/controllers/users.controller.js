@@ -34,19 +34,18 @@ const getAllUsers = catchAsync(async (req, res, next) => {
 });
 
 const createUser = catchAsync(async (req, res, next) => {
-  const { name, email, password } = req.body;
+  const { email, password } = req.body;
 
   const validate = await User.findOne({ email }) || null;
 
   if(validate!==null){
-    return res.status(409).json({ message: "User exist" });
+    return res.status(409).json({ message: "emailExist" });
   }
 
   const salt = await bcrypt.genSalt(12);
   const hashPassword = await bcrypt.hash(password, salt);
 
   const newUser = await User.create({
-    name,
     email,
     password: hashPassword,
     status: false

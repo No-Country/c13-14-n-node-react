@@ -1,16 +1,21 @@
-const { body, validationResult } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 
 // Utils
 const { AppError } = require('../utils/appError');
 
 const createUserValidations = [
-  body('name').notEmpty().withMessage('Name cannot be empty'),
-  body('email')
+  check('email')
     .notEmpty()
     .withMessage('Email cannot be empty')
     .isEmail()
-    .withMessage('Must be a valid email'),
-  body('password')
+    .withMessage('Must be a valid email')
+    .custom(value => {
+      if (!/\S+@\S+\.\S+/.test(value)) {
+        throw new Error('Invalid email format');
+      }
+      return true;
+    }),
+  check('password')
     .notEmpty()
     .withMessage('Password cannot be empty')
     .isLength({ min: 8 })

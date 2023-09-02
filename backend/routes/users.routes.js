@@ -1,11 +1,17 @@
 const express = require('express');
 
+const { body, validationResult } = require('express-validator');
+
 // Middlewares
 const {
   userExists,
   protectToken,
   protectAccountOwner,
 } = require('../middlewares/users.middlewares');
+
+const {
+  createUserValidations,
+} = require('../middlewares/validations.middlewares');
 
 // Controller
 const {
@@ -21,7 +27,10 @@ const {
 
 const router = express.Router();
 
-router.post('/', createUser);
+router.post('/', [
+  body('email').isEmail().withMessage('El email debe ser un email válido'),
+  body('password').notEmpty().withMessage('Password cannot be empty').isLength({ min: 8 }).withMessage('Password must be at least 8 characters long')
+], createUser);
 
 router.post('/login', login);
 
