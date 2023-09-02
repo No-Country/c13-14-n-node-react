@@ -33,7 +33,7 @@ const createLink = catchAsync(async (req, res) => {
   try {
     const newLink = {
       name: req.body.name,
-      profileId: req.body.profileId,
+      profile: req.body.profileId,
       urlEnlace: req.body.urlEnlace,
       icon: req.body.icon,
       status: req.body.status,
@@ -51,7 +51,7 @@ const updateLink = catchAsync(async (req, res) => {
   const id = req.params.id;
   const newLinkData = {
     name: req.body.name,
-    profileId: req.body.profileId,
+    profile: req.body.profileId,
     urlEnlace: req.body.urlEnlace,
     icon: req.body.icon,
     status: req.body.status,

@@ -29,11 +29,15 @@ const profileSchema = new mongoose.Schema({
     default: false,
     type: Boolean,
   },
-  userId: {
+  user: {
     type: mongoose.Schema.ObjectId,
     ref: "User"
   },
-  themeId: {
+  link: [{
+    type: mongoose.Schema.ObjectId,
+    ref: "Link"
+  }],
+  theme: {
     type: mongoose.Schema.ObjectId,
     ref: "Theme",
   }

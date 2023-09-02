@@ -6,7 +6,7 @@ const linkSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  profileId: {
+  profile: {
     type: mongoose.Schema.ObjectId,
     ref: "Profile",
     required: true,

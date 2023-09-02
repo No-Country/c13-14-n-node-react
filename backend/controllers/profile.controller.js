@@ -13,14 +13,21 @@ const createProfile = catchAsync(async (req, res, next) => {
         header,
         image,
         body,
+        user,
         themeId,
         lastInitProfile
     } = req.body;
 
-    const validate = await Profile.findOne({ nameSpace }) || null;
 
-    if (validate !== null) {
-        return res.status(409).json({ message: "Profile exist" })
+    const validateExist = await Profile.findOne({ nameSpace }) || null;
+    const validate = await Profile.find({ user });
+    console.log(validate.length)
+    if (validateExist !== null) {
+        return res.status(409).json({ message: "ya existe un profile con ese nombre." })
+    }
+
+    if (validate.length > 4) {
+        return res.status(409).json({ message: "no puedes crear mas de 5 profiles" })
     }
 
     const newProfile = await Profile.create(
@@ -30,6 +37,7 @@ const createProfile = catchAsync(async (req, res, next) => {
             header,
             image,
             body,
+            user,
             themeId,
             status: true,
             lastInitProfile
@@ -43,6 +51,22 @@ const createProfile = catchAsync(async (req, res, next) => {
 });
 
 
+const findAllProfile = catchAsync(async (req, res, next) => {
+    const { id } = req.params;
+
+    const allProfile = await Profile.find({ user: id }).populate("user") || null;
+
+    if (allProfile === null) {
+        return res.status(409).json({ message: "no tienes perfiles." })
+    }
+
+    res.status(200).json({
+        message: "success",
+        profile: allProfile
+    })
+})
+
 module.exports = {
-    createProfile
+    createProfile,
+    findAllProfile
 }
