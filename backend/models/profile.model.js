@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const profileSchema = new mongoose.Schema({
   nameSpace: {
     type: String,
+    unique: true,
     required: true
   },
   title: {
@@ -27,12 +28,14 @@ const profileSchema = new mongoose.Schema({
   lastInitProfile: {
     default: false,
     type: Boolean,
-    require: true
+  },
+  userId: {
+    type: mongoose.Schema.ObjectId,
+    ref: "User"
   },
   themeId: {
     type: mongoose.Schema.ObjectId,
     ref: "Theme",
-    require: true
   }
 });
 

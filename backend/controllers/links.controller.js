@@ -5,17 +5,17 @@ const { AppError } = require('../utils/appError');
 
 //Obtener todos los links
 
-const getAllLinks = async (req, res) => {
+const getAllLinks = catchAsync(async (req, res) => {
   try {
     const links = await Link.find();
     res.status(200).send(links);
   } catch (error) {
     res.status(500).send({ error: "Error interno del servidor" });
   }
-}
+});
 
 //Obtener un link por ID
-const getLinkById = async (req, res) => {
+const getLinkById = catchAsync(async (req, res) => {
   try {
     const id = req.params.id;
     const link = await Link.findById(id);
@@ -26,14 +26,14 @@ const getLinkById = async (req, res) => {
   } catch (error) {
     res.status(500).send({ error: "Error interno del servidor" });
   }
-}
+});
 
 //Crear un nuevo link
-const createLink = async (req, res) => {
+const createLink = catchAsync(async (req, res) => {
   try {
     const newLink = {
       name: req.body.name,
-      idProfile: req.body.idProfile,
+      profileId: req.body.profileId,
       urlEnlace: req.body.urlEnlace,
       icon: req.body.icon,
       status: req.body.status,
@@ -44,31 +44,31 @@ const createLink = async (req, res) => {
   } catch (error) {
     res.status(400).send({ error: "Solicitud incorrecta" });
   }
-}
+});
 
 //Actualizar un link
-  const updateLink = async (req, res) => {
-    const id = req.params.id;
-    const newLinkData = {
-      name: req.body.name,
-      idProfile: req.body.idProfile,
-      urlEnlace: req.body.urlEnlace,
-      icon: req.body.icon,
-      status: req.body.status,
-      order: req.body.order
-    };
-    try {
-      const updatedLink = await Link.findByIdAndUpdate(id, newLinkData, { new: true });
-      if (!updatedLink) {
-        return res.status(404).send({ mensaje: "No se encontró el link" });
-      }
-      res.status(200).send({ mensaje: "Link modificado con éxito", link: updatedLink });
-    } catch (error) {
-      res.status(500).send({ error: "Error interno del servidor" });
+const updateLink = catchAsync(async (req, res) => {
+  const id = req.params.id;
+  const newLinkData = {
+    name: req.body.name,
+    profileId: req.body.profileId,
+    urlEnlace: req.body.urlEnlace,
+    icon: req.body.icon,
+    status: req.body.status,
+    order: req.body.order
+  };
+  try {
+    const updatedLink = await Link.findByIdAndUpdate(id, newLinkData, { new: true });
+    if (!updatedLink) {
+      return res.status(404).send({ mensaje: "No se encontró el link" });
     }
+    res.status(200).send({ mensaje: "Link modificado con éxito", link: updatedLink });
+  } catch (error) {
+    res.status(500).send({ error: "Error interno del servidor" });
   }
+});
 //Eliminar un link
-const deleteLink = async (req, res) => {
+const deleteLink = catchAsync(async (req, res) => {
   const id = req.params.id;
   try {
     const link = await Link.findByIdAndDelete(id);
@@ -79,7 +79,7 @@ const deleteLink = async (req, res) => {
   } catch (error) {
     res.status(500).send({ error: "Error interno del servidor" });
   }
-}
+});
 
 module.exports = {
   getAllLinks,

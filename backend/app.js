@@ -9,7 +9,8 @@ const { globalErrorHandler } = require('./controllers/errors.controller');
 const { usersRouter } = require('./routes/users.routes');
 const { linksRouter } = require('./routes/links.routes');
 const { profileRouter } = require('./routes/profile.routes');
-
+const { themeRouter } = require('./routes/theme.routes');
+const { userProfileRouter } = require('./routes/userProfileRouter.routes');
 // Init express app
 const app = express();
 
@@ -32,6 +33,8 @@ app.use(limiter);
 app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/links', linksRouter);
 app.use('/api/v1/profile', profileRouter);
+app.use('/api/v1/theme', themeRouter);
+app.use('/api/v1/userprofile', userProfileRouter);
 
 // Global error handler
 app.use('*', globalErrorHandler);
