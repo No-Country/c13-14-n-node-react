@@ -3,6 +3,7 @@ import AdminNavbar from '../components/Navbar'
 import { Col, Container, Row } from 'react-bootstrap'
 import LinkList from '../components/LinksList'
 import SideBar from '../components/sidebar'
+import Look from '../components/Look/LookHeader'
 
 export default function AdminPage() {
   const [tab, setTab] = useState(1)
@@ -14,7 +15,7 @@ export default function AdminPage() {
         <Row>
           <Col sm={12} md={7}>
             {tab === 1 && <LinkList />}
-            {tab === 2 && <h2>Apariencia</h2>}
+            {tab === 2 && <Look />}
             {tab === 3 && <h2>Settings</h2>}
           </Col>
           <Col sm={12} md={5} className='d-flex justify-content-center align-items-center '>
