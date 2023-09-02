@@ -1,16 +1,20 @@
 const mongoose = require('mongoose');
 
-const themSchema = new mongoose.Schema({
-    userId: {
+const themeSchema = new mongoose.Schema({
+    name: {
         type: String,
-        require: true
+        required: true
     },
-    premium: {
-        type: Boolean,
-        require: true
+    backgroundTheme: { // imagen de fondo
+        type: String,
+        required: true
+    },
+    backgroundLink: { // color de fondo links
+        type: String,
+        required: true
     }
 });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('Theme', themeSchema);
 
 module.exports = { User };

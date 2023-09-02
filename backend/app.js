@@ -8,6 +8,7 @@ const { globalErrorHandler } = require('./controllers/errors.controller');
 // Routers
 const { usersRouter } = require('./routes/users.routes');
 const { linksRouter } = require('./routes/links.routes');
+const { profileRouter } = require('./routes/profile.routes');
 
 // Init express app
 const app = express();
@@ -30,6 +31,7 @@ app.use(limiter);
 // Endpoints
 app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/links', linksRouter);
+app.use('/api/v1/profile', profileRouter);
 
 // Global error handler
 app.use('*', globalErrorHandler);

@@ -6,8 +6,9 @@ const linkSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  idProfile: {
-    type: String,
+  profileId: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Profile",
     required: true,
   },
   urlEnlace: {
