@@ -33,7 +33,7 @@ const createLink = catchAsync(async (req, res) => {
   try {
     const newLink = {
       name: req.body.name,
-      profile: req.body.profileId,
+      profile: req.body.profile,
       urlEnlace: req.body.urlEnlace,
       icon: req.body.icon,
       status: req.body.status,
@@ -42,7 +42,7 @@ const createLink = catchAsync(async (req, res) => {
     const link = await Link.create(newLink);
     res.status(201).send({ mensaje: "Link creado exitosamente", idLink: link._id });
   } catch (error) {
-    res.status(400).send({ error: "Solicitud incorrecta" });
+    res.status(400).send({ error: "Solicitud incorrecta", error });
   }
 });
 
@@ -51,7 +51,7 @@ const updateLink = catchAsync(async (req, res) => {
   const id = req.params.id;
   const newLinkData = {
     name: req.body.name,
-    profile: req.body.profileId,
+    profile: req.body.profile,
     urlEnlace: req.body.urlEnlace,
     icon: req.body.icon,
     status: req.body.status,
