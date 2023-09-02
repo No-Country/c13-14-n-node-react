@@ -1,6 +1,8 @@
 const dictionary = {
-  landing: {
-    tite: 'Welcome'
+  navbar: {
+    login: 'Login',
+    register: 'Register'
+
   }
 }
 

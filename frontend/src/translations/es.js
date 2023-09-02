@@ -1,24 +1,51 @@
 const dictionary = {
-  navbar: {
-    login: 'Iniciar Sesion',
-    register: 'Registrarse'
-
-  },
   landingPage: {
-    welcome: 'Bienenido a la landing de Unilink'
+    welcome: '¡Hola!',
+    register: 'Crear cuenta',
+    login: 'Iniciar sesión'
   },
   registerPage: {
-    title: 'Crea tu cuenta',
-    name: 'Nombre',
-    email: 'Correo',
+    title1: 'Crea tu cuenta',
+    title2: 'Crea tu perfil',
+    name: 'Nombre de usuario',
+    namePlaceholder: 'Ingresa tu apodo o seudónimo',
+    email: 'Email',
+    emailPlaceholder: 'Ingresa tu correo electrónico',
     password: 'Contraseña',
+    passwordPlaceholder: 'Ingresa una contraseña',
     confirm: 'Confirmar',
-    button: 'Enviar',
-    // Validaciones
-    required: 'El campo es requerido',
-    nameLength: 'Debe tener entre 4 y 20 caracteres',
-    passwordLength: 'Debe tener entre 4 y 10 caracteres',
-    noMatch: 'Las contraseñas no coinciden'
+    confirmPlaceholder: 'Confirma tu contraseña',
+    profile: 'Nombre perfil',
+    profilePlaceholder: 'uni.link/tu-perfil',
+    tycOne: 'Al crear tu cuenta, aceptas nuestros ',
+    tycTwo: 'Términos y condiciones',
+    tycTree: ', y confirmas que has leído nuestra ',
+    tycFour: 'Política de privacidad',
+    buttonHome: 'Volver',
+    buttonStep1: 'Continuar',
+    buttonStep2: 'Volver',
+    buttonSubmit: 'Crear mi cuenta y perfil',
+    buttonOmit: 'Omitir perfil y crear cuenta'
+  },
+  authMessage: {
+    invalidEmail: 'Email no válido',
+    requiredEmail: 'Email es requerido',
+    requiredPassword: 'Contraseña es requerida',
+    invalidPassword: 'Debe tener entre 4 y 10 caracteres y almenos una letra y un número',
+    requiredConfirm: 'Condirmación es requerida',
+    invalidConfirm: 'Las contraseñas no coinciden'
+  },
+  loginPage: {
+    title: 'Inicia sesión',
+    email: 'Email',
+    emailPlaceholder: 'Ingresa tu correo electrónico',
+    password: 'Contraseña',
+    passwordPlaceholder: 'Ingresa tu contraseña',
+    buttonLogin: 'Iniciar sesión',
+    buttonHome: 'Volver'
+  },
+  messageBox: {
+    button: 'Aceptar'
   },
   errorPage: {
     button: 'Volver'

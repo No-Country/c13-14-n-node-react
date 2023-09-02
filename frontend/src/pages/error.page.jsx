@@ -18,7 +18,7 @@ export default function ErrorPage () {
       <h1 className='text-9xl'>{error.status}</h1>
       <h4 className='text-5xl mb-4'>{error.statusText}</h4>
       <OutlineButton
-        onClick={() => navigate('/')}
+        onClick={() => navigate(-1)}
         ref={defaultFocus}
         label={dictionaryWord('errorPage.button')}
         />

@@ -14,22 +14,25 @@ const validateToken = async (url, token) => {
 
 export const loginService = async (passport) => {
   try {
-    const { data } = await axios.post(API_URL_LOGIN, passport)
-    return data
+    const res = await axios.post(API_URL_LOGIN, passport)
+    const { user, token } = res.data
+    const { name, email, _id } = user
+    const session = { user: { id: _id, name, email }, token }
+    return session
   } catch (error) {
     //! FALTA MANEJO DE ERRORES
-    console.log(error.messge)
+    console.log(error.message)
     return {}
   }
 }
 
-export const sendRegistrationData = async (formData) => {
+export const registerService = async (formData) => {
   try {
-    const { data } = await axios.post(API_URL_REGISTER, formData)
-    return data
+    const res = await axios.post(API_URL_REGISTER, formData)
+    return res.data
   } catch (error) {
     //! FALTA MANEJO DE ERRORES
-    console.log(error.messge)
+    console.log(error.message)
     return false
   }
 }

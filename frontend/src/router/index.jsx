@@ -11,7 +11,7 @@ import Admin from '../pages/admin.page'
 
 import Error from '../pages/error.page'
 
-// import ProtectedRoute from '../pages/protected'
+import ProtectedRoute from '../pages/protected.page'
 
 const router = createBrowserRouter([
   {
@@ -23,14 +23,13 @@ const router = createBrowserRouter([
       { path: '/login', element: <Login /> },
       { path: '/register', element: <Register /> },
       { path: '/validate', element: <Validate /> },
-      { path: '/admin', element: <Admin /> }
-      /*    {
+      {
         path: '/',
         element: <ProtectedRoute/>,
         children: [
           { path: '/admin', element: <Admin /> }
         ]
-      } */
+      }
     ]
   }
 ])
