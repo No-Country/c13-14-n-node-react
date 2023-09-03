@@ -6,6 +6,7 @@ import './index.css'
 
 // React-bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
 // Router
 import router from './router'
@@ -17,7 +18,7 @@ import store from './store'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
-        <RouterProvider router={router}/>
-      </Provider>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 )

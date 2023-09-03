@@ -104,3 +104,16 @@
   margin: 20px auto;
   background: #333;
 }
+
+.avatar {
+  width: 53px;
+  height: 53px;
+  border-radius: 50%;
+  background-image: url("https://api.lorem.space/image/face?w=450&amp");
+  background-position: center;
+  background-size: cover;
+  border: 3px solid transparent;
+}
+.icon-list{
+  width: 12%;
+}

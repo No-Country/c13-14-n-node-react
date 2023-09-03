@@ -4,7 +4,8 @@ import { APP_KEY_TOKEN, APP_URL_ADMIN } from '../config/constants'
 import { loginService, validateAuthService, validateUserService } from '../services/auth.service'
 import { useNavigate } from 'react-router-dom'
 
-export default function useSession () {
+
+export default function useSession() {
   const session = useSelector(state => state.session)
   const navigate = useNavigate()
 
