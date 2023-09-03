@@ -53,6 +53,29 @@ const createProfile = catchAsync(async (req, res, next) => {
 });
 
 
+const deleteProfile = catchAsync(async (req, res, next) => {
+
+    try {
+        const { id } = req.params;
+
+        const result = await Profile.findOneAndDelete({ _id: id });
+
+        if (!result) {
+            return res.status(500).json({ status: error, message: "error al eliminar" });
+        }
+
+        res.status(200).json({
+            status: 'success',
+            result,
+            message: "profile delete"
+        })
+
+    } catch (error) {
+        res.status(500).send({ error: "Error interno del servidor" });
+    }
+})
+
+
 const findAllProfile = catchAsync(async (req, res, next) => {
     const { id } = req.params;
 
@@ -71,5 +94,6 @@ const findAllProfile = catchAsync(async (req, res, next) => {
 
 module.exports = {
     createProfile,
-    findAllProfile
+    findAllProfile,
+    deleteProfile
 }

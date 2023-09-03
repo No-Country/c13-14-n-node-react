@@ -27,4 +27,12 @@ export const getAllProfile = (id) => async (dispatch) => {
   }
 }
 
+export const deleteProfile = (id) => async (dispatch) => {
+  try {
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export default profileState.reducer

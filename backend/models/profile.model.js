@@ -15,6 +15,7 @@ const profileSchema = new mongoose.Schema({
   },
   image: {
     type: String,
+    default: "default.jpg"
   },
   status: {
     type: Boolean,

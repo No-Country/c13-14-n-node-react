@@ -4,6 +4,14 @@ import ListGroup from 'react-bootstrap/ListGroup'
 const ListProfiles = () => {
     const { profile } = useSelector(state => state.profile)
 
+    const deleteProfile = (id) => {
+        console.log(id)
+    }
+
+    const updateProfile = (id) => {
+        console.log(id)
+    }
+
     return (
         <ListGroup className="mt-5 container">
             {
@@ -12,16 +20,16 @@ const ListProfiles = () => {
                         <section className="d-flex align-items-center">
                             <div
                                 style={{
-                                    backgroundImage: new URL(`https://api.lorem.space/image/face?w=450`).toString(),
+                                    backgroundImage: new URL(item.image === 'default.jpg' ? `https://api.lorem.space/image/face?w=450` : `${item.image}`).toString(),
                                 }}
                                 className="avatar"
                             >
                             </div>
-                            <p className="mx-3">xxxx xxxxx</p>
+                            <p className="mx-3">{item.nameSpace}</p>
                         </section>
                         <section className="icon-list d-flex align-items-center justify-content-between m-2">
-                            <i className="bi bi-trash3-fill text-danger"></i>
-                            <i className="bi bi-pencil-square text-primary"></i>
+                            <i className="bi bi-trash3-fill text-danger" onClick={() => deleteProfile(item._id)}></i>
+                            <i className="bi bi-pencil-square text-primary" onClick={() => updateProfile(item._id)}></i>
                         </section>
                     </ListGroup.Item>
                 ))
