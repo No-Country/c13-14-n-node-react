@@ -10,7 +10,9 @@ import useSession from '../../hooks/useSession'
 export default function AdminNavbar ({ setTab }) {
   const { session, logout } = useSession()
 
-  const { user } = session
+  //const { user } = session
+
+  const user = {};
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
