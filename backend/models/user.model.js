@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { USER_STATUS } = require('../config/constants');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -15,9 +16,12 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   status: {
-    type: Boolean,
-    default: false,
+    type: Number, // 
+    default: USER_STATUS.NO_VAIDATE, 
     required: true,
+  },
+  lastSelectedIDProfile: {
+    type: mongoose.Schema.Types.ObjectId,
   },
 
 });

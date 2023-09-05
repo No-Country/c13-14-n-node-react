@@ -12,6 +12,13 @@ const { linksRouter } = require('./routes/links.routes');
 // Init express app
 const app = express();
 
+// Development Mode
+if (process.env.DEV) {
+  const morgan = require('morgan')
+  app.use(morgan('dev'))
+}
+
+
 // Enable CORS
 app.use(cors());
 

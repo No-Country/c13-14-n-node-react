@@ -12,15 +12,15 @@ const profileSchema = new mongoose.Schema({
       },
       body: {
         type: String,
-        required: true,
+        required: false,
       },
       themeProfileId: {
         type: Object,
-        require: true
+        require: false
       },
       lastInitProfile: {
         type: Boolean,
-        require: true
+        require: false
       }
 });
 

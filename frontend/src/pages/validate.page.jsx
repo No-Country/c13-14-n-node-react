@@ -4,12 +4,13 @@ import useSession from '../hooks/useSession'
 export default function ValidatePage () {
   const [searchParams] = useSearchParams()
   const { validateUser } = useSession()
-
   // Verifico si recibo el token por query
   const token = searchParams.get('token')
 
   // Si tengo query intento validar el token
-  useEffect(() => token && validateUser(token), [])
+  useEffect(() => {
+    if (token) validateUser(token)
+  }, [])
 
   //! Falta renderizar un error si no se logró validar e inicir session
 
