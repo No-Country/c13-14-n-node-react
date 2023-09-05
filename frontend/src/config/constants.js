@@ -8,12 +8,13 @@ export const APP_KEY_TOKEN = 'APP_KEY_TOKEN'
 export const KEY_LOADER = 'loader'
 
 // Config API_URLS
-const API_URL_BASE = 'http://3.21.158.160/api/v1'
+const API_URL_BASE = 'http://localhost:4000/api/v1'
 
 export const API_URL_LOGIN = API_URL_BASE + '/users/login'
 export const API_URL_REGISTER = API_URL_BASE + '/users'
 export const API_URL_SESSION = API_URL_BASE + '/auth/session'
 export const API_URL_VALIDATE = API_URL_BASE + '/auth/validate'
+export const API_URL_LINKS = API_URL_BASE + '/links'
 
 export const APP_URL_LANDING = '/'
 export const APP_URL_LOGIN = '/login'

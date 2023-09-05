@@ -18,6 +18,13 @@ const createUserValidations = [
     .withMessage('La contraseña debe tener al menos una mayúscula, una minúscula y un número'),
 ];
 
+const validateLinksErrors = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+  }
+  next();
+}
 const checkValidations = (req, res, next) => {
   const errors = validationResult(req);
 
@@ -36,4 +43,5 @@ const checkValidations = (req, res, next) => {
 module.exports = {
   createUserValidations,
   checkValidations,
+  validateLinksErrors
 };

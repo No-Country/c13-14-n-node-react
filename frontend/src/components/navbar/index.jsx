@@ -12,7 +12,8 @@ export default function AdminNavbar ({ setTab }) {
   const dispatch = useDispatch()
   const { session, logout } = useSession()
 
-  const { user } = session
+  // const { user } = session
+  const  user = "guillermo" 
   const toggleSideBar = () => {
     dispatch(setToggle(true))
   }

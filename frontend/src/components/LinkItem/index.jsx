@@ -1,8 +1,14 @@
 import { Button, Card, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import useLink from '../../hooks/useLinks'
 
 export default function LinkItem ({ link }) {
-  const { title, url, enabled } = link
+  const { title, url, enabled, id } = link
+  const { deleteLink } = useLink()
+
+  const handleDelete = () => {
+    deleteLink(id)
+  }
 
   return (
     <Card>
@@ -22,6 +28,8 @@ export default function LinkItem ({ link }) {
               value={enabled}
             />
             <Button variant="outline-primary">Editar</Button>
+            <Button onClick={handleDelete} variant="outline-primary">Eliminar</Button>
+
         </div>
       </Card.Body>
     </Card>

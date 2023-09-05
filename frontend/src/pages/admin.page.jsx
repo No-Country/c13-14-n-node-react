@@ -4,9 +4,8 @@ import { Col, Container, Row } from 'react-bootstrap'
 import LinkList from '../components/LinksList'
 import SideBar from '../components/sidebar'
 
-export default function AdminPage() {
+export default function AdminPage () {
   const [tab, setTab] = useState(1)
-
   return (
     <section className='flex-grow min-vh-100'>
       <AdminNavbar setTab={setTab} />

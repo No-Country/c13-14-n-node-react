@@ -17,7 +17,7 @@ const linkSchema = new mongoose.Schema({
     unique: true,
   },
   icon: {
-    type: String, //Por definir
+    type: String,
     required: true,
   },
   status: {
