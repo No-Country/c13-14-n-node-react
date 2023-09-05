@@ -15,7 +15,10 @@ const validateToken = async (url, token) => {
 export const loginService = async (passport) => {
   try {
     const res = await axios.post(API_URL_LOGIN, passport)
-    return res.data
+    const { user, token } = res.data
+    const { name, email, _id } = user
+    const session = { user: { id: _id, name, email }, token }
+    return session
   } catch (error) {
     //! FALTA MANEJO DE ERRORES
     console.log(error.message)
@@ -29,7 +32,7 @@ export const registerService = async (formData) => {
     return res.data
   } catch (error) {
     //! FALTA MANEJO DE ERRORES
-    console.log(error.messge)
+    console.log(error.message)
     return false
   }
 }

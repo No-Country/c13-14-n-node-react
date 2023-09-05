@@ -7,11 +7,8 @@ export default function RootLayout () {
   const { loadLocalStorage } = useLocalStorage()
   useEffect(() => loadLocalStorage(), [])
   return (
-    <div>
-      <main>
-        <Outlet/>
-      </main>
-    </div>
-
+    <main>
+      <Outlet/>
+    </main>
   )
 }
