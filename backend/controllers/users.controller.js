@@ -25,8 +25,8 @@ const { UserProfile } = require('../models/userProfile.model');
 const { catchAsync } = require('../utils/catchAsync');
 const { AppError } = require('../utils/appError');
 const { USER_STATUS } = require('../config/constants');
-const { sendRegisterNotification, sendWelcomeMessage } = require('../services/email.service');
-const { validateUserService } = require('../services/auth.service');
+const { sendRegisterNotification } = require('../services/email.service');
+const { validateUserService, loginUserService } = require('../services/auth.service');
 const { resendValidationService } = require('../services/auth.service');
 
 dotenv.config({ path: './config.env' });
@@ -52,7 +52,7 @@ const createUser = catchAsync(async (req, res, next) => {
   // Verify pre-existence of the profile
   if(profile){
     const validateProfile = await Profile.findOne({nameSpace:profile})
-    if(validateProfile) return res.status(409).json({ message: "Profile exist" });
+    if(validateProfile) return res.status(409).json({ message: "PROFILE_EXIST" });
   }
 
   const salt = await bcrypt.genSalt(12);
@@ -67,9 +67,9 @@ const createUser = catchAsync(async (req, res, next) => {
   if(profile){
       const newProfile = await Profile.create({nameSpace:profile})
       // Default profile
-      newUser.lastSelectedIDProfile = newProfile._id
+      newUser.profile = newProfile._id
       newUser.save()
-      const newUserProfile = {idUser:newUser._id, idProfile:newProfile._id, status:'accepted'}
+      const newUserProfile = {user:newUser._id, profile:newProfile._id, status:'accepted'}
       console.log(newUserProfile)
       await UserProfile.create(newUserProfile)
   }
@@ -114,22 +114,11 @@ const deleteUser = catchAsync(async (req, res, next) => {
 });
 
 const login = catchAsync(async (req, res, next) => {
-  const { email, password } = req.body;
+    console.log(req.body)
+    const { email, password } = req.body;
+    const session = await loginUserService({ email, password })
+    res.json(session)
 
-  const user = await User.findOne({email })
-
-  // User validations
-  if (!user) return res.status(401).json({ message: "USER_NOT_FOUND" })
-  if (user.status !== USER_STATUS.VALIDATE) return res.status(401).json({ message: "USER_NOT_VALIDATE" })
-  if (!(await bcrypt.compare(password, user.password)))return res.status(401).json({ message: "INVALID_PASSWORD" })
-  
-  // Generate JWT
-  const token = await jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
-  });
-
-  user.password = undefined;
-  res.status(200).json({ user, token });
 });
 
 const checkToken = catchAsync(async (req, res, next) => {
@@ -137,22 +126,20 @@ const checkToken = catchAsync(async (req, res, next) => {
 });
 
 const validateUser = catchAsync(async (req, res, next)  => {
-  res.json({message:'entre'})
   const { token } = req.params;
-  console.log('TOKEN_________', token)
-  if (!token) return res.status(401).json({ message: 'Token missing' });
+  if (!token) return res.status(401).json({ message: 'INVALID_TOKEN' });
   try {
-    const result = await validateUserService(token)
-    return res.status(200).json(result)
+    const session = await validateUserService(token)
+    return res.status(200).json({session})
   } catch (error) {
-    return res.status(401).json({ message: 'Invalid token' }); // res.redirect(url);
+    return res.status(401).json({ message: 'INVALID_TOKEN' }); // res.redirect(url);
   }
 });
 
 const resendValidationEmail = catchAsync(async (req, res, next) => {
   try {
-    const {email} = req.body
-    const result = await resendValidationService({email})
+    const { email } = req.body
+    await resendValidationService({ email })
     return res.send(200).json({message:'RESEND_EMAIL'})
   } catch ({message}) {
     res.status(401).json({message})

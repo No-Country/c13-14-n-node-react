@@ -31,7 +31,7 @@ router.post('/', createUserValidations, checkValidations, createUser);
 router.post('/login', login);
 
 //Validate
-router.post('/validate/:token', validateUser);
+router.post('/validate/:token', validateUser )
 
 // Re-send email
 router.post('/resend', resendValidationEmail);

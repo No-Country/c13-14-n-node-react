@@ -2,9 +2,9 @@ const { APP_FRONT_URL_VALIDATE } = require('../config/constants')
 const { transproter } = require('../config/mailer')
 const { createToken } = require('../libs/token')
 
-const sendRegisterNotification = (email)=>{
+const sendRegisterNotification = ( { idUser, email } )=>{
     const expiresIn ='3h' // El token para validar caduca en 3hs
-    const token = createToken({email},{expiresIn})
+    const token = createToken({ idUser, email },{expiresIn})
     const link = `${APP_FRONT_URL_VALIDATE}?token=${token}`
     transproter.sendMail({
         from:`"Unilink" <${process.env.SMTP_ACCOUNT}>`,
@@ -16,6 +16,7 @@ const sendRegisterNotification = (email)=>{
             </a>
         `
     })
+    return true
 }
 
 const sendWelcomeMessage = ({email})=>{

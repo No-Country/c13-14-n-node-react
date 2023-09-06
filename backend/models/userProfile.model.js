@@ -1,13 +1,17 @@
 const mongoose = require('mongoose');
+const { User } = require('./user.model');
+const { Profile } = require('./profile.model');
 
 const userSchema = new mongoose.Schema({
-  idUser: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
+    ref: User
   },
-  idProfile: {
+  profile: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
+    ref: Profile
   },
   rol: {
     type: String,
@@ -28,3 +32,18 @@ const userSchema = new mongoose.Schema({
 const UserProfile = mongoose.model('UserProfile', userSchema);
 
 module.exports = { UserProfile };
+
+ /* userId: {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+        required: true
+    },
+    profileId: {
+        type: mongoose.Schema.ObjectId,
+        ref: "Profile",
+        required: true
+    },
+    role: {
+        type: String,
+        required: true
+    } */

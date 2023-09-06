@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 
 const secret = process.env.JWT_SECRET
-const expire = process.env.JWT_EXPIRE
+const expire = process.env.JWT_EXPIRES_IN
 
 const createToken = (data, options ) => {
   const exp = options?.expiresIn || expire
