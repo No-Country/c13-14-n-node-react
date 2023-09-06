@@ -2,7 +2,7 @@ import { useSelector } from "react-redux"
 import ListGroup from 'react-bootstrap/ListGroup'
 
 const ListProfiles = () => {
-    const { profile } = useSelector(state => state.profile)
+    const { profiles } = useSelector(state => state.profile)
 
     const deleteProfile = (id) => {
         console.log(id)
@@ -15,7 +15,7 @@ const ListProfiles = () => {
     return (
         <ListGroup className="mt-5 container">
             {
-                profile.map(item => (
+                profiles.map(item => (
                     <ListGroup.Item key={item._id} className="shadow-sm d-flex align-items-center justify-content-between my-2 p-1 rounded-3">
                         <section className="d-flex align-items-center">
                             <div

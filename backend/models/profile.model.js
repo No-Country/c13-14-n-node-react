@@ -4,11 +4,11 @@ const profileSchema = new mongoose.Schema({
   nameSpace: {
     type: String,
     unique: true,
-    required: true
+    required: false
   },
   title: {
-    type: String,
-    required: true
+    type: [String],
+    required: false
   },
   header: {
     type: String,
@@ -20,11 +20,11 @@ const profileSchema = new mongoose.Schema({
   status: {
     type: Boolean,
     default: false,
-    required: true
+    required: false
   },
   body: {
     type: String,
-    required: true,
+    required: false,
   },
   lastInitProfile: {
     default: false,

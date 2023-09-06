@@ -8,11 +8,14 @@ import { getAllProfile } from '../../reducers/profile.slice'
 
 export default function SideBar() {
     const dispatch = useDispatch()
+    const { newProfile } = useSelector(state => state.profile)
     const { user } = useSelector(state => state.session)
     const { toggle } = useSelector(state => state.toggle)
+
     useEffect(() => {
         dispatch(getAllProfile(user.id))
-    }, [])
+        console.log("first")
+    }, [newProfile])
 
     const handleClose = () => {
         dispatch(setToggle(false))
