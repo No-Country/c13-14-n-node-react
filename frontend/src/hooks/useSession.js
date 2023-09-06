@@ -14,11 +14,10 @@ export default function useSession () {
 
   const dispatch = useDispatch()
 
-  const setSession = ({ user, profiles, profile, links, token }) => {
-    user.profiles = profiles
+  const setSession = ({ user, userProfiles, profile, token }) => {
+    user.userProfiles = userProfiles
     dispatch(setSessionSlice(user))
     dispatch(setProfile(profile))
-    dispatch(setLinks(links))
     token
       ? window.localStorage.setItem(APP_KEY_TOKEN, token)
       : window.localStorage.removeItem(APP_KEY_TOKEN)

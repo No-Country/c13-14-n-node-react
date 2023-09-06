@@ -8,7 +8,11 @@ const { Link } = require('../models/link.model');
 const findSessionDataService = async (user)=>{
   let profile
   let links
-  const profiles = await UserProfile.find({user: user.id }).populate('profile')
+  const userProfiles = await UserProfile.find({user: user.id })
+    .populate({
+      path: 'profile',
+      select: 'nameSpace rol'
+    })
 
   if(user?.profile) {
     profile = await Profile.findById(user.profile)
@@ -21,7 +25,7 @@ const findSessionDataService = async (user)=>{
 
   return { 
     user, 
-    profiles, 
+    userProfiles, 
     profile:{...profile.toJSON(), links}, 
     token
   }
