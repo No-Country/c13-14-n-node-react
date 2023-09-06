@@ -1,10 +1,15 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Toolbar from '../components/Toolbar'
 import { Col, Container, Row } from 'react-bootstrap'
 import LinkList from '../components/LinksList'
+import useLoader from '../hooks/useLoader'
 
 export default function AdminPage () {
   const [tab, setTab] = useState(1)
+
+  const { loaderOnOff } = useLoader()
+
+  useEffect(() => { loaderOnOff(false) }, [])
 
   return (
     <section className='flex-grow min-vh-100'>

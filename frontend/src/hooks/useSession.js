@@ -31,9 +31,10 @@ export default function useSession () {
   const validateUser = async (token) => {
     loaderOnOff(true)
     const session = await validateUserService(token)
-    if (!session) return
+    if (!session) return false
     setSession(session)
     loaderOnOff(false)
+    return true
   }
 
   const login = async (passport) => {
