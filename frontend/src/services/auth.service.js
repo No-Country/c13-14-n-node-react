@@ -16,10 +16,7 @@ const validateToken = async (url, token) => {
 export const loginService = async (passport) => {
   try {
     const res = await axios.post(API_URL_LOGIN, passport)
-    const { user, token } = res.data
-    const { name, email, _id } = user
-    const session = { user: { id: _id, name, email }, token }
-    return session
+    return res.data
   } catch (error) {
     //! FALTA MANEJO DE ERRORES
     console.log(error.message)

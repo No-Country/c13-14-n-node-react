@@ -1,5 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { setSession as setSessionSlice } from '../reducers/session.slice'
+import { setProfile } from '../reducers/profile.slice'
+import { setLinks } from '../reducers/links.slice'
 import { APP_KEY_TOKEN, APP_URL_ADMIN } from '../config/constants'
 import { loginService, validateAuthService, validateUserService } from '../services/auth.service'
 import { useNavigate } from 'react-router-dom'
@@ -12,9 +14,11 @@ export default function useSession () {
 
   const dispatch = useDispatch()
 
-  const setSession = (session) => {
-    const { token } = session
-    dispatch(setSessionSlice(session))
+  const setSession = ({ user, profiles, profile, links, token }) => {
+    user.profiles = profiles
+    dispatch(setSessionSlice(user))
+    dispatch(setProfile(profile))
+    dispatch(setLinks(links))
     token
       ? window.localStorage.setItem(APP_KEY_TOKEN, token)
       : window.localStorage.removeItem(APP_KEY_TOKEN)
