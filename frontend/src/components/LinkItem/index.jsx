@@ -62,18 +62,20 @@ export default function LinkItem ({ link, handleDeleteLink, handletoggleLinkStat
         </Modal.Header>
         <Modal.Body className='modalBody'>
           <Form className='d-flex flex-wrap justify-content-center' onSubmit={handleUpdateLinkFormSubmit}>
-            <Form.Group className="formFields m-2 col-10 col-md-5" controlId="formBasicName">
+            <Form.Group className="formFields m-2 col-10" controlId="formBasicName">
               <Form.Label>Nombre:</Form.Label>
               <Form.Control
                 type="text"
                 name="name"
+                defaultValue={link.name}
               />
             </Form.Group>
-            <Form.Group className="formFields m-2 col-10 col-md-5" controlId="formBasicUrlEnlace">
+            <Form.Group className="formFields m-2 col-10" controlId="formBasicUrlEnlace">
               <Form.Label>URL:</Form.Label>
               <Form.Control
                 type="text"
                 name="urlEnlace"
+                defaultValue={link.urlEnlace}
               />
             </Form.Group>
             <Modal.Footer className="mt-3 col-8">

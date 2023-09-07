@@ -146,14 +146,14 @@ export default function LinkList ({ link }) {
         </Modal.Header>
         <Modal.Body className='modalBody'>
           <Form className='d-flex flex-wrap justify-content-center' onSubmit={handleAddLinkFormSubmit}>
-            <Form.Group className="formFields m-2 col-10 col-md-5" controlId="formBasicName">
+            <Form.Group className="formFields m-2 col-10" controlId="formBasicName">
               <Form.Label>Nombre:</Form.Label>
               <Form.Control
                 type="text"
                 name="name"
               />
             </Form.Group>
-            <Form.Group className="formFields m-2 col-10 col-md-5" controlId="formBasicUrlEnlace">
+            <Form.Group className="formFields m-2 col-10" controlId="formBasicUrlEnlace">
               <Form.Label>URL:</Form.Label>
               <Form.Control
                 type="text"
