@@ -32,18 +32,3 @@ const userSchema = new mongoose.Schema({
 const UserProfile = mongoose.model('UserProfile', userSchema);
 
 module.exports = { UserProfile };
-
- /* userId: {
-        type: mongoose.Schema.ObjectId,
-        ref: "User",
-        required: true
-    },
-    profileId: {
-        type: mongoose.Schema.ObjectId,
-        ref: "Profile",
-        required: true
-    },
-    role: {
-        type: String,
-        required: true
-    } */

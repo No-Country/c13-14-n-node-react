@@ -44,5 +44,15 @@ const registerService = (body)=>{
 
 }
 
+const authTokenService = async (token)=>{
+  const session = validToken(token)
+  console.log(session)
+  if(!session) throw new Error('IVALID_TOKEN')
+  const { userId } = session
+  const user = User.findById(userId)
+  if(!user) throw new Error('IVALID_TOKEN')
+  return findSessionDataService(user)
+}
 
-module.exports = { validateUserService , resendValidationService, loginUserService, registerService}
+
+module.exports = { validateUserService , resendValidationService, loginUserService, registerService, authTokenService }

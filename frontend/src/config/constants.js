@@ -12,7 +12,7 @@ const API_URL_BASE = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000/
 
 export const API_URL_LOGIN = API_URL_BASE + '/users/login'
 export const API_URL_REGISTER = API_URL_BASE + '/users'
-export const API_URL_SESSION = API_URL_BASE + '/auth/session'
+export const API_URL_SESSION = API_URL_BASE + '/users/auth'
 export const API_URL_VALIDATE = API_URL_BASE + '/auth/validate'
 export const API_URL_LINKS = API_URL_BASE + '/links'
 

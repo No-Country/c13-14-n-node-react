@@ -10,7 +10,6 @@ export default function useLocalStorage () {
   const { loaderOnOff } = useLoader()
 
   const loadLocalStorage = () => {
-    loaderOnOff(true)
     const language = window.localStorage.getItem(APP_KEY_LANGUAGE) || DEFAULT_LANGUAGE
     setLanguage(language)
     const token = window.localStorage.getItem(APP_KEY_TOKEN)

@@ -8,7 +8,9 @@ import Loader from '../components/Loader'
 export default function RootLayout () {
   const { loaderValue } = useLoader()
   const { loadLocalStorage } = useLocalStorage()
-  useEffect(() => loadLocalStorage(), [])
+  useEffect(() => {
+    loadLocalStorage()
+  }, [])
   return (
     <main>
       {loaderValue && <Loader/>}

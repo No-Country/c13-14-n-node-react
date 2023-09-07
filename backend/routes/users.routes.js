@@ -15,7 +15,7 @@ const {
   updateUser,
   deleteUser,
   login,
-  checkToken,
+  authToken,
   resendValidationEmail,
   validateUser,
 } = require('../controllers/users.controller');
@@ -36,13 +36,13 @@ router.post('/validate/:token', validateUser )
 // Re-send email
 router.post('/resend', resendValidationEmail);
 
+// Login con token
+router.post('/auth/:token', authToken);
+
 // Apply protectToken middleware
 router.use(protectToken);
 
 router.get('/', getAllUsers);
-
-router.get('/check-token', checkToken);
-
 
 router
   .route('/:id')

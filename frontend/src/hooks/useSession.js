@@ -15,9 +15,10 @@ export default function useSession () {
   const dispatch = useDispatch()
 
   const setSession = ({ user, userProfiles, profile, token }) => {
-    user.userProfiles = userProfiles
+    if (user) user.userProfiles = userProfiles
     dispatch(setSessionSlice(user))
     dispatch(setProfile(profile))
+    // dispatch(setProfile(profile))
     token
       ? window.localStorage.setItem(APP_KEY_TOKEN, token)
       : window.localStorage.removeItem(APP_KEY_TOKEN)
@@ -26,8 +27,9 @@ export default function useSession () {
 
   const authToken = async (token) => {
     loaderOnOff(true)
+    console.log('AUTH_TOKEN____')
     const session = await validateAuthService(token)
-    session && setSession(session)
+    setSession(session)
     loaderOnOff(false)
   }
 

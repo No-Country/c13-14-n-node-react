@@ -26,7 +26,7 @@ const { catchAsync } = require('../utils/catchAsync');
 const { AppError } = require('../utils/appError');
 const { USER_STATUS } = require('../config/constants');
 const { sendRegisterNotification } = require('../services/email.service');
-const { validateUserService, loginUserService } = require('../services/auth.service');
+const { validateUserService, loginUserService, authTokenService } = require('../services/auth.service');
 const { resendValidationService } = require('../services/auth.service');
 
 dotenv.config({ path: './config.env' });
@@ -121,8 +121,15 @@ const login = catchAsync(async (req, res, next) => {
 
 });
 
-const checkToken = catchAsync(async (req, res, next) => {
-  res.status(200).json({ user: req.sessionUser });
+const authToken = catchAsync(async (req, res, next) => {
+  const { token } = req.params;
+  if (!token) return res.status(401).json({ message: 'INVALID_TOKEN' });
+  try {
+    const session = await authTokenService(token)
+    return res.status(200).json({session})
+  } catch (error) {
+    return res.status(401).json({ message: 'INVALID_TOKEN' }); // res.redirect(url);
+  }
 });
 
 const validateUser = catchAsync(async (req, res, next)  => {
@@ -153,7 +160,7 @@ module.exports = {
   updateUser,
   deleteUser,
   login,
-  checkToken,
+  authToken,
   validateUser,
   resendValidationEmail
 };
