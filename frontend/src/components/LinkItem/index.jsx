@@ -1,36 +1,29 @@
 import { Button, Card, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import useLink from '../../hooks/useLinks'
-import { FaTrashAlt } from "react-icons/fa";
-import { MdOutlineModeEditOutline } from "react-icons/md";
-import { useState } from 'react';
-import Modal from 'react-bootstrap/Modal';
+import { FaTrashAlt } from 'react-icons/fa'
+import { MdOutlineModeEditOutline } from 'react-icons/md'
+import { useState } from 'react'
+import Modal from 'react-bootstrap/Modal'
 
-export default function LinkItem({ link }) {
-  const [name, setName] = useState(link.name);
-  const [showUpdateLinkModal, setShowUpdateLinkModal] = useState(false);
-
-  const { deleteLink } = useLink();
+export default function LinkItem ({ link, handleDeleteLink, handletoggleLinkStatus }) {
+  // const [name, setName] = useState(link.name)
+  const [showUpdateLinkModal, setShowUpdateLinkModal] = useState(false)
 
   // Define la función handleInputChange para actualizar el estado 'name'
-  const handleInputChange = (event) => {
-    setName(event.target.value);
-  };
-
-  const handleDelete = () => {
-    deleteLink(link.id);
-  }
+  // const handleInputChange = (event) => {
+  //   setName(event.target.value)
+  // }
 
   const handleShowUpdateLinkModal = () => {
     setShowUpdateLinkModal(true)
   }
   const handleCloseUpdateLinkModal = () => {
-    setShowUpdateLinkModal(false);
-  };
+    setShowUpdateLinkModal(false)
+  }
 
-const handleUpdateLinkFormSubmit = () => {
+  const handleUpdateLinkFormSubmit = () => {
 
-}
+  }
 
   return (
     <>
@@ -38,13 +31,14 @@ const handleUpdateLinkFormSubmit = () => {
         <Card.Body className=' px-3'>
           <div className='d-flex justify-content-between border rounded px-3 py-2 tittleContainer'>
             <Card.Title className='d-flex'>
-              {name}
-                <Button onClick={handleShowUpdateLinkModal} className='mx-3' variant=""><MdOutlineModeEditOutline /></Button>
+              {link.name}
+              <Button onClick={handleShowUpdateLinkModal} className='mx-3' variant=""><MdOutlineModeEditOutline /></Button>
             </Card.Title>
             <Form.Check
               type="switch"
               id="custom-switch"
-              value={link.status}
+              defaultChecked={link.status}
+              onChange={() => handletoggleLinkStatus(link)}
             />
           </div>
           <div className='d-flex justify-content-between'>
@@ -54,10 +48,11 @@ const handleUpdateLinkFormSubmit = () => {
                 <Button onClick={handleShowUpdateLinkModal} className='mx-3' variant=""><MdOutlineModeEditOutline /></Button>
               </Card.Text>
             </Link>
-            <Button onClick={handleDelete} className='' variant=""><FaTrashAlt /></Button>
+            <Button onClick={() => handleDeleteLink(link)} className='' variant=""><FaTrashAlt /></Button>
           </div>
         </Card.Body>
       </Card>
+
       {/* Modal para editar un link */}
       <Modal show={showUpdateLinkModal} onHide={handleCloseUpdateLinkModal}>
         <Modal.Header className='modalHeader' closeButton>
@@ -91,8 +86,6 @@ const handleUpdateLinkFormSubmit = () => {
           </Form>
         </Modal.Body>
       </Modal>
-      </>
-
-
+    </>
   )
 }

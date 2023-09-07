@@ -1,9 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = [
-  { id: 'dadadadadadadad', name: 'Link1', icon: 'icon', urlEnlace: 'https://www.facebook.com/', status: true, order: 1 },
-  { id: '344adadadadadad', name: 'Link2', icon: 'icon', urlEnlace: 'https://www.facebook.com/', status: true, order: 1 }
-]
+const initialState = []
 
 const linksSlice = createSlice({
   name: 'links',
@@ -32,9 +29,9 @@ const linksSlice = createSlice({
       return links
     },
     toggleLinkStatus: (state, action) => {
-      const { id, status } = action.payload
+      const { _id, status } = action.payload
       const links = state.map(link => {
-        if (link.id === id) {
+        if (link._id === _id) {
           return { ...link, status }
         }
         return link

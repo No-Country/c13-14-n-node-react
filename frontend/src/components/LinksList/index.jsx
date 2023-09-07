@@ -1,50 +1,118 @@
 import { Button, Container, Row } from 'react-bootstrap'
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react'
 import LinkItem from '../LinkItem'
 import useLinks from '../../hooks/useLinks'
-import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
-import './index.css';
-import { FiCreditCard } from "react-icons/fi";
+import Modal from 'react-bootstrap/Modal'
+import Form from 'react-bootstrap/Form'
+import './index.css'
+import { FiCreditCard } from 'react-icons/fi'
+import { useDispatch } from 'react-redux'
+import { setLinks } from '../../reducers/links.slice'
+import { getLinksService } from '../../services/links.service'
 
-export default function LinkList() {
+export default function LinkList ({ link }) {
   const { links, addLink } = useLinks()
-  const [showAddLinkModal, setShowAddLinkModal] = useState(false);
-  const [showAddTitleModal, setShowAddTitleModal] = useState(false);
+  const [showAddLinkModal, setShowAddLinkModal] = useState(false)
+  const [showAddTitleModal, setShowAddTitleModal] = useState(false)
+  const dispatch = useDispatch()
 
+  // Función para cargar los enlaces
+  const fetchLinks = async () => {
+    try {
+      const links = await getLinksService()
+      dispatch(setLinks(links))
+    } catch (error) {
+      console.error('Error al cargar los enlaces:', error)
+    }
+  }
+
+  useEffect(() => {
+    fetchLinks()
+  }, [dispatch])
+
+  // Manejo modal para agregar link
   const handleShowAddLinkModal = () => {
     setShowAddLinkModal(true)
   }
   const handleCloseAddLinkModal = () => {
-    setShowAddLinkModal(false);
-  };
+    setShowAddLinkModal(false)
+  }
+
+  // Manejo modal para agregar titulo
   const handleShowAddTitleModal = () => {
     setShowAddTitleModal(true)
   }
   const handleCloseAddTitleModal = () => {
-    setShowAddTitleModal(false);
-  };
-
-  const handleAddLinkFormSubmit = (data) => {
-    const newLink = {
-      name: data.name,
-      urlEnlace: data.urlEnlace,
-      order: 1,
-      status: data.status
-    }
-    addLink(newLink)
+    setShowAddTitleModal(false)
   }
-  const handleAddTitleFormSubmit = (data) => {
-    const newTitle = {
-      name: data.name,
+
+  // Agregar un link
+  const handleAddLinkFormSubmit = async (e) => {
+    e.preventDefault()
+    const formData = new FormData(e.target)
+    const newName = formData.get('name')
+    const newUrlEnlace = formData.get('urlEnlace')
+
+    if (newName && newUrlEnlace) {
+      const newLink = {
+        name: newName,
+        profile: '64f51237a0d2e00a28b13939',
+        icon: '123456',
+        urlEnlace: newUrlEnlace,
+        order: links.length + 1,
+        status: true
+      }
+      await addLink(newLink)
+      await fetchLinks()
+      setShowAddLinkModal(false)
+      console.log(newLink)
     }
-    addTitle(newTitle)
+  }
+
+  // Eliminar link
+  const { deleteLink } = useLinks()
+  const handleDeleteLink = async (link) => {
+    try {
+      await deleteLink(link._id)
+      await fetchLinks()
+    } catch (error) {
+      console.error('Error al eliminar el enlace:', error)
+    }
+  }
+
+  // Modificar el link
+
+  // Modificar estado del link
+  const { toggleLinkStatus } = useLinks()
+  const handletoggleLinkStatus = async (link) => {
+    try {
+      const updatedLink = {
+        name: link.name,
+        profile: link.profile,
+        icon: link.icon,
+        urlEnlace: link.urlEnlace,
+        order: link.order,
+        status: !link.status
+      }
+      await toggleLinkStatus(link._id, updatedLink)
+      await fetchLinks()
+    } catch (error) {
+      console.error('Error al cambiar el estado', error)
+    }
+  }
+
+  // Agregar un titulo
+  const handleAddTitleFormSubmit = (data) => {
+    // const newTitle = {
+    //   name: data.name
+    // }
+    // addTitle(newTitle)
   }
 
   return (
     <>
-      <Container className='d-flex gap-3 flex-column containerLinks'>
-        <Row>
+      <Container className='d-flex row gap-3 w-100'>
+        <Row className='col-12'>
           <Button
             className='rounded-pill addLinkButton'
             onClick={handleShowAddLinkModal}
@@ -63,8 +131,8 @@ export default function LinkList() {
           </Button>
         </Row>
         <Row className='d-flex gap-3'>
-          {links.map(link =>
-            <LinkItem key={link.title} link={link} />
+          {links.map((link, index) =>
+            <LinkItem key={index} link={link} handleDeleteLink={handleDeleteLink} handletoggleLinkStatus={handletoggleLinkStatus}/>
           )}
         </Row>
       </Container>
