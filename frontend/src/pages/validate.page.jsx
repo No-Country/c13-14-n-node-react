@@ -1,15 +1,23 @@
 import { useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import useSession from '../hooks/useSession'
+import { APP_URL_ADMIN, APP_URL_LOGIN } from '../config/constants'
 export default function ValidatePage () {
+  const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const { validateUser } = useSession()
-
   // Verifico si recibo el token por query
   const token = searchParams.get('token')
 
   // Si tengo query intento validar el token
-  useEffect(() => token && validateUser(token), [])
+  useEffect(() => {
+    if (token) {
+      validateUser(token)
+        .then(res => {
+          navigate(res ? APP_URL_ADMIN : APP_URL_LOGIN)
+        })
+    }
+  }, [])
 
   //! Falta renderizar un error si no se logró validar e inicir session
 

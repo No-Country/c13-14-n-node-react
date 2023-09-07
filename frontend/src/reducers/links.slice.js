@@ -40,7 +40,7 @@ const linksSlice = createSlice({
         return link
       })
       return links
-    },
+    }
   }
 })
 

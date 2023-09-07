@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
-  nameSpace: 'gonzaloTest'
-}
+const initialState = {}
 
 const profileSlice = createSlice({
   name: 'profile',

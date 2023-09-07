@@ -8,7 +8,7 @@ export const APP_KEY_TOKEN = 'APP_KEY_TOKEN'
 export const KEY_LOADER = 'loader'
 
 // Config API_URLS
-const API_URL_BASE = 'http://localhost:4000/api/v1'
+const API_URL_BASE = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000/api/v1'
 
 export const API_URL_LOGIN = API_URL_BASE + '/users/login'
 export const API_URL_REGISTER = API_URL_BASE + '/users'
