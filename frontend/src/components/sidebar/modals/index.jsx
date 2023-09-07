@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 import { Button, Form, Modal } from 'react-bootstrap'
 import useLanguage from '../../../hooks/useLanguage'
 import { useDispatch, useSelector } from 'react-redux'
-import { createProfile, getAllProfile } from '../../../reducers/profile.slice'
+import { createProfile } from '../../../reducers/profile.slice'
 
 const ModalNewProfile = ({ show, handleClose }) => {
     const dispatch = useDispatch()

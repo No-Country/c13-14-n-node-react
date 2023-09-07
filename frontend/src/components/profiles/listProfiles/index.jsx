@@ -1,16 +1,10 @@
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import ListGroup from 'react-bootstrap/ListGroup'
 
 const ListProfiles = () => {
+    const dispatch = useDispatch()
     const { profiles } = useSelector(state => state.profile)
 
-    const deleteProfile = (id) => {
-        console.log(id)
-    }
-
-    const updateProfile = (id) => {
-        console.log(id)
-    }
 
     return (
         <ListGroup className="mt-5 container">
@@ -26,10 +20,6 @@ const ListProfiles = () => {
                             >
                             </div>
                             <p className="mx-3">{item.nameSpace}</p>
-                        </section>
-                        <section className="icon-list d-flex align-items-center justify-content-between m-2">
-                            <i className="bi bi-trash3-fill text-danger" onClick={() => deleteProfile(item._id)}></i>
-                            <i className="bi bi-pencil-square text-primary" onClick={() => updateProfile(item._id)}></i>
                         </section>
                     </ListGroup.Item>
                 ))
