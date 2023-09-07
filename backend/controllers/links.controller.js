@@ -1,4 +1,6 @@
 const { Link } = require('../models/link.model');
+const { Profile } = require('../models/profile.model');
+
 const { catchAsync } = require('../utils/catchAsync');
 const { AppError } = require('../utils/appError');
 
@@ -39,12 +41,19 @@ const createLink = catchAsync(async (req, res) => {
       status: req.body.status,
       order: req.body.order
     }
+    
     const link = await Link.create(newLink);
+
+    await Profile.findByIdAndUpdate(req.body.profile,
+      { $push: { "link": link._id } }
+    );
+
     res.status(201).send({ mensaje: "Link creado exitosamente", idLink: link._id });
   } catch (error) {
     res.status(400).send({ error: "Solicitud incorrecta", error });
   }
 });
+
 
 //Actualizar un link
 const updateLink = catchAsync(async (req, res) => {

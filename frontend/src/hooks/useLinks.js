@@ -1,10 +1,12 @@
-import { setLinks, addLink as addLinkSlice, deleteLink as deleteLinkSlice, editLing as editLinkSlice } from '../reducers/links.slice'
+import { setLinks, addLink as addLinkSlice, deleteLink as deleteLinkSlice } from '../reducers/links.slice'
 import { useSelector, useDispatch } from 'react-redux'
 import { createLinkService } from '../services/links.service'
 
 export default function useLinks () {
   const links = useSelector(state => state.links)
   const dispatch = useDispatch()
+
+
 
   const addLink = (newLink) => {
     // createLinkService(newLink)
@@ -15,9 +17,13 @@ export default function useLinks () {
     dispatch(deleteLinkSlice(id))
   }
 
-  const editLink = (id) => {
-    dispatch(editLinkSlice(id))
+  const updateLink = (id, updatedLink) => {
+    dispatch(updateLink(id, updatedLink))
   }
 
-  return { links, addLink, deleteLink, editLink }
+  const toggleLinkStatus = (id, updatedLink) => {
+    dispatch(toggleLinkStatus(id, updatedLink))
+  }
+
+  return { links, addLink, deleteLink }
 }

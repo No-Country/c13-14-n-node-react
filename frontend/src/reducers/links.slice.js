@@ -20,26 +20,29 @@ const linksSlice = createSlice({
     deleteLink: (state, action) => {
       const links = state.filter(link => link.id !== action.payload)
       return links
-    }
-    // editLink: (state, action) => {
-    //   const { id, name, icon, urlEnlace, status, order } = action.payload
-    //   const links = state.map(link => {
-    //     if (link.id === id) {
-    //       return {
-    //         ...link,
-    //         name,
-    //         icon,
-    //         urlEnlace,
-    //         status,
-    //         order
-    //       }
-    //     }
-    //     return link
-    //   })
-    //   return links
-    // }
+    },
+    updateLink: (state, action) => {
+      const { id, updatedLink } = action.payload
+      const links = state.map(link => {
+        if (link.id === id) {
+          return { ...link, ...updatedLink }
+        }
+        return link
+      })
+      return links
+    },
+    toggleLinkStatus: (state, action) => {
+      const { id, status } = action.payload
+      const links = state.map(link => {
+        if (link.id === id) {
+          return { ...link, status }
+        }
+        return link
+      })
+      return links
+    },
   }
 })
 
-export const { setLinks, addLink, deleteLink } = linksSlice.actions
+export const { setLinks, addLink, deleteLink, updateLink, toggleLinkStatus } = linksSlice.actions
 export default linksSlice.reducer

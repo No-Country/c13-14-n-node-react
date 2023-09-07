@@ -1,0 +1,28 @@
+
+.addLinkButton {
+    background-color: #0f294a;
+    color: white;
+}
+
+.addLinkButton:hover {
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+    background-color: #0f294a;
+    color: white;
+}
+.tittleContainer{
+background-color: rgb(187, 187, 187);
+    
+}
+.addTittleButton {
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+}
+.addTittleButton {
+    background-color: white;
+}
+.linkInput{
+    border: none;
+    width:max-content !important;
+    /* max-width: 30px; */
+    /* minWidth: '50px';
+    maxWidth: '30px'; */
+}
