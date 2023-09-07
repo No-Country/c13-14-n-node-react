@@ -50,7 +50,7 @@ export const getAllProfile = (id) => async (dispatch) => {
 
 export const deleteProfile = (id) => async (dispatch) => {
   try {
-
+    await axios.delete(`${APP_URL_PROFILE}/${id}`)
   } catch (error) {
     console.log(error)
   }

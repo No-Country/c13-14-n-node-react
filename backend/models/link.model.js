@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { Profile } = require('./profile.model');
 
 const linkSchema = new mongoose.Schema({
   name: {
@@ -7,9 +8,9 @@ const linkSchema = new mongoose.Schema({
     unique: true,
   },
   profile: {
-    type: mongoose.Schema.ObjectId,
-    ref: "Profile",
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
+    ref: Profile
   },
   urlEnlace: {
     type: String,
