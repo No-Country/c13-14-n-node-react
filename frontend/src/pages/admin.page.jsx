@@ -3,7 +3,7 @@ import AdminNavbar from '../components/Navbar'
 import { Col, Container, Row } from 'react-bootstrap'
 import LinkList from '../components/LinksList'
 import SideBar from '../components/sidebar'
-import Look from '../components/Look/LookHeader'
+import Look from '../components/Look'
 
 export default function AdminPage() {
   const [tab, setTab] = useState(1)
