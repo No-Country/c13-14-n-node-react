@@ -1,7 +1,7 @@
+import { useDispatch, useSelector } from 'react-redux'
 import { setKey as setKeySlice } from '../reducers/keys.slice'
-import { useSelector, useDispatch } from 'react-redux'
 
-export default function useKeyState (key) {
+export default function useKey (key) {
   const keys = useSelector(state => state.keys)
   const dispatch = useDispatch()
 
@@ -9,9 +9,7 @@ export default function useKeyState (key) {
     dispatch(setKeySlice({ key, value }))
   }
 
-  const getKey = () => {
-    return keys[key]
-  }
+  const value = keys[key]
 
-  return [getKey, setKey]
+  return [value, setKey]
 }
