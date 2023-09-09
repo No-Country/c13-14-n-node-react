@@ -15,36 +15,39 @@ export default function useSession () {
   const dispatch = useDispatch()
 
   const setSession = ({ status, data }) => {
-    dispatch(setUser(status ? data.user : USER_INICIAL_STATE))
-    dispatch(setProfile(status ? data.profile : PROFILE_INICIAL_STATE))
+    dispatch(setUser(status ? { ...data.user, userProfiles: data.userProfiles } : USER_INICIAL_STATE))
+    dispatch(setProfile(status ? { ...data.profile, links: data.links } : PROFILE_INICIAL_STATE))
   }
 
   const authToken = async (token) => {
-    const res = await await handleApi(loginFromTokenService, token)
+    const res = await await handleService(loginFromTokenService, token)
     console.log(res)
     !res.status && window.localStorage.removeItem(APP_KEY_TOKEN)
     return res
   }
 
-  const validateUser = async (token) => await handleApi(validateUserService, token)
+  const validateUser = async (token) => await handleService(validateUserService, token)
 
-  const resendEmail = async (email) => await handleApi(resendEmailService, email)
+  const resendEmail = async (email) => await handleService(resendEmailService, email)
 
   const login = async (passport) => {
-    const res = await handleApi(loginService, passport)
+    const res = await handleService(loginService, passport)
     res.status && window.localStorage.setItem(APP_KEY_TOKEN, res.data.token)
     return res
   }
 
-  const handleApi = async (cb, param) => {
-    loaderOnOff(true)
-    const res = await cb(param)
+  const handleService = async (service, param) => {
+    loaderOnOff(true) // Muestra el loader
+    const res = await service(param)
     setSession(res)
-    loaderOnOff(false)
+    loaderOnOff(false) // Oculta el loader
     return res
   }
 
-  const logout = () => setSession({})
+  const logout = () => {
+    window.localStorage.removeItem(APP_KEY_TOKEN)
+    setSession({})
+  }
 
   return { user, login, logout, authToken, validateUser, setSession, resendEmail }
 }

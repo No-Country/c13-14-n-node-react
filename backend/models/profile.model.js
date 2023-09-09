@@ -1,26 +1,19 @@
 const mongoose = require('mongoose');
 
 const profileSchema = new mongoose.Schema({
-    nameSpace: {
+      nameSpace: {
         type: String,
-        required: true
-      },
-      status: {
-        type: Boolean,
-        default: false,
-        required: true
+        unique: true,
+        required: false
       },
       body: {
         type: String,
         required: false,
       },
-      themeProfileId: {
-        type: Object,
-        require: false
-      },
-      lastInitProfile: {
+      status: {
         type: Boolean,
-        require: false
+        default: true,
+        required: false
       }
 });
 

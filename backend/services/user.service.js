@@ -8,11 +8,25 @@ const { Link } = require('../models/link.model');
 const findSessionDataService = async (user)=>{
   let profile
   let links
-  const userProfiles = await UserProfile.find({user: user.id })
+
+  // Busco todos los userProfile del usuario que tenga status = accepted
+  let userProfiles = await UserProfile.find({user: user.id , status: 'accepted'})
     .populate({
       path: 'profile',
-      select: 'nameSpace rol'
-    })
+      select: 'nameSpace rol status'
+    }).lean()
+
+  // Le doy formato de salida
+  userProfiles = userProfiles.map(item => {
+    return {
+      id : item.profile._id.toString(),
+      nameSpace: item.profile.nameSpace,
+      rol: item.rol,
+      status: item.status,
+    }
+  })
+
+  console.log(userProfiles)
 
   if(user?.profile) {
     profile = await Profile.findById(user.profile)
@@ -23,10 +37,25 @@ const findSessionDataService = async (user)=>{
   const profileId = profile?._id.toString()
   const token = createToken({userId, profileId})
 
+  const userFormater = {
+    id: user._id.toString(),
+    name: user?.name,
+    email: user.email,
+    status: user.status,
+  }
+
+  const profileFormater = {
+    id: profile._id.toString(),
+    nameSpace: profile.nameSpace,
+    body: profile.body,
+    status: profile.status,
+  }
+
   return { 
-    user, 
+    user: userFormater, 
     userProfiles, 
-    profile:{...profile.toJSON(), links}, 
+    profile:profileFormater, 
+    links,
     token
   }
 }
