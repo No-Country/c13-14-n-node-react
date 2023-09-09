@@ -15,26 +15,35 @@ const {
   updateUser,
   deleteUser,
   login,
-  checkToken,
-  validateTokenSession,
+  authToken,
+  resendValidationEmail,
+  validateUser,
   changeUserPassword,
 } = require('../controllers/users.controller');
+
 const { createUserValidations, checkValidations } = require('../middlewares/validations.middlewares');
 
 const router = express.Router();
 
+//Register
 router.post('/', createUserValidations, checkValidations, createUser);
 
+//Login
 router.post('/login', login);
 
-router.get('/validateToken/:token', validateTokenSession);
+//Validate
+router.post('/validate/:token', validateUser )
+
+// Re-send email
+router.post('/resend', resendValidationEmail);
+
+// Login con token
+router.post('/auth/:token', authToken);
 
 // Apply protectToken middleware
 router.use(protectToken);
 
 router.get('/', getAllUsers);
-
-router.get('/check-token', checkToken);
 
 router
   .route('/:id')

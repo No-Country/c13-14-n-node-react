@@ -1,10 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
-
-const initialState = {
-  name: "gonzalo",
-  photo: "https://placehold.co/64x64/black/white",
-  _id: "64ed20d41a9768ea40da2020"
-}
+import { createSlice } from '@reduxjs/toolkit';
 
 const sessionSlice = createSlice({
   name: 'session',

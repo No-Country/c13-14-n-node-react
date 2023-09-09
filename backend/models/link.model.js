@@ -1,20 +1,19 @@
 const mongoose = require('mongoose');
+const { Profile } = require('./profile.model');
 
 const linkSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
   },
   profile: {
-    type: mongoose.Schema.ObjectId,
-    ref: "Profile",
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
+    ref: Profile
   },
   urlEnlace: {
     type: String,
     required: true,
-    unique: true,
   },
   icon: {
     type: String,

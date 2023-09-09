@@ -7,15 +7,16 @@ import { useState } from 'react'
 
 import Logo from '../components/logo'
 import useLanguage from '../hooks/useLanguage'
-import Messagebox from '../components/Messagebox'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { APP_URL_LANDING } from '../config/constants'
 import { registerService } from '../services/auth.service'
+import toast, { Toaster } from 'react-hot-toast'
+import { formatMessageError } from '../libs/errors'
 
 export default function RegisterPage () {
   const [step, setStep] = useState(1)
   const { dictionaryWord } = useLanguage('registerPage')
-  const [show, setShow] = useState(false)
+  const { dictionaryWord: dictionaryErrors } = useLanguage('errors')
   const navigate = useNavigate()
 
   const {
@@ -31,15 +32,34 @@ export default function RegisterPage () {
 
   const onSubmit = async (data) => {
     const res = await registerService(data)
-    console.log(res)
-    res && setShow(true)
+    res.solved
+      ? handleRedirection()
+      : handleError(res.payload)
+  }
+
+  const handleRedirection = () => {
+    toast.success('Se ha enviado un correo ded validación a ' + getValues('email'), {
+      position: 'top-center'
+    })
+    setTimeout(() => navigate(APP_URL_LANDING), 3000)
+  }
+
+  const handleError = (message) => {
+    const error = formatMessageError(message)
+    toast.error(dictionaryErrors(error))
   }
 
   return (
     <Container className='min-vh-100'>
+      <Toaster
+         position="bottom-center"
+        reverseOrder={false}
+      />
       <Row className='min-vh-100'>
         <Col sm={12} md={6} className='d-flex justify-content-center align-items-center' >
-          <Logo height='37px' width='160px' fill='black' />
+          <Link to={APP_URL_LANDING}>
+            <Logo height='37px' width='160px' fill='black' />
+          </Link>
         </Col>
         <Col sm={12} md={6} xl={4} className='d-flex justify-content-center align-items-md-center' >
           <Form noValidate onSubmit={handleSubmit(onSubmit)} className='w-100' >
@@ -55,6 +75,7 @@ export default function RegisterPage () {
                     {...register('email')}
                     isInvalid={!!errors.email}
                     isValid = {!errors.email && dirtyFields.email}
+                    autoFocus
                   />
                 </Form.Group>
 
@@ -110,6 +131,7 @@ export default function RegisterPage () {
                     {...register('profile')}
                     isInvalid={!!errors.profile}
                     isValid = {!errors.profile && dirtyFields.profile}
+                    autoFocus
                   />
                 </Form.Group>
                 <div className="d-grid my-5 gap-3">
@@ -129,19 +151,19 @@ export default function RegisterPage () {
                   >
                     Omitir y registrarse
                   </Button>
+                  <Button
+                    onClick={() => setStep(1)}
+                    className='form-btn'
+                    variant="outline-primary"
+                  >
+                    Volver
+                  </Button>
                 </div>
               </div>
             )}
           </Form>
         </Col>
       </Row>
-      <Messagebox
-        title='Registro envidao'
-        body={`Recibirá un correo a ${getValues('email')} para validar el correo`}
-        show={show}
-        setShow={setShow}
-        onClose={() => navigate(APP_URL_LANDING)}
-      />
     </Container>
   )
 }

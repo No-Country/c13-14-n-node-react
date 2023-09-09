@@ -1,38 +1,32 @@
-import { Button, Container, Row } from 'react-bootstrap'
+import { Container, Row } from 'react-bootstrap'
+import { useState } from 'react'
 
 import LinkItem from '../LinkItem'
+import { ButtonPrimary } from '../theme/buttons'
+
 import useLinks from '../../hooks/useLinks'
+import NewLink from '../NewLink'
 
 export default function LinkList () {
-  const { links, addLink } = useLinks()
+  const { links } = useLinks()
+  const [showAddLinkModal, setShowAddLinkModal] = useState(false)
 
-  const handleNewLink = () => {
-  // MODAL
-    const newLink = {
-      id: 'sdfsfsfsfsdfsd444',
-      name: 'Link3',
-      urlEnlace: 'www.google.com.ar',
-      order: 3
-    }
-
-    addLink(newLink)
-  }
+  const handleCloseFromNew = () => setShowAddLinkModal(false)
 
   return (
-    <Container className='d-flex gap-3 flex-column '>
-      <Row>
-          <Button
-            className='rounded-pill'
-            onClick={handleNewLink}
-          >
-            Nuevo link
-          </Button>
-     </Row>
-    <Row className='d-flex gap-3'>
-      {links.map(link =>
-        <LinkItem key={link.title} link={link}/>
-      )}
-      </Row>
-    </Container>
+      <Container className='d-flex row gap-3 w-100 m-auto '>
+        <Row className='col-12'>
+          <ButtonPrimary onClick={() => setShowAddLinkModal(true)}>
+            Agregar link +
+          </ButtonPrimary>
+        </Row>
+        <Row className='d-flex gap-3'>
+          { // Se renderizan los links existentes
+            links.map(link => <LinkItem key={link._id} link={link} />)
+          }
+        </Row>
+        <NewLink show={showAddLinkModal} onHide={handleCloseFromNew} />
+      </Container>
+
   )
 }
