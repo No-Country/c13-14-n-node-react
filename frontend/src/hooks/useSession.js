@@ -1,9 +1,4 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { setSession as setSessionSlice } from '../reducers/session.slice'
-import { APP_KEY_TOKEN, APP_URL_ADMIN } from '../config/constants'
-import { loginService, validateAuthService, validateUserService } from '../services/auth.service'
-import { useNavigate } from 'react-router-dom'
-import { userChangePasswordService } from '../services/user.service'
 
 import { setUser } from '../reducers/user.slice'
 import { setProfile } from '../reducers/profile.slice'
@@ -49,14 +44,10 @@ export default function useSession () {
     return res
   }
 
-  const changePassword = async (password, name, id) => {
-    return await userChangePasswordService(password, name, id);
-  }
-
   const logout = () => {
     window.localStorage.removeItem(APP_KEY_TOKEN)
     setSession({})
   }
 
-  return { session, login, logout, authToken, validateUser }
+  return { user, login, logout, authToken, validateUser, setSession, resendEmail }
 }

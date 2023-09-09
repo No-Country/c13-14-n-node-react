@@ -10,10 +10,8 @@ import { setToggle } from '../../reducers/toggles.slice'
 
 export default function AdminNavbar ({ setTab }) {
   const dispatch = useDispatch()
-  const { session, logout } = useSession()
+  const { user, logout } = useSession()
 
-  // const { user } = session
-  const  user = "guillermo" 
   const toggleSideBar = () => {
     dispatch(setToggle(true))
   }
@@ -32,7 +30,7 @@ export default function AdminNavbar ({ setTab }) {
             <Nav.Link onClick={() => setTab(3)}>Settings</Nav.Link>
           </Nav>
           <Nav>
-            <NavDropdown title={user.name} id="basic-nav-dropdown">
+            <NavDropdown title={user?.name || 'Usuario'} id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.2">Configuración</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.3" onClick={logout}>Cerrar Sesión</NavDropdown.Item>
