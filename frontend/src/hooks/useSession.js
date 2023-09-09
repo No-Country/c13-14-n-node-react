@@ -6,7 +6,7 @@ import { setProfile } from '../reducers/profile.slice'
 import { loginService, loginFromTokenService, validateUserService, resendEmailService } from '../services/auth.service'
 
 import useLoader from './useLoader'
-import { PROFILE_INICIAL_STATE, USER_INICIAL_STATE } from '../config/constants'
+import { APP_KEY_TOKEN, PROFILE_INICIAL_STATE, USER_INICIAL_STATE } from '../config/constants'
 
 export default function useSession () {
   const user = useSelector(state => state.user)
@@ -19,13 +19,22 @@ export default function useSession () {
     dispatch(setProfile(status ? data.profile : PROFILE_INICIAL_STATE))
   }
 
-  const authToken = async (token) => await handleApi(loginFromTokenService, token)
+  const authToken = async (token) => {
+    const res = await await handleApi(loginFromTokenService, token)
+    console.log(res)
+    !res.status && window.localStorage.removeItem(APP_KEY_TOKEN)
+    return res
+  }
 
   const validateUser = async (token) => await handleApi(validateUserService, token)
 
   const resendEmail = async (email) => await handleApi(resendEmailService, email)
 
-  const login = async (passport) => await handleApi(loginService, passport)
+  const login = async (passport) => {
+    const res = await handleApi(loginService, passport)
+    res.status && window.localStorage.setItem(APP_KEY_TOKEN, res.data.token)
+    return res
+  }
 
   const handleApi = async (cb, param) => {
     loaderOnOff(true)

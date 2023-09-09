@@ -77,10 +77,9 @@ const registerService = async (email, password, profile)=>{
 
 const authTokenService = async (token)=>{
   const session = validToken(token)
-  console.log(session)
   if(!session) throw new Error('IVALID_TOKEN')
   const { userId } = session
-  const user = User.findById(userId)
+  const user = await User.findById(userId)
   if(!user) throw new Error('IVALID_TOKEN')
   return findSessionDataService(user)
 }

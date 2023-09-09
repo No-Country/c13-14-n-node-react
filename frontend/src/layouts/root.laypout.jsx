@@ -2,24 +2,26 @@ import { Outlet } from 'react-router-dom'
 
 import useLoader from '../hooks/useLoader'
 import Loader from '../components/Loader'
-import { localSession, locaLanguage } from '../libs/localStorage'
 import { useEffect } from 'react'
 
-import useSession from '../hooks/useSession'
+// import useSession from '../hooks/useSession'
 import useLanguage from '../hooks/useLanguage'
+// import { APP_KEY_LANGUAGE, APP_KEY_TOKEN, DEFAULT_LANGUAGE } from '../config/constants'
+import { APP_KEY_LANGUAGE, DEFAULT_LANGUAGE } from '../config/constants'
 
 export default function RootLayout ({ session, language }) {
   const { loaderValue, loaderOnOff } = useLoader(true)
-  const { setSession } = useSession()
+  // const { authToken } = useSession()
   const { setLanguage } = useLanguage()
 
   useEffect(() => {
-    const language = locaLanguage()
+    const language = window.localStorage.getItem(APP_KEY_LANGUAGE) || DEFAULT_LANGUAGE
     setLanguage(language)
-    localSession().then(session => {
-      setSession(session)
-      loaderOnOff(false)
-    })
+    loaderOnOff(false)
+    /* const token = window.localStorage.getItem(APP_KEY_TOKEN)
+    token
+      ? authToken(token).finally(loaderOnOff(false))
+      : loaderOnOff(false) */
   }, [])
 
   return (

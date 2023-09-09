@@ -91,7 +91,7 @@ const authToken = catchAsync(async (req, res, next) => {
   if (!token) return res.status(401).json({ message: 'INVALID_TOKEN' });
   try {
     const session = await authTokenService(token)
-    return res.status(200).json({session})
+    return res.status(200).json(session)
   } catch (error) {
     return res.status(401).json({ message: 'INVALID_TOKEN' }); // res.redirect(url);
   }

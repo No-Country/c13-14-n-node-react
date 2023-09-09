@@ -4,10 +4,10 @@ import { API_URL_LOGIN, API_URL_REGISTER, API_URL_RESEND, API_URL_SESSION, API_U
 const validateToken = async (url, token) => {
   try {
     const res = await axios.post(`${url}/${token}`)
-    return res.data
+    return { status: true, data: res.data }
   } catch (error) {
-    const message = error?.response?.data?.message
-    return message || 'SERVER_ERROR'
+    const message = error?.response?.data?.message || 'SERVER_ERROR'
+    return { status: false, data: message }
   }
 }
 
