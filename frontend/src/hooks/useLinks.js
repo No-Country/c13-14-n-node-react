@@ -1,4 +1,4 @@
-import { setLinks, addLink as addLinkSlice, deleteLink as deleteLinkSlice, editLing as editLinkSlice } from '../reducers/links.slice'
+import { setLinks, addLink as addLinkSlice, deleteLink as deleteLinkSlice, editLink as editLinkSlice } from '../reducers/links.slice'
 import { useSelector, useDispatch } from 'react-redux'
 import { createLinkService } from '../services/links.service'
 

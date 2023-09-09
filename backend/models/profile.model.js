@@ -13,10 +13,10 @@ const profileSchema = new mongoose.Schema({
   header: {
     type: String,
   },
-  image: {
+  header: {
     type: String,
   },
-  status: {
+  header: {
     type: Boolean,
     default: false,
     required: true

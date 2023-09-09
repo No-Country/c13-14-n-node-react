@@ -3,6 +3,7 @@ import { setSession as setSessionSlice } from '../reducers/session.slice'
 import { APP_KEY_TOKEN, APP_URL_ADMIN } from '../config/constants'
 import { loginService, validateAuthService, validateUserService } from '../services/auth.service'
 import { useNavigate } from 'react-router-dom'
+import { userChangePasswordService } from '../services/user.service'
 
 export default function useSession () {
   const session = useSelector(state => state.session)
@@ -37,7 +38,11 @@ export default function useSession () {
     return !!session
   }
 
+  const changePassword = async (password, name, id) => {
+    return await userChangePasswordService(password, name, id);
+  }
+
   const logout = () => setSession({})
 
-  return { session, login, logout, authToken, validateUser }
+  return { session, login, logout, authToken, validateUser, changePassword }
 }

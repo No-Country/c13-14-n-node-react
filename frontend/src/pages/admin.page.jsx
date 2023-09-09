@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import AdminNavbar from '../components/Navbar'
+import AdminNavbar from '../components/navbar/index'
 import { Col, Container, Row } from 'react-bootstrap'
 import LinkList from '../components/LinksList'
 import SideBar from '../components/sidebar'

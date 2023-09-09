@@ -15,6 +15,7 @@ export const API_URL_REGISTER = API_URL_BASE + '/users'
 export const API_URL_SESSION = API_URL_BASE + '/auth/session'
 export const API_URL_VALIDATE = API_URL_BASE + '/auth/validate'
 export const API_URL_LINKS = API_URL_BASE + '/links'
+export const API_URL_CHANGEPASSWORD = API_URL_BASE + '/users/updatePassword/'
 
 export const APP_URL_LANDING = '/'
 export const APP_URL_LOGIN = '/login'

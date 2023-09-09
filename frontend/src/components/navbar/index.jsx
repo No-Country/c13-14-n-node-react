@@ -12,12 +12,8 @@ export default function AdminNavbar ({ setTab }) {
   const dispatch = useDispatch()
   const { session, logout } = useSession()
 
-  //const { user } = session
-
-  const user = {};
-
-  // const { user } = session
-  const  user = "guillermo" 
+  const  user = {name: "guillermo"} 
+  
   const toggleSideBar = () => {
     dispatch(setToggle(true))
   }
@@ -37,7 +33,7 @@ export default function AdminNavbar ({ setTab }) {
           </Nav>
           <Nav>
             <NavDropdown title={user.name} id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.2">Configuración</NavDropdown.Item>
+              <NavDropdown.Item href="/admin/account">Configuración</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.3" onClick={logout}>Cerrar Sesión</NavDropdown.Item>
             </NavDropdown>

@@ -11,8 +11,8 @@ export default function useLocalStorage () {
     const language = window.localStorage.getItem(APP_KEY_LANGUAGE) || DEFAULT_LANGUAGE
     setLanguage(language)
 
-    const token = window.localStorage.getItem(APP_KEY_TOKEN)
-    !!token && authToken(token)
+    /* const token = window.localStorage.getItem(APP_KEY_TOKEN)
+    !!token && authToken(token) */
   }
 
   return { loadLocalStorage }

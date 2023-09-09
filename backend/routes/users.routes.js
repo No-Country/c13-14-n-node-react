@@ -17,6 +17,7 @@ const {
   login,
   checkToken,
   validateTokenSession,
+  changeUserPassword,
 } = require('../controllers/users.controller');
 const { createUserValidations, checkValidations } = require('../middlewares/validations.middlewares');
 
