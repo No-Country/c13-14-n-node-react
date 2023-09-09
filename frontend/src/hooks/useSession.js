@@ -14,15 +14,15 @@ export default function useSession () {
 
   const dispatch = useDispatch()
 
-  const setSession = ({ status, data }) => {
-    dispatch(setUser(status ? { ...data.user, userProfiles: data.userProfiles } : USER_INICIAL_STATE))
-    dispatch(setProfile(status ? { ...data.profile, links: data.links } : PROFILE_INICIAL_STATE))
+  const setSession = ({ solved, payload }) => {
+    dispatch(setUser(solved ? { ...payload.user, userProfiles: payload.userProfiles } : USER_INICIAL_STATE))
+    dispatch(setProfile(solved ? { ...payload.profile, links: payload.links } : PROFILE_INICIAL_STATE))
   }
 
   const authToken = async (token) => {
     const res = await await handleService(loginFromTokenService, token)
     console.log(res)
-    !res.status && window.localStorage.removeItem(APP_KEY_TOKEN)
+    !res.solved && window.localStorage.removeItem(APP_KEY_TOKEN)
     return res
   }
 
@@ -32,7 +32,7 @@ export default function useSession () {
 
   const login = async (passport) => {
     const res = await handleService(loginService, passport)
-    res.status && window.localStorage.setItem(APP_KEY_TOKEN, res.data.token)
+    res.solved && window.localStorage.setItem(APP_KEY_TOKEN, res.payload.token)
     return res
   }
 

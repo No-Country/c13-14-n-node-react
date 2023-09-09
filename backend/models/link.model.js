@@ -5,7 +5,6 @@ const linkSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
   },
   profile: {
     type: mongoose.Schema.Types.ObjectId,
@@ -15,7 +14,6 @@ const linkSchema = new mongoose.Schema({
   urlEnlace: {
     type: String,
     required: true,
-    unique: true,
   },
   icon: {
     type: String,

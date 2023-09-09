@@ -4,30 +4,30 @@ import { API_URL_LOGIN, API_URL_REGISTER, API_URL_RESEND, API_URL_SESSION, API_U
 const validateToken = async (url, token) => {
   try {
     const res = await axios.post(`${url}/${token}`)
-    return { status: true, data: res.data }
+    return { solved: true, payload: res.data }
   } catch (error) {
     const message = error?.response?.data?.message || 'SERVER_ERROR'
-    return { status: false, data: message }
+    return { solved: false, payload: message }
   }
 }
 
 export const loginService = async (passport) => {
   try {
     const res = await axios.post(API_URL_LOGIN, passport)
-    return { status: true, data: res.data }
+    return { solved: true, payload: res.data }
   } catch (error) {
     const message = error?.response?.data?.message || 'SERVER_ERROR'
-    return { status: false, data: message }
+    return { solved: false, payload: message }
   }
 }
 
 export const registerService = async (formData) => {
   try {
     const res = await axios.post(API_URL_REGISTER, formData)
-    return { status: true, data: res.data }
+    return { solved: true, payload: res.data }
   } catch (error) {
     const message = error?.response?.data?.message || 'SERVER_ERROR'
-    return { status: false, data: message }
+    return { solved: false, payload: message }
   }
 }
 
@@ -42,9 +42,9 @@ export const loginFromTokenService = async (token) => {
 export const resendEmailService = async (email) => {
   try {
     const res = await axios.post(API_URL_RESEND, { email })
-    return { status: true, data: res.data }
+    return { solved: true, payload: res.data }
   } catch (error) {
     const message = error?.response?.data?.message || 'SERVER_ERROR'
-    return { status: false, data: message }
+    return { solved: false, payload: message }
   }
 }

@@ -5,25 +5,13 @@ import { MdOutlineModeEditOutline } from 'react-icons/md'
 import { useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 
-export default function LinkItem ({ link, handleDeleteLink, handletoggleLinkStatus }) {
-  // const [name, setName] = useState(link.name)
+export default function LinkItem ({ link }) {
   const [showUpdateLinkModal, setShowUpdateLinkModal] = useState(false)
 
-  // Define la función handleInputChange para actualizar el estado 'name'
-  // const handleInputChange = (event) => {
-  //   setName(event.target.value)
-  // }
+  const handleShowUpdateLinkModal = () => setShowUpdateLinkModal(true)
+  const handleCloseUpdateLinkModal = () => setShowUpdateLinkModal(false)
 
-  const handleShowUpdateLinkModal = () => {
-    setShowUpdateLinkModal(true)
-  }
-  const handleCloseUpdateLinkModal = () => {
-    setShowUpdateLinkModal(false)
-  }
-
-  const handleUpdateLinkFormSubmit = () => {
-
-  }
+  const handleUpdateLinkFormSubmit = () => { }
 
   return (
     <>
@@ -38,7 +26,7 @@ export default function LinkItem ({ link, handleDeleteLink, handletoggleLinkStat
               type="switch"
               id="custom-switch"
               defaultChecked={link.status}
-              onChange={() => handletoggleLinkStatus(link)}
+              onChange={() => console.log('ups')}
             />
           </div>
           <div className='d-flex justify-content-between'>
@@ -48,7 +36,7 @@ export default function LinkItem ({ link, handleDeleteLink, handletoggleLinkStat
                 <Button onClick={handleShowUpdateLinkModal} className='mx-3' variant=""><MdOutlineModeEditOutline /></Button>
               </Card.Text>
             </Link>
-            <Button onClick={() => handleDeleteLink(link)} className='' variant=""><FaTrashAlt /></Button>
+            <Button onClick={() => console.log('ups')} className='' variant=""><FaTrashAlt /></Button>
           </div>
         </Card.Body>
       </Card>

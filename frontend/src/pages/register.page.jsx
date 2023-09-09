@@ -22,6 +22,7 @@ export default function RegisterPage () {
   const {
     register,
     handleSubmit,
+    getValues,
     setValue,
     formState: { errors, dirtyFields }
   } = useForm({
@@ -31,9 +32,16 @@ export default function RegisterPage () {
 
   const onSubmit = async (data) => {
     const res = await registerService(data)
-    res.status
-      ? window.alert('SI')
-      : handleError(res.data)
+    res.solved
+      ? handleRedirection()
+      : handleError(res.payload)
+  }
+
+  const handleRedirection = () => {
+    toast.success('Se ha enviado un correo ded validación a ' + getValues('email'), {
+      position: 'top-center'
+    })
+    setTimeout(() => navigate(APP_URL_LANDING), 3000)
   }
 
   const handleError = (message) => {
@@ -67,6 +75,7 @@ export default function RegisterPage () {
                     {...register('email')}
                     isInvalid={!!errors.email}
                     isValid = {!errors.email && dirtyFields.email}
+                    autoFocus
                   />
                 </Form.Group>
 
@@ -122,6 +131,7 @@ export default function RegisterPage () {
                     {...register('profile')}
                     isInvalid={!!errors.profile}
                     isValid = {!errors.profile && dirtyFields.profile}
+                    autoFocus
                   />
                 </Form.Group>
                 <div className="d-grid my-5 gap-3">

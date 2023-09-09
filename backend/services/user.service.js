@@ -30,7 +30,7 @@ const findSessionDataService = async (user)=>{
 
   if(user?.profile) {
     profile = await Profile.findById(user.profile)
-    links = await Link.find({ profile:user.profile })
+    links = await Link.find({ profile:user.profile }).select('')
   }
 
   const userId = user._id.toString()

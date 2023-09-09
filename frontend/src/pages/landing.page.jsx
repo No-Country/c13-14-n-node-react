@@ -20,7 +20,7 @@ export default function LandinPage () {
     if (!token) navigate(APP_URL_LOGIN)
     else {
       authToken(token).then(res => {
-        res.status
+        res.solved
           ? navigate(APP_URL_ADMIN)
           : navigate(APP_URL_LOGIN)
       })

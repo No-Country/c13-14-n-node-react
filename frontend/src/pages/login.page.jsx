@@ -33,14 +33,13 @@ export default function LoginPage () {
 
   const onSubmit = async (data) => {
     const res = await login(data)
-    !res.status
-      ? handleError(res.data)
+    !res.solved
+      ? handleError(res.payload)
       : navigate(APP_URL_ADMIN)
   }
 
   const handleError = (message) => {
     const error = formatMessageError(message)
-    console.log(error)
     toast.error(dictionaryErrors(error))
     if (message === 'USER_NOT_VALIDATE') setBtnValidateEmail(true)
   }
@@ -78,6 +77,7 @@ export default function LoginPage () {
                     {...register('email')}
                     isInvalid={!!errors.email}
                     isValid = {!errors.email && dirtyFields.email}
+                    autoFocus
                   />
                 </Form.Group>
 

@@ -41,3 +41,4 @@ export const PROFILE_INICIAL_STATE = {
   delegateTo: [],
   links: []
 }
+export const LINK_INICIAL_STATE = { name: '', urlEnlace: '' }

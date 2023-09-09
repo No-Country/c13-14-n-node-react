@@ -1,39 +1,36 @@
 import axios from 'axios'
 import { API_URL_LINKS } from '../config/constants'
-import { headers } from '../libs/api'
-
-export const getLinksService = async () => {
-  try {
-    const res = await axios.get(API_URL_LINKS, { headers })
-    return res.data
-  } catch (error) {
-
-  }
-}
+import { authTokenHeader } from '../libs/api'
 
 export const createLinkService = async (newLink) => {
   try {
+    const headers = authTokenHeader()
     const res = await axios.post(API_URL_LINKS, newLink, { headers })
-    return res.status === 201
+    return { solved: true, payload: res.data }
   } catch (error) {
-    return false
+    const message = error?.response?.data?.message || 'SERVER_ERROR'
+    return { solved: false, payload: message }
   }
 }
 
 export const updateLinkService = async (_id, updatedLink) => {
   try {
-    const response = await axios.patch(`${API_URL_LINKS}/${_id}`, updatedLink, { headers })
-    return response.status === 200
+    const headers = authTokenHeader()
+    const res = await axios.patch(`${API_URL_LINKS}/${_id}`, updatedLink, { headers })
+    return { solved: true, payload: res.data }
   } catch (error) {
-    return false
+    const message = error?.response?.data?.message || 'SERVER_ERROR'
+    return { solved: false, payload: message }
   }
 }
 
 export const deleteLinkService = async (_id) => {
   try {
+    const headers = authTokenHeader()
     const res = await axios.delete(`${API_URL_LINKS}/${_id}`, { headers })
-    return res.status === 200
+    return { solved: true, payload: res.data }
   } catch (error) {
-    return false
+    const message = error?.response?.data?.message || 'SERVER_ERROR'
+    return { solved: false, payload: message }
   }
 }
