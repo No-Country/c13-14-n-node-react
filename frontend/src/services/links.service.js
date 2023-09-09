@@ -14,52 +14,26 @@ export const getLinksService = async () => {
 export const createLinkService = async (newLink) => {
   try {
     const res = await axios.post(API_URL_LINKS, newLink, { headers })
-    return res.data
+    return res.status === 201
   } catch (error) {
+    return false
+  }
+}
 
+export const updateLinkService = async (_id, updatedLink) => {
+  try {
+    const response = await axios.patch(`${API_URL_LINKS}/${_id}`, updatedLink, { headers })
+    return response.status === 200
+  } catch (error) {
+    return false
   }
 }
 
 export const deleteLinkService = async (_id) => {
   try {
     const res = await axios.delete(`${API_URL_LINKS}/${_id}`, { headers })
-    console.log(_id)
-    return res.data
+    return res.status === 200
   } catch (error) {
-
-  }
-}
-
-export const uddateLinkService = async (_id, updatedLink) => {
-  try {
-    const response = await axios.patch(`${API_URL_LINKS}/${_id}`, updatedLink)
-
-    if (response.status === 200) {
-      console.log('Enlace actualizado con éxito:', response.data)
-      return response.data
-    } else {
-      console.error('Error al actualizar el enlace:', response.status, response.statusText)
-      throw new Error('Error al actualizar el enlace')
-    }
-  } catch (error) {
-    console.error('Error al actualizar el enlace:', error)
-    throw error
-  }
-}
-
-export const toggleLinkStatusService = async (_id, updatedLink) => {
-  try {
-    const response = await axios.patch(`${API_URL_LINKS}/${_id}`, updatedLink)
-
-    if (response.status === 200) {
-      console.log('Enlace actualizado con éxito:', response.data)
-      return response.data
-    } else {
-      console.error('Error al actualizar el enlace:', response.status, response.statusText)
-      throw new Error('Error al actualizar el enlace')
-    }
-  } catch (error) {
-    console.error('Error al actualizar el enlace:', error)
-    throw error
+    return false
   }
 }

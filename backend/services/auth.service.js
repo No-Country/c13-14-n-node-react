@@ -9,15 +9,15 @@ const { createToken, validToken } = require('../libs/token');
 const { sendRegisterNotification, sendWelcomeMessage } = require('./email.service');
 const { findSessionDataService } = require('./user.service');
 
-const loginUserService = async ({ email, password }) =>{
+const loginUserService = async ( email, password ) =>{
   let profile
   let links
   const user = await User.findOne({email })
 
   // User validations
-  if (!user) return res.status(401).json({ message: "USER_NOT_FOUND" })
-  if (user.status !== USER_STATUS.VALIDATE) return res.status(401).json({ message: "USER_NOT_VALIDATE" })
-  if (!(await bcrypt.compare(password, user.password)))return res.status(401).json({ message: "INVALID_PASSWORD" })
+  if (!user) throw new Error("USER_NOT_FOUND")
+  if (user.status !== USER_STATUS.VALIDATE) throw new Error("USER_NOT_VALIDATE")
+  if (!(await bcrypt.compare(password, user.password))) throw new Error("INVALID_PASSWORD")
 
   return await findSessionDataService(user)
 }
@@ -31,17 +31,48 @@ const validateUserService = async (token) =>{
     return await findSessionDataService(user)
 }
 
-const resendValidationService = async ({ email }) =>{
+const resendValidationService = async ( email ) =>{
   const user = await User.findOne({ email })
   if(!user?.email) throw new Error('USER_NOT_FOUND')
   if(user.status !== USER_STATUS.NO_VAIDATE) throw new Error('USER_VALIDATE')
   const idUser = user._id.toString()
   sendRegisterNotification({ idUser, email })
-  return true
 }
 
-const registerService = (body)=>{
+const registerService = async (email, password, profile)=>{
+    
+    // Verify email pre-existence
+    const user = await User.findOne({email})
+    if(user) throw new Error('USER_EXIST')
 
+    // Verify pre-existence of the profile
+    if(profile){
+      const existingProfile = await Profile.findOne({nameSpace:profile})
+      if(existingProfile) throw new Error('PROFIE_EXIST')
+    }
+
+    const salt = await bcrypt.genSalt(12);
+    const hashPassword = await bcrypt.hash(password, salt);
+
+    const newUser = await User.create({
+      email,
+      password: hashPassword,
+    });
+
+    // Create profile and userProfile
+    if(profile){
+        const newProfile = await Profile.create({nameSpace:profile})
+        // Default profile
+        newUser.profile = newProfile._id
+        newUser.save()
+        const newUserProfile = {user:newUser._id, profile:newProfile._id, status:'accepted'}
+        await UserProfile.create(newUserProfile)
+    }
+
+    // Send email notification
+    sendRegisterNotification({email})
+
+    return true
 }
 
 const authTokenService = async (token)=>{

@@ -1,16 +1,27 @@
 import { Outlet } from 'react-router-dom'
-import useLocalStorage from '../hooks/useLocalStorage'
 
-import { useEffect } from 'react'
 import useLoader from '../hooks/useLoader'
 import Loader from '../components/Loader'
+import { localSession, locaLanguage } from '../libs/localStorage'
+import { useEffect } from 'react'
 
-export default function RootLayout () {
-  const { loaderValue } = useLoader()
-  const { loadLocalStorage } = useLocalStorage()
+import useSession from '../hooks/useSession'
+import useLanguage from '../hooks/useLanguage'
+
+export default function RootLayout ({ session, language }) {
+  const { loaderValue, loaderOnOff } = useLoader(true)
+  const { setSession } = useSession()
+  const { setLanguage } = useLanguage()
+
   useEffect(() => {
-    loadLocalStorage()
+    const language = locaLanguage()
+    setLanguage(language)
+    localSession().then(session => {
+      setSession(session)
+      loaderOnOff(false)
+    })
   }, [])
+
   return (
     <main>
       {loaderValue && <Loader/>}

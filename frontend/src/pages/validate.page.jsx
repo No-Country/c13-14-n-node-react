@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import useSession from '../hooks/useSession'
 import { APP_URL_ADMIN, APP_URL_LOGIN } from '../config/constants'
+import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 export default function ValidatePage () {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
@@ -19,15 +20,25 @@ export default function ValidatePage () {
     }
   }, [])
 
-  //! Falta renderizar un error si no se logró validar e inicir session
+  const handleSubmit = (e) => {
+    e.preventdefault()
+  }
 
   return token
     //! Aca debería haber un loader
     ? (<h1>Token: {token}</h1>)
     : (
     // Si no tengo token muestro el mensaje que se le envio un correo
-    <section className='flex-grow'>
-        <h1>Recibiste correo</h1>
-    </section>
+    <Container className='d-flex min-vh-100 justify-content-center align-items-center'>
+      <Row>
+        <Col>
+        <h3 className='mb-3'>Validá tu correo</h3>
+        <Form onSubmit={handleSubmit} method='POST'>
+          <Form.Control type="email" placeholder='Tu email' className='mb-3' autofocus />
+          <Button type='submit'>Enviar</Button>
+        </Form>
+        </Col>
+      </Row>
+    </Container>
       )
 }

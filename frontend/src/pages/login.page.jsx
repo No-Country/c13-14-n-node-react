@@ -6,20 +6,25 @@ import { loginValidationSchema } from '../validations/auth.shcema'
 
 import Logo from '../components/logo'
 import useLanguage from '../hooks/useLanguage'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { APP_URL_ADMIN, APP_URL_LANDING } from '../config/constants'
 import useSession from '../hooks/useSession'
 import { useState } from 'react'
+import { formatMessageError } from '../libs/errors'
+import toast, { Toaster } from 'react-hot-toast'
 
 export default function LoginPage () {
   const { dictionaryWord } = useLanguage('loginPage')
-  const [showError, setShowError] = useState(false)
-  const { login } = useSession()
+  const { dictionaryWord: dictionaryErrors } = useLanguage('errors')
+  const [btnValidateEmail, setBtnValidateEmail] = useState(false)
+
+  const { login, resendEmail } = useSession()
   const navigate = useNavigate()
 
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors, dirtyFields }
   } = useForm({
     resolver: yupResolver(loginValidationSchema),
@@ -28,16 +33,37 @@ export default function LoginPage () {
 
   const onSubmit = async (data) => {
     const res = await login(data)
-    !res
-      ? setShowError(res)
+    !res.status
+      ? handleError(res.data)
       : navigate(APP_URL_ADMIN)
+  }
+
+  const handleError = (message) => {
+    const error = formatMessageError(message)
+    console.log(error)
+    toast.error(dictionaryErrors(error))
+    if (message === 'USER_NOT_VALIDATE') setBtnValidateEmail(true)
+  }
+
+  const handleResend = async () => {
+    setBtnValidateEmail(false)
+    const res = await resendEmail(getValues('email'))
+    res.status
+      ? toast.success('Se ha vuelto a enviar un correo a ' + getValues('email'), { position: 'top-center' })
+      : handleError(res.message)
   }
 
   return (
     <Container className='min-vh-100'>
+      <Toaster
+         position="bottom-center"
+        reverseOrder={false}
+      />
       <Row className='min-vh-100'>
         <Col sm={12} md={6} className='d-flex justify-content-center align-items-center' >
-          <Logo height='37px' width='160px' fill='black' />
+          <Link to={APP_URL_LANDING} >
+            <Logo height='37px' width='160px' fill='black' />
+          </Link>
         </Col>
         <Col sm={12} md={6} xl={4} className='d-flex justify-content-center align-items-md-center' >
           <Form noValidate onSubmit={handleSubmit(onSubmit)} className='w-100' >
@@ -75,6 +101,16 @@ export default function LoginPage () {
                   >
                     {dictionaryWord('buttonLogin')}
                   </Button>
+                  { btnValidateEmail &&
+                    <Button
+                      className='form-btn'
+                      variant="primary"
+                      disabled={!(!!getValues('email') && !errors.email)}
+                      onClick={handleResend}
+                  >
+                    Volver a solicitar correo de validación
+                  </Button>
+                  }
                   <Button
                     className='form-btn'
                     variant="outline-primary"
@@ -88,7 +124,6 @@ export default function LoginPage () {
           </Form>
         </Col>
       </Row>
-      {showError && <p>No se pudo iniciar sesion</p>}
     </Container>
   )
 }

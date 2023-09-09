@@ -1,29 +1,44 @@
-import { setLinks, addLink as addLinkSlice, deleteLink as deleteLinkSlice, updateLink as updateLinkSlice, toggleLinkStatus as toggleLinkStatusSlice} from '../reducers/links.slice'
-import { useSelector, useDispatch } from 'react-redux'
-import { getLinksService, createLinkService, deleteLinkService, uddateLinkService, toggleLinkStatusService } from '../services/links.service'
+import { createLinkService, deleteLinkService, updateLinkService } from '../services/links.service'
+
+import useProfile from './useProfile'
 
 export default function useLinks () {
-  const links = useSelector(state => state.links)
-  const dispatch = useDispatch()
+  const { profile: { links }, setProfile } = useProfile()
 
-  const addLink = (newLink) => {
-    createLinkService(newLink)
-    dispatch(addLinkSlice(newLink))
+  const addLink = async (newLink) => {
+    // Petición a la API
+    const res = await createLinkService(newLink)
+    // Si se creo actualizo el estado local
+    res && setProfile({ links: [...links, newLink] })
+    return res
   }
 
-  const deleteLink = (_id) => {
-    deleteLinkService(_id)
-    dispatch(deleteLinkSlice(_id))
+  const deleteLink = async (id) => {
+    // Petición a la API
+    const res = await deleteLinkService(id)
+    // Si pudo eliminar borro del estado
+    if (res) {
+      // Filtro del nuevo estado el id
+      const newState = links.filter(link => link.id !== id)
+      // Envío al estado global
+      setProfile({ links: newState })
+    }
+    return res
   }
 
-  const updateLink = (_id, updatedLink) => {
-    dispatch(updateLinkSlice(_id, updatedLink))
+  // Funcion para editar un link.
+  // data debe ser un objeto con las propiedades a modificar
+  const editLink = async (id, data) => {
+    const res = await updateLinkService(id, data)
+    if (res) {
+      // Busco el id y reemplazo los nuevos datos recibidos
+      const newState = links.map(link => link.id === id ? { ...link, data } : link)
+      setProfile({ links: newState })
+    }
+    return res
   }
 
-  const toggleLinkStatus = (_id, updatedLink) => {
-    toggleLinkStatusService(_id, updatedLink)
-    dispatch(toggleLinkStatusSlice(_id, updatedLink))
-  }
+  const sortLink = (from, to) => links
 
-  return { links, addLink, deleteLink, toggleLinkStatus }
+  return { links, addLink, deleteLink, editLink, sortLink }
 }

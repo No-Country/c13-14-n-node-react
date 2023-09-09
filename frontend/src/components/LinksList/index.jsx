@@ -1,34 +1,21 @@
 import { Button, Container, Row } from 'react-bootstrap'
 import { useState, useEffect } from 'react'
-import LinkItem from '../LinkItem'
-import useLinks from '../../hooks/useLinks'
-import Modal from 'react-bootstrap/Modal'
-import Form from 'react-bootstrap/Form'
-import './index.css'
+
 import { FiCreditCard } from 'react-icons/fi'
 import { useDispatch } from 'react-redux'
 import { setLinks } from '../../reducers/links.slice'
-import { getLinksService } from '../../services/links.service'
+import './index.css'
+
+import Form from 'react-bootstrap/Form'
+import Modal from 'react-bootstrap/Modal'
+import LinkItem from '../LinkItem'
+
+import useLinks from '../../hooks/useLinks'
 
 export default function LinkList ({ link }) {
-  const { links, addLink } = useLinks()
+  const { links, addLink, deleteLink } = useLinks()
   const [showAddLinkModal, setShowAddLinkModal] = useState(false)
   const [showAddTitleModal, setShowAddTitleModal] = useState(false)
-  const dispatch = useDispatch()
-
-  // Función para cargar los enlaces
-  const fetchLinks = async () => {
-    try {
-      const links = await getLinksService()
-      dispatch(setLinks(links))
-    } catch (error) {
-      console.error('Error al cargar los enlaces:', error)
-    }
-  }
-
-  useEffect(() => {
-    fetchLinks()
-  }, [dispatch])
 
   // Manejo modal para agregar link
   const handleShowAddLinkModal = () => {
@@ -39,41 +26,36 @@ export default function LinkList ({ link }) {
   }
 
   // Manejo modal para agregar titulo
-  const handleShowAddTitleModal = () => {
-    setShowAddTitleModal(true)
-  }
-  const handleCloseAddTitleModal = () => {
-    setShowAddTitleModal(false)
-  }
+  const handleShowAddTitleModal = () => setShowAddTitleModal(true)
+
+  const handleCloseAddTitleModal = () => setShowAddTitleModal(false)
 
   // Agregar un link
   const handleAddLinkFormSubmit = async (e) => {
     e.preventDefault()
     const formData = new FormData(e.target)
-    const newName = formData.get('name')
-    const newUrlEnlace = formData.get('urlEnlace')
+    const name = formData.get('name')
+    const urlEnlace = formData.get('urlEnlace')
 
-    if (newName && newUrlEnlace) {
+    if (name && urlEnlace) {
       const newLink = {
-        name: newName,
-        profile: '64f51237a0d2e00a28b13939',
+        name,
         icon: '123456',
-        urlEnlace: newUrlEnlace,
+        urlEnlace,
         order: links.length + 1,
         status: true
       }
-      await addLink(newLink)
-      await fetchLinks()
+      const res = await addLink(newLink)
+      !res && console.log('ERROR AL AGREGAR')
       setShowAddLinkModal(false)
-      console.log(newLink)
+    } else {
+      //! MESAJE VALIDACION DE FORMULARIO
     }
   }
 
   // Eliminar link
-  const { deleteLink } = useLinks()
   const handleDeleteLink = async (link) => {
-    try {
-      await deleteLink(link._id)
+    const res = await deleteLink(link._id)
       await fetchLinks()
     } catch (error) {
       console.error('Error al eliminar el enlace:', error)
