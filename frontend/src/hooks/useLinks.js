@@ -19,9 +19,10 @@ export default function useLinks () {
 
   const deleteLink = async (id) => {
     const res = await handleService(deleteLinkService, id)
-    if (res.status) {
-      // Filtro del nuevo estado el id
-      const newState = links.filter(link => link.id !== id)
+    if (res.solved) {
+      const newState = links.filter(link => {
+        return link._id !== id
+      })
       setProfile({ links: newState })
     }
     return res
@@ -29,7 +30,7 @@ export default function useLinks () {
 
   // Funcion para editar un link.
   // data debe ser un objeto con las propiedades a modificar
-  const editLink = async (id, data) => {
+  const updateLink = async (id, data) => {
     const res = await handleService(updateLinkService, { id, data })
     if (res.solved) {
       // Busco el id y reemplazo los nuevos datos recibidos
@@ -48,5 +49,5 @@ export default function useLinks () {
 
   const sortLink = (from, to) => links
 
-  return { links, addLink, deleteLink, editLink, nextOrder, sortLink }
+  return { links, addLink, deleteLink, updateLink, nextOrder, sortLink }
 }

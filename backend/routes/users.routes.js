@@ -18,6 +18,7 @@ const {
   authToken,
   resendValidationEmail,
   validateUser,
+  changeUserPassword,
 } = require('../controllers/users.controller');
 
 const { createUserValidations, checkValidations } = require('../middlewares/validations.middlewares');

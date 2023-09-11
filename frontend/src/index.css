@@ -142,9 +142,6 @@
 .linkInput {
   border: none;
   width: max-content !important;
-  /* max-width: 30px; */
-  /* minWidth: '50px';
-    maxWidth: '30px'; */
 }
 
 .btn-theme {
