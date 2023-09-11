@@ -17,7 +17,7 @@ export default function AdminPage () {
         <Container className='d-flex justify-content-center align-items-center mt-5'>
           <Row>
             <Col sm={12} md={8}>
-              {  tab === 1 && <LinkList/>  }
+              { tab === 1 && <LinkList/> }
               { tab === 2 && <h2>Apariencia</h2> }
               { tab === 3 && <h2>Settings</h2> }
             </Col>

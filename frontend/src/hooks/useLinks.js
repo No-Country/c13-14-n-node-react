@@ -29,7 +29,7 @@ export default function useLinks () {
 
   // Funcion para editar un link.
   // data debe ser un objeto con las propiedades a modificar
-  const editLink = async (id, data) => {
+  const updateLink = async (id, data) => {
     const res = await handleService(updateLinkService, { id, data })
     if (res.solved) {
       // Busco el id y reemplazo los nuevos datos recibidos
@@ -55,5 +55,5 @@ export default function useLinks () {
 
   const sortLink = (from, to) => links
 
-  return { links, addLink, deleteLink, editLink, nextOrder, sortLink }
+  return { links, addLink, deleteLink, updateLink, nextOrder, sortLink }
 }
