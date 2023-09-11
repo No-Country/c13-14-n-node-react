@@ -34,8 +34,13 @@ export default function useLinks () {
     const res = await handleService(updateLinkService, { id, data })
     if (res.solved) {
       // Busco el id y reemplazo los nuevos datos recibidos
-      const newState = links.map(link => link.id === id ? { ...link, data } : link)
+      console.log(links)
+      console.log(id)
+      console.log(data)
+      const newState = links.map(link => link._id === id ? { ...data, _id: id } : link)
+      console.log(newState)
       setProfile({ links: newState })
+      console.log(setProfile)
     }
     return res
   }
