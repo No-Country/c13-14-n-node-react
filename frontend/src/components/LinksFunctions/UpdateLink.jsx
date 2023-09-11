@@ -1,22 +1,18 @@
 import { Button, Form, Modal } from 'react-bootstrap'
 import useLinks from '../../hooks/useLinks'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 
-export default function UpdateLink ({ show, onHide, data }) {
-  const [formData, setFormData] = useState({
-    name: data ? data.name : '',
-    urlEnlace: data ? data.urlEnlace : ''
-  })
+export default function UpdateLink ({ show, onHide, link }) {
+  const [formData, setFormData] = useState(link)
   const { updateLink } = useLinks()
-  const [initialData, setInitialData] = useState({})
 
-  useEffect(() => {
+  /*   useEffect(() => {
     if (data) {
       setFormData(data)
       setInitialData(data)
     }
-  }, [data])
+  }, [data]) */
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -25,16 +21,10 @@ export default function UpdateLink ({ show, onHide, data }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-
     // Solo actualiza el enlace si hay cambios
-    if (formData.name !== initialData.name || formData.urlEnlace !== initialData.urlEnlace) {
-      const { name, urlEnlace } = formData
-      const res = await updateLink(initialData._id, {
-        name,
-        urlEnlace,
-        icon: '123',
-        status: true
-      })
+    const { name, urlEnlace } = formData
+    if (name !== link.name || urlEnlace !== link.urlEnlace) {
+      const res = await updateLink(formData)
       if (res.solved) {
         handleSolved()
       } else {

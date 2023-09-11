@@ -1,0 +1,9 @@
+.previewer {
+  width: 289px;
+  height: 575px;
+  flex-shrink: 0;
+  border-radius: 40px;
+  border: 11px solid #000;
+  background: linear-gradient(180deg, #3D8488 20.83%, rgba(113, 72, 128, 0.79) 42.26%, rgba(140, 99, 158, 0.56) 53.25%, rgba(174, 152, 187, 0.34) 65.31%, rgba(202, 196, 211, 0.16) 73.98%, rgba(212, 213, 216, 0.04) 79.69%, rgba(212, 213, 216, 0.04) 84.9%, rgba(212, 214, 216, 0.03) 99.99%, rgba(217, 217, 217, 0.00) 100%);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.30);
+}

@@ -4,7 +4,7 @@ import useProfile from './useProfile'
 
 export default function useLinks () {
   const { profile: { links }, setProfile } = useProfile()
-  const { loaderOnOff } = useLoader()
+  const { handleService } = useLoader()
 
   const addLink = async (newLink) => {
     console.log(newLink)
@@ -30,25 +30,13 @@ export default function useLinks () {
 
   // Funcion para editar un link.
   // data debe ser un objeto con las propiedades a modificar
-  const updateLink = async (id, data) => {
-    const res = await handleService(updateLinkService, { id, data })
+  const updateLink = async (updatedLink) => {
+    const res = await updateLinkService(updatedLink)
     if (res.solved) {
-      // Busco el id y reemplazo los nuevos datos recibidos
-      console.log(links)
-      console.log(id)
-      console.log(data)
-      const newState = links.map(link => link._id === id ? { ...data, _id: id } : link)
-      console.log(newState)
+      const newState = links.map(link => link._id === updatedLink._id ? updatedLink : link)
       setProfile({ links: newState })
       console.log(setProfile)
     }
-    return res
-  }
-
-  const handleService = async (service, param) => {
-    loaderOnOff(true)
-    const res = await service(param)
-    loaderOnOff(false)
     return res
   }
 

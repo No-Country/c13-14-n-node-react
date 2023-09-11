@@ -14,11 +14,10 @@ export const createLinkService = async (newLink) => {
 }
 
 export const updateLinkService = async (link) => {
-  console.log(link.id)
-  console.log(link.data)
   try {
     const headers = authTokenHeader()
-    const res = await axios.patch(`${API_URL_LINKS}/${link.id}`, link.data, { headers })
+    const id = link._id
+    const res = await axios.patch(`${API_URL_LINKS}/${id}`, link, { headers })
     return { solved: true, payload: res.data }
   } catch (error) {
     const message = error?.response?.data?.message || 'SERVER_ERROR'

@@ -26,8 +26,6 @@ const findSessionDataService = async (user)=>{
     }
   })
 
-  console.log(userProfiles)
-
   if(user?.profile) {
     profile = await Profile.findById(user.profile)
     links = await Link.find({ profile:user.profile }).select('')
