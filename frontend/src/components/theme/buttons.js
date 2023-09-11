@@ -27,3 +27,17 @@ export const ButtonSecondary = styled.button`
     background: ${COLOR_BUTTON_SECONDARY_HOVER};
   }
 `
+export const ButtonLink = styled.button`
+  width: ${props => props.width || '100%'};
+  height: 49px;
+  border: 1px solid rgba(0, 0, 0, 0.73);
+  border-radius: 15px;
+  background-color: transparent;
+  cursor: pointer;
+  transition: 0.4s ease;
+  color: rgba(0, 0, 0, 0.73);
+  &:hover {
+    color:white;
+    background: ${COLOR_BUTTON_PRIMARY_HOVER};
+  }
+`

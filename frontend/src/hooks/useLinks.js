@@ -30,11 +30,10 @@ export default function useLinks () {
 
   // Funcion para editar un link.
   // data debe ser un objeto con las propiedades a modificar
-  const updateLink = async (id, data) => {
-    const res = await handleService(updateLinkService, { id, data })
+  const updateLink = async (updatedLink) => {
+    const res = await updateLinkService(updatedLink)
     if (res.solved) {
-      // Busco el id y reemplazo los nuevos datos recibidos
-      const newState = links.map(link => link.id === id ? { ...link, data } : link)
+      const newState = links.map(link => link._id === updatedLink._id ? updatedLink : link)
       setProfile({ links: newState })
     }
     return res

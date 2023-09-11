@@ -53,9 +53,7 @@ router
   .get(getLinkById)
   .patch( 
     [
-      param('id').isMongoId().withMessage('ID de enlace no válido'),
       body('name').notEmpty().withMessage('El nombre es obligatorio'),
-      body('profile').notEmpty().withMessage('El ID del perfil es obligatorio').isMongoId().withMessage('El ID del perfil debe ser un ObjectId válido'),
       body('urlEnlace').notEmpty().withMessage('El URL es obligatorio').isURL().withMessage('El URL debe ser una URL válida'),
       body('icon').notEmpty().withMessage('El icono es obligatorio'),
       body('status').notEmpty().withMessage('El estado es obligatorio').isBoolean().withMessage('El estado debe ser un booleano válido'),

@@ -3,6 +3,7 @@ import Toolbar from '../components/Toolbar'
 import { Col, Container, Row } from 'react-bootstrap'
 import LinksList from '../components/LinksList/LinksList'
 import useLoader from '../hooks/useLoader'
+import Previewer from '../components/previewer/Previewer'
 
 export default function AdminPage () {
   const [tab, setTab] = useState(1)
@@ -22,9 +23,7 @@ export default function AdminPage () {
               { tab === 3 && <h2>Settings</h2> }
             </Col>
             <Col sm={12} md={4} className='d-flex justify-content-center align-items-center '>
-              <div className='smartphone text-white d-flex justify-content-center align-items-center '>
-              <p >Acá va el simulador</p>
-            </div>
+              <Previewer/ >
           </Col>
         </Row>
       </Container>

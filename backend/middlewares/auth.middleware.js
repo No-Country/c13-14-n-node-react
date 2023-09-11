@@ -2,7 +2,6 @@ const { validToken } = require('../libs/token');
 const { catchAsync } = require('../utils/catchAsync');
 
 const validateToken = (req, res, next) => {
-  console.log('ESTOY ACA _____',  req.headers)
   const { authorization } = req.headers
   let token
   if (authorization) {

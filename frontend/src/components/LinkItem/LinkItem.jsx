@@ -1,17 +1,27 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { FaTrashAlt } from 'react-icons/fa'
 import { MdOutlineModeEditOutline } from 'react-icons/md'
 import DeleteLink from '../LinksFunctions/DeleteLink'
 import UpdateLink from '../LinksFunctions/UpdateLink'
+import useLinks from '../../hooks/useLinks'
 
 export default function LinkItem ({ link }) {
+  const { updateLink } = useLinks()
+  const checkboxRef = useRef(null)
+
   const [showDeleteLinkModal, setShowDeleteLinkModal] = useState(false)
   const handleCloseFromDelete = () => setShowDeleteLinkModal(false)
 
   const [showUpdateLinkModal, setShowUpdateLinkModal] = useState(false)
   const handleCloseFromUpdate = () => setShowUpdateLinkModal(false)
+
+  const handleStatus = async () => {
+    const status = checkboxRef.current.checked
+    const res = await updateLink({ ...link, status })
+    console.log(res)
+  }
 
   return (
     <>
@@ -28,7 +38,8 @@ export default function LinkItem ({ link }) {
               type='switch'
               id='custom-switch'
               defaultChecked={link.status}
-              onChange={() => console.log('ups')}
+              onChange={handleStatus}
+              ref={checkboxRef}
             />
           </div>
           <div className='d-flex justify-content-between'>
@@ -42,7 +53,7 @@ export default function LinkItem ({ link }) {
         </Card.Body>
       </Card>
       <DeleteLink show={showDeleteLinkModal} onHide={handleCloseFromDelete} linkId={showDeleteLinkModal} />
-      <UpdateLink show={showUpdateLinkModal} onHide={handleCloseFromUpdate} data={showUpdateLinkModal} />
+      <UpdateLink show={showUpdateLinkModal} onHide={handleCloseFromUpdate} link={link} />
     </>
   )
 }

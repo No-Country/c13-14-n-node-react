@@ -19,9 +19,9 @@ export default function LinksList () {
           <ButtonPrimary onClick={() => setShowAddLinkModal(true)}>
             Agregar link +
           </ButtonPrimary>
-          <ButtonSecondary>
+          {/* <ButtonSecondary>
             Agregar Título
-          </ButtonSecondary>
+          </ButtonSecondary> */}
         </Row>
         <Row className='d-flex gap-3'>
           {
