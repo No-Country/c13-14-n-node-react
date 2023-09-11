@@ -7,14 +7,14 @@ import styles from './previewer.module.css'
 import defaultImage from '../../assets/user.jpg'
 import { ButtonLink } from '../theme/buttons'
 
-export default function Emulator () {
+export default function Previewer () {
   const { profile } = useProfile()
   const { links } = profile
 
   return (
     <div className={styles.previewer}>
-        <div className='d-flex flex-column gap-2 mx-2 align-items-center mt-4'>
-          <Image src={defaultImage} roundedCircle width={80} className='mb-1' />
+        <div className='d-flex flex-column gap-2 mx-2 align-items-center mt-5'>
+          <Image src={defaultImage} roundedCircle width={90} className='mb-1' />
           <Link to={'/'} className='text-decoration-none' >
             <h5 className='text-black'>
               @{profile.nameSpace}
