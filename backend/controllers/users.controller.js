@@ -59,11 +59,15 @@ const getUserById = catchAsync(async (req, res, next) => {
 
 const updateUser = catchAsync(async (req, res, next) => {
   const { user } = req;
-  const { name, password, email } = req.body;
-
-  await user.updateOne({ name, password, email });
-
-  res.status(200).json({ status: 'success' });
+  const { name, password } = req.body;
+  const id = req.params.id
+  
+  try{
+    await user.updateOne({_id: id},{ name: name, password: password });
+    res.status(200).json({ status: 'success' });
+  }catch(error){
+    res.status(500).json({status: 'Fail'})
+  }
 });
 
 const deleteUser = catchAsync(async (req, res, next) => {

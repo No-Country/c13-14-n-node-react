@@ -3,6 +3,8 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 const express = require('express');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
+var morgan = require('morgan')
+
 
 // Controllers
 const { globalErrorHandler } = require('./controllers/errors.controller');
@@ -25,6 +27,12 @@ if (process.env.DEV) {
 
 // Enable CORS
 app.use(cors());
+
+// Development Mode
+if (process.env.DEV) {
+  const morgan = require('morgan')
+  app.use(morgan('dev'))
+}
 
 // Enable incoming JSON data
 app.use(express.json());
