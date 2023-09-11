@@ -49,5 +49,9 @@ export default function useSession () {
     setSession({})
   }
 
-  return { user, login, logout, authToken, validateUser, setSession, resendEmail }
+  const changePassword = async(password, email) =>{
+    const res = await handleService(changePasswordService, password, email)
+  }
+
+  return { user, login, logout, authToken, validateUser, setSession, resendEmail, changePassword }
 }

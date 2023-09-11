@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
-var morgan = require('morgan')
+var morgan = require('morgan');
 
 
 // Controllers
@@ -13,6 +13,7 @@ const { linksRouter } = require('./routes/links.routes');
 const { profileRouter } = require('./routes/profile.routes');
 const { themeRouter } = require('./routes/theme.routes');
 const { userProfileRouter } = require('./routes/userProfileRouter.routes');
+
 // Init express app
 const app = express();
 

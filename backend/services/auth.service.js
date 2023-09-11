@@ -44,6 +44,7 @@ const registerService = async (email, password, profile)=>{
     // Verify email pre-existence
     const user = await User.findOne({email})
     if(user) throw new Error('USER_EXIST')
+  
 
     // Verify pre-existence of the profile
     if(profile){

@@ -7,11 +7,13 @@ import Logo from '../logo'
 import useSession from '../../hooks/useSession'
 import { useDispatch } from 'react-redux'
 import { setToggle } from '../../reducers/toggles.slice'
+import { useNavigate } from 'react-router-dom'
+import { APP_URL_ACCOUNT } from '../../config/constants';
 
 export default function AdminNavbar ({ setTab }) {
   const dispatch = useDispatch()
   const { user, logout } = useSession()
-
+  const navigate = useNavigate()
   const toggleSideBar = () => {
     dispatch(setToggle(true))
   }
@@ -31,7 +33,7 @@ export default function AdminNavbar ({ setTab }) {
           </Nav>
           <Nav>
             <NavDropdown title={user?.name || 'Usuario'} id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.2">Configuración</NavDropdown.Item>
+              <Nav.Link onClick={() => navigate(APP_URL_ACCOUNT)}>Settings</Nav.Link>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.3" onClick={logout}>Cerrar Sesión</NavDropdown.Item>
             </NavDropdown>

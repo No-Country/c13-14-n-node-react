@@ -8,6 +8,7 @@ import Register from '../pages/register.page'
 import Validate from '../pages/validate.page'
 
 import Admin from '../pages/admin.page'
+import Account from '../pages/account.page'
 
 import Error from '../pages/error.page'
 
@@ -27,7 +28,8 @@ const router = createBrowserRouter([
         path: '/',
         element: <ProtectedRoute/>,
         children: [
-          { path: '/admin', element: <Admin /> }
+          { path: '/admin', element: <Admin /> },
+          { path: '/admin/account', element: <Account /> },
         ]
       }
     ]

@@ -2,7 +2,6 @@ const { validToken } = require('../libs/token');
 const { catchAsync } = require('../utils/catchAsync');
 
 const validateToken = (req, res, next) => {
-  console.log('ESTOY ACA _____',  req.headers)
   const { authorization } = req.headers
   let token
   if (authorization) {
@@ -13,7 +12,6 @@ const validateToken = (req, res, next) => {
   }
   if (!token) return res.status(406).json({message:'AUTH_FALSE'})
   const session = validToken(token)
-  console.log('SESSION___', session)
   req.headers.session = session
   next()
 }

@@ -1,0 +1,28 @@
+import axios from 'axios'
+import { API_URL_CHANGE_PASSWORD, API_URL_USERS } from '../config/constants'
+import { authTokenHeader } from '../libs/api'
+
+export const updatedUserDataService = async (data) => {
+  try {
+    console.log(data,"esto es data")
+    console.log(data.photo,"esto es photo")
+    const headers = authTokenHeader()
+    const res = await axios.post(API_URL_USERS, data, { headers,'Content-Type': 'multipart/form-data' })
+    return { solved: true, payload: res.data }
+  } catch (error) {
+    const message = error?.response?.data?.message || 'SERVER_ERROR'
+    return { solved: false, payload: message }
+  }
+}
+
+export const changePasswordService = async (password) => {
+    try {
+      const headers = authTokenHeader();
+      console.log(headers)
+      const res = await axios.post(API_URL_CHANGE_PASSWORD, { password }, { headers })
+    } catch (error) {
+      const message = error?.response?.data?.message || 'SERVER_ERROR'
+      console.log(error)
+      return { solved: false, payload: message }
+    }
+  }
