@@ -80,6 +80,7 @@ const login = catchAsync(async (req, res, next) => {
     try {
       const { email, password } = req.body;
       const session = await loginUserService( email, password)
+      console.log(session)
       res.status(200).json(session)
     } catch ({ message }) {
       res.status(409).send({ message })
@@ -91,6 +92,7 @@ const authToken = catchAsync(async (req, res, next) => {
   if (!token) return res.status(401).json({ message: 'INVALID_TOKEN' });
   try {
     const session = await authTokenService(token)
+    console.log(session)
     return res.status(200).json(session)
   } catch (error) {
     return res.status(401).json({ message: 'INVALID_TOKEN' }); // res.redirect(url);

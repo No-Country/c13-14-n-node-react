@@ -4,7 +4,7 @@ import useProfile from './useProfile'
 
 export default function useLinks () {
   const { profile: { links }, setProfile } = useProfile()
-  const { loaderOnOff } = useLoader()
+  const { handleService } = useLoader()
 
   const addLink = async (newLink) => {
     console.log(newLink)
@@ -36,13 +36,6 @@ export default function useLinks () {
       const newState = links.map(link => link.id === id ? { ...link, data } : link)
       setProfile({ links: newState })
     }
-    return res
-  }
-
-  const handleService = async (service, param) => {
-    loaderOnOff(true)
-    const res = await service(param)
-    loaderOnOff(false)
     return res
   }
 

@@ -1,4 +1,4 @@
-import { Container, Form, Button, Row, Col } from 'react-bootstrap'
+import { Container, Form, Button, Row, Col, InputGroup } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
@@ -9,11 +9,13 @@ import Logo from '../components/logo'
 import useLanguage from '../hooks/useLanguage'
 import { Link, useNavigate } from 'react-router-dom'
 import { APP_URL_LANDING } from '../config/constants'
-import { registerService } from '../services/auth.service'
 import toast, { Toaster } from 'react-hot-toast'
 import { formatMessageError } from '../libs/errors'
+import useSession from '../hooks/useSession'
 
 export default function RegisterPage () {
+  const { register: registerHook } = useSession()
+
   const [step, setStep] = useState(1)
   const { dictionaryWord } = useLanguage('registerPage')
   const { dictionaryWord: dictionaryErrors } = useLanguage('errors')
@@ -31,7 +33,7 @@ export default function RegisterPage () {
   })
 
   const onSubmit = async (data) => {
-    const res = await registerService(data)
+    const res = await registerHook(data)
     res.solved
       ? handleRedirection()
       : handleError(res.payload)
@@ -123,8 +125,11 @@ export default function RegisterPage () {
             { step === 2 && (
               <div className='w-100'>
                 <h1 className='form-header mb-4' >{dictionaryWord('title2')}</h1>
+
                 <Form.Group className="mb-3" controlId="formGroupEmail">
                   <Form.Label>{dictionaryWord('profile')}</Form.Label>
+                  <InputGroup className="mb-3">
+                  <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
                   <Form.Control
                     type="text"
                     placeholder={dictionaryWord('profilePlaceholder')}
@@ -133,7 +138,9 @@ export default function RegisterPage () {
                     isValid = {!errors.profile && dirtyFields.profile}
                     autoFocus
                   />
+                </InputGroup>
                 </Form.Group>
+
                 <div className="d-grid my-5 gap-3">
                   <Button
                     type='submit'
@@ -143,14 +150,14 @@ export default function RegisterPage () {
                   >
                     Crear cuenta y perfil
                   </Button>
-                  <Button
+                  {/* <Button
                     type='submit'
                     onClick={() => setValue('profile', null)}
                     className='form-btn'
                     variant="outline-primary"
                   >
                     Omitir y registrarse
-                  </Button>
+                  </Button> */}
                   <Button
                     onClick={() => setStep(1)}
                     className='form-btn'

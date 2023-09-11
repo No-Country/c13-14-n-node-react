@@ -16,7 +16,7 @@ const dictionary = {
     confirm: 'Confirmar',
     confirmPlaceholder: 'Confirma tu contraseña',
     profile: 'Nombre perfil',
-    profilePlaceholder: 'uni.link/tu-perfil',
+    profilePlaceholder: 'tuperfil',
     tycOne: 'Al crear tu cuenta, aceptas nuestros ',
     tycTwo: 'Términos y condiciones',
     tycTree: ', y confirmas que has leído nuestra ',
@@ -55,7 +55,8 @@ const dictionary = {
     userexist: 'El usuario ya existe en la base de datos',
     profieexist: 'El nombre del perfil no está disponible',
     invalidpassword: 'Contraseña incorrecta',
-    usernotfound: 'El usuario no existe'
+    usernotfound: 'El usuario no existe',
+    servererror: 'UPS!! Hubo un problema , intente nuevamente'
   }
 }
 
