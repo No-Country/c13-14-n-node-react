@@ -19,9 +19,10 @@ export default function useLinks () {
 
   const deleteLink = async (id) => {
     const res = await handleService(deleteLinkService, id)
-    if (res.status) {
-      // Filtro del nuevo estado el id
-      const newState = links.filter(link => link.id !== id)
+    if (res.solved) {
+      const newState = links.filter(link => {
+        return link._id !== id
+      })
       setProfile({ links: newState })
     }
     return res
