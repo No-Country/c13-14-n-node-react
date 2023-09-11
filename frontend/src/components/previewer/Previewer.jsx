@@ -6,6 +6,7 @@ import styles from './previewer.module.css'
 
 import defaultImage from '../../assets/user.jpg'
 import { ButtonLink } from '../theme/buttons'
+import SocialIcons from '../SocialIcons/SocialIcons'
 
 export default function Previewer () {
   const { profile } = useProfile()
@@ -21,11 +22,12 @@ export default function Previewer () {
             </h5>
           </Link>
           <p>Acá va la bio</p>
+          <SocialIcons/>
         </div>
-        <div className='d-flex flex-column gap-3 mx-2 align-items-center mt-2'>
+        <div className='d-flex flex-column gap-2 mx-2 align-items-center mt-2'>
         { links.map(link => link.status &&
           (
-          <ButtonLink key={link._id} width='230px'>
+          <ButtonLink key={link._id} width='220px'>
             {link.name}
           </ButtonLink>
           )) }

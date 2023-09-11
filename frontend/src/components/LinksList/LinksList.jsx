@@ -14,7 +14,7 @@ export default function LinksList () {
   const handleCloseFromNew = () => setShowAddLinkModal(false)
 
   return (
-      <Container className='d-flex row gap-3 w-100 m-auto linksContainer'>
+      <Container className='d-flex row gap-3 linksContainer'>
         <Row className='col-12'>
           <ButtonPrimary onClick={() => setShowAddLinkModal(true)}>
             Agregar link +
