@@ -10,6 +10,9 @@
     margin-left: 20px; /* Espacio de 20px a la derecha del nombre */
   }
   
-  .delete-button {
-    /* Estilos opcionales para el botón de eliminar */
+  .text-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100% !important;
   }

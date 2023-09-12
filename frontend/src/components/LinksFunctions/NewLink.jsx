@@ -52,6 +52,7 @@ export default function NewLink ({ show, onHide, data }) {
               type="text"
               name="name"
               autoFocus
+              maxLength="25"
               isValid={!!formData.name}
               isInvalid={!formData.name}
               onChange={handleChange}
