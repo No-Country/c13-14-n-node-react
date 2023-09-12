@@ -7,11 +7,26 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 
 import Logo from '../components/logo'
-import { APP_URL_LOGIN, APP_URL_REGISTER } from '../config/constants'
+import { APP_KEY_TOKEN, APP_URL_ADMIN, APP_URL_LOGIN, APP_URL_REGISTER } from '../config/constants'
+import useSession from '../hooks/useSession'
 
 export default function LandinPage () {
   const { dictionaryWord } = useLanguage('landingPage')
   const navigate = useNavigate()
+  const { authToken } = useSession()
+
+  const handleLogin = () => {
+    const token = window.localStorage.getItem(APP_KEY_TOKEN)
+    if (!token) navigate(APP_URL_LOGIN)
+    else {
+      authToken(token).then(res => {
+        res.solved
+          ? navigate(APP_URL_ADMIN)
+          : navigate(APP_URL_LOGIN)
+      })
+    }
+  }
+
   return (
     <Container fluid as='section' className='bg-landing' >
       <Row className='d-flex fluid'>
@@ -27,7 +42,7 @@ export default function LandinPage () {
             {dictionaryWord('register')}
           </Button>
           <Button
-            onClick={() => navigate(APP_URL_LOGIN)}
+            onClick={ handleLogin }
             variant="outline-light" className='btn-landing'
           >
             {dictionaryWord('login')}

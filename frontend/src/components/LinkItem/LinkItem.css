@@ -1,0 +1,15 @@
+.custom-card-body {
+    padding: 0; /* Elimina el relleno predeterminado del Card.Body */
+  }
+  
+  .titleContainer {
+    align-items: center; /* Centra verticalmente los elementos dentro de titleContainer */
+  }
+  
+  .edit-button {
+    margin-left: 20px; /* Espacio de 20px a la derecha del nombre */
+  }
+  
+  .delete-button {
+    /* Estilos opcionales para el botón de eliminar */
+  }
