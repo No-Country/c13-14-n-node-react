@@ -35,6 +35,7 @@ export default function useLinks () {
     if (res.solved) {
       const newState = links.map(link => link._id === updatedLink._id ? updatedLink : link)
       setProfile({ links: newState })
+      console.log(setProfile)
     }
     return res
   }
