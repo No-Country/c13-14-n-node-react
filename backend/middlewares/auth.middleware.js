@@ -1,5 +1,4 @@
-const { validToken } = require('../libs/token');
-const { catchAsync } = require('../utils/catchAsync');
+const { validToken } = require('../libs/token')
 
 const validateToken = (req, res, next) => {
   const { authorization } = req.headers
@@ -10,11 +9,10 @@ const validateToken = (req, res, next) => {
     if (token) parts = token.split('.')
     if (parts.length !== 3) token = undefined
   }
-  if (!token) return res.status(406).json({message:'AUTH_FALSE'})
+  if (!token) return res.status(406).json({ message: 'AUTH_FALSE' })
   const session = validToken(token)
-  console.log('SESSION___', session)
   req.headers.session = session
   next()
 }
 
-module.exports = {validateToken}
+module.exports = { validateToken }

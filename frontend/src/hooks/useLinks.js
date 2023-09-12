@@ -8,7 +8,7 @@ export default function useLinks () {
 
   const addLink = async (newLink) => {
     console.log(newLink)
-    const res = await handleService(createLinkService, newLink)
+    const res = await createLinkService(newLink)
     if (res.solved) {
       const { idLink } = res.payload
       newLink._id = idLink
