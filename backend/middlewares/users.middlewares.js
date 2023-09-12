@@ -8,8 +8,7 @@ const { catchAsync } = require('../utils/catchAsync');
 const { AppError } = require('../utils/appError');
 
 const protectToken = catchAsync(async (req, res, next) => {
-  let token;
-
+  const token = req.headers['access-token'];
   // Extract token from headers
   if (
     req.headers.authorization &&

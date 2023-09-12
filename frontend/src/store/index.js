@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import sessionReducer from '../reducers/session.slice'
+import userReducer from '../reducers/user.slice'
+import profileReducer from '../reducers/profile.slice'
 import languageReducer from '../reducers/language.slice'
 import keysReducer from '../reducers/keys.slice'
 
 export default configureStore({
   reducer: {
-    session: sessionReducer,
+    user: userReducer,
+    profile: profileReducer,
     language: languageReducer,
     keys: keysReducer
   }

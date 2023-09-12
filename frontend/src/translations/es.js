@@ -16,12 +16,12 @@ const dictionary = {
     confirm: 'Confirmar',
     confirmPlaceholder: 'Confirma tu contraseña',
     profile: 'Nombre perfil',
-    profilePlaceholder: 'uni.link/tu-perfil',
+    profilePlaceholder: 'tuperfil',
     tycOne: 'Al crear tu cuenta, aceptas nuestros ',
     tycTwo: 'Términos y condiciones',
     tycTree: ', y confirmas que has leído nuestra ',
     tycFour: 'Política de privacidad',
-    buttonHome: 'Volver',
+    buttonHome: 'Home',
     buttonStep1: 'Continuar',
     buttonStep2: 'Volver',
     buttonSubmit: 'Crear mi cuenta y perfil',
@@ -42,13 +42,21 @@ const dictionary = {
     password: 'Contraseña',
     passwordPlaceholder: 'Ingresa tu contraseña',
     buttonLogin: 'Iniciar sesión',
-    buttonHome: 'Volver'
+    buttonHome: 'Home'
   },
   messageBox: {
     button: 'Aceptar'
   },
   errorPage: {
     button: 'Volver'
+  },
+  errors: {
+    usernotvalidate: 'El usuario no ha sido validado',
+    userexist: 'El usuario ya existe en la base de datos',
+    profieexist: 'El nombre del perfil no está disponible',
+    invalidpassword: 'Contraseña incorrecta',
+    usernotfound: 'El usuario no existe',
+    servererror: 'UPS!! Hubo un problema , intente nuevamente'
   }
 }
 

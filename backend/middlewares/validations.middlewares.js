@@ -16,8 +16,19 @@ const createUserValidations = [
     .withMessage('Password must be at least 5 and 10.')
     .matches(/^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{5,10}$/)
     .withMessage('La contraseña debe tener al menos una mayúscula, una minúscula y un número'),
+  check('profile')
+    .optional()
+    .isLength({ min: 5, max: 15 })
+    .isAlphanumeric()
 ];
 
+const validateLinksErrors = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+  }
+  next();
+}
 const checkValidations = (req, res, next) => {
   const errors = validationResult(req);
 
@@ -36,4 +47,5 @@ const checkValidations = (req, res, next) => {
 module.exports = {
   createUserValidations,
   checkValidations,
+  validateLinksErrors
 };

@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
+const { USER_STATUS } = require('../config/constants');
+const { Profile } = require('./profile.model');
 
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: false,
   },
   email: {
     type: String,
@@ -15,9 +16,13 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   status: {
-    type: Boolean,
-    default: false,
+    type: Number, // 
+    default: USER_STATUS.NO_VAIDATE, 
     required: true,
+  },
+  profile: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: Profile
   },
 
 });
