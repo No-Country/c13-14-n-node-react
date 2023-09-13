@@ -2,8 +2,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const nodemailer = require("nodemailer");
-const fileupload = require('express-fileupload');
-var fs = require('fs');
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
@@ -13,15 +11,6 @@ const transporter = nodemailer.createTransport({
     pass: process.env.PASS_NODEMAILER
   }
 });
-
-
-const dir = __dirname + '/uploads/images';
-
-
-if (!fs.existsSync(dir)){
-  fs.mkdirSync(dir);
-}
-
 
 // require('crypto').randomBytes(64).toString('hex')
 
@@ -68,21 +57,36 @@ const getUserById = catchAsync(async (req, res, next) => {
 
 const updateUser = catchAsync(async (req, res, next) => {
   const { userId } = req.headers.session
-  const { name } = req.body;
-
-  console.log(req.body.name)
-
-  if (!req.files.photo){
-    console.log("No encontrado") 
-  }else{
-    console.log("encontrado")
+  const { name, photoName } = req.body;
+  
+  if (req.files) {
+    const photo = req.files.photo;
+    photo.mv(`C:/Users/zhark/Desktop/unilinkk/c13-14-n-node-react/backend/uploads/images/${photoName}`, function(err) {
+      if (err)
+        return res.status(500).send(err);
+    });
+    if(name){
+      try{
+        await User.updateOne({_id: userId}, { name, photo: photoName});
+        res.status(200).json({ status: 'success_photo_name' });
+      }catch(error){
+        res.status(200).json({status: 'Fail'})
+      }
+    }else {
+      res.status(200).json({ status: 'success_photo' });
+    }
+  }else if (name) {
+    try {
+      await User.updateOne({ _id: userId }, { name });
+      res.status(200).json({ status: 'success' });
+    } catch (error) {
+      res.status(500).json({ status: 'Fail' });
+    }
+  } else {
+    // Manejar el caso en el que no se proporcionaron ni una foto ni un nombre
+    res.status(400).json({ status: 'Fail', message: 'Ninguna foto ni nombre proporcionados.' });
   }
-  try{
-    await User.updateOne({_id: userId}, { name });
-    res.status(200).json({ status: 'success' });
-  }catch(error){
-    res.status(500).json({status: 'Fail'})
-  }
+
 });
 
 const deleteUser = catchAsync(async (req, res, next) => {

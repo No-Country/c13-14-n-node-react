@@ -13,9 +13,13 @@ const { linksRouter } = require('./routes/links.routes');
 const { profileRouter } = require('./routes/profile.routes');
 const { themeRouter } = require('./routes/theme.routes');
 const { userProfileRouter } = require('./routes/userProfileRouter.routes');
+const fs = require('fs');
+const fileUpload = require('express-fileupload');
 
 // Init express app
 const app = express();
+
+app.use(fileUpload());
 
 // Development Mode
 if (process.env.DEV) {
@@ -23,6 +27,12 @@ if (process.env.DEV) {
   app.use(morgan('dev'))
 }
 
+const dir = __dirname + '/uploads/images';
+
+
+if (!fs.existsSync(dir)){
+  fs.mkdirSync(dir);
+}
 
 // Enable CORS
 app.use(cors());
@@ -44,6 +54,8 @@ const limiter = rateLimit({
 });
 
 app.use(limiter);
+
+app.use('/uploads/images', express.static('uploads/images'))
 
 // Endpoints
 app.use('/api/v1/users', usersRouter);

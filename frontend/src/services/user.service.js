@@ -4,10 +4,12 @@ import { authTokenHeader } from '../libs/api'
 
 export const updatedUserDataService = async (data) => {
   try {
-    console.log(data,"esto es data")
-    console.log(data.photo,"esto es photo")
+    const formData = new FormData();
+    formData.append('photo', data.photo);
+    formData.append('name', data.name);
+    formData.append('photoName', data.photoName);
     const headers = authTokenHeader()
-    const res = await axios.post(API_URL_USERS, data, { headers,'Content-Type': 'multipart/form-data' })
+    const res = await axios.post(API_URL_USERS, formData, { headers,'Content-Type': 'multipart/form-data' })
     return { solved: true, payload: res.data }
   } catch (error) {
     const message = error?.response?.data?.message || 'SERVER_ERROR'

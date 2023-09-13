@@ -10,11 +10,15 @@ export default function useUser () {
 
   // data debe ser un objeto con las propiedades a modificar
   const editUser = async (data) => {
-    console.log(data.photo)
     const res = await handleService(updatedUserDataService, data)
+    const newData = {
+      name: data.name,
+      photo: data.photoName
+    }
+    console.log(data.photoName);
     if (res.solved) {
       // Busco el id y reemplazo los nuevos datos recibidos
-      const newState = {...user, ...data}
+      const newState = {...user, ...newData}
       dispatch(setUser(newState))
     }
     return res

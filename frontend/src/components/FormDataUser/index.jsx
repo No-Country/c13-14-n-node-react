@@ -16,7 +16,7 @@ export default function FormDataUser (){
     e.preventDefault()
     const name = nameUserRef.current.value;
     const photo = fileInputRef.current.files[0];
-    console.log(photo)
+    let nuevoNombre;
     if (!photo) {
       return toast.error("Seleccione una foto");
     }
@@ -25,8 +25,11 @@ export default function FormDataUser (){
     }
     if(!name){
       return toast.error("Nuevo nombre no proporcionado");
-    }
-    const res = await editUser({ name, photo });
+    }if (photo && photo.type) { // Verificar que photo y photo.mimetype estén definidos
+      nuevoNombre = `${user.id}_${Date.now()}.${photo.type.split('/')[1]}`;
+    }  
+    console.log(nuevoNombre)
+    const res = await editUser({ name, photo, photoName });
     console.log(res)
   }
 
@@ -45,8 +48,8 @@ export default function FormDataUser (){
         <h3 className='mb-4' >Actualizar nombre y foto</h3>
       </div>
       <Image
-        src="https://placehold.co/64x64/black/white"
-        alt={`_photo`}
+        src="http://localhost:4000/uploads/images/64fe508954b7e0fc1c490d18_1694554220408.png"
+        alt={`${user.name}_photo`}
         style={imageStyle}
       />
       <FormGroup>
