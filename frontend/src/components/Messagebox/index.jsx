@@ -10,14 +10,7 @@ function Messagebox ({ title, body, onClose, show, setShow }) {
     onClose()
   }
 
-  const handleShow = () => { setShow(true) }
-
   return (
-    <>
-      <Button variant="primary" onClick={handleShow}>
-        Launch static backdrop modal
-      </Button>
-
       <Modal
         show={show}
         onHide={handleClose}
@@ -36,7 +29,6 @@ function Messagebox ({ title, body, onClose, show, setShow }) {
           </Button>
         </Modal.Footer>
       </Modal>
-    </>
   )
 }
 

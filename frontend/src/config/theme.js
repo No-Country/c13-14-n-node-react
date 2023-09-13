@@ -1,6 +1,9 @@
-export const COLOR_PRIMARY = '#080928'
-export const COLOR_SECONDARY = '#4EFFF7'
-export const COLOR_BACKGROUND = '#0F294A'
-export const COLOR_PINK = '#CE2BFE'
-export const COLOR_PURPURE = '#9352EE'
-export const COLOR_CYAN = '#46DFFF'
+export const COLOR_BUTTON_PRIMARY = '#0A0E39'
+export const COLOR_BUTTON_PRIMARY_HOVER = '#5B2C6F'
+
+export const COLOR_BUTTON_SECONDARY = '#FFFFFF'
+export const COLOR_BUTTON_SECONDARY_HOVER = '#ECECEC'
+
+export const COLOR_BACKGRAUND_NAVBAR = '#0A0E39'
+export const COLOR_BACKGRAUND_SECCTION = '#E5E5EA'
+export const COLOR_BACKGRAUND_CARD = '#FCFCFC'
