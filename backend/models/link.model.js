@@ -1,10 +1,10 @@
-const mongoose = require('mongoose');
-const { Profile } = require('./profile.model');
+const mongoose = require('mongoose')
+const { Profile } = require('./profile.model')
 
 const linkSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: true
   },
   profile: {
     type: mongoose.Schema.Types.ObjectId,
@@ -13,11 +13,11 @@ const linkSchema = new mongoose.Schema({
   },
   urlEnlace: {
     type: String,
-    required: true,
+    required: true
   },
   icon: {
     type: String,
-    required: true,
+    required: true
   },
   status: {
     type: Boolean,
@@ -26,10 +26,10 @@ const linkSchema = new mongoose.Schema({
   },
   order: {
     type: Number,
-    required: true,
-  },
-});
+    required: true
+  }
+})
 
-const Link = mongoose.model('Link', linkSchema);
+const Link = mongoose.model('Link', linkSchema)
 
-module.exports = { Link };
+module.exports = { Link }

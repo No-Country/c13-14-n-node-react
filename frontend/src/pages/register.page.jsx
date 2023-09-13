@@ -25,7 +25,6 @@ export default function RegisterPage () {
     register,
     handleSubmit,
     getValues,
-    setValue,
     formState: { errors, dirtyFields }
   } = useForm({
     resolver: yupResolver(registerValidationSchema),

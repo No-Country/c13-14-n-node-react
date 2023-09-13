@@ -1,4 +1,8 @@
 .previewer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
   width: 289px;
   height: 575px;
   flex-shrink: 0;

@@ -1,75 +1,58 @@
 // Utils
-const { catchAsync } = require('../utils/catchAsync');
-const { AppError } = require('../utils/appError');
+const { catchAsync } = require('../utils/catchAsync')
 
-//models
+// models
 const { Profile } = require('../models/profile.model')
 
+// Services
+const { createProfileService, findProfileService } = require('../services/profile.service')
+const { createToken } = require('../libs/token')
 
+// Crear un nuevo link
 const createProfile = catchAsync(async (req, res, next) => {
-    const {
-        nameSpace,
-        title,
-        header,
-        image,
-        body,
-        user,
-        link,
-        themeId,
-        lastInitProfile
-    } = req.body;
-
-
-    const validateExist = await Profile.findOne({ nameSpace }) || null;
-    const validate = await Profile.find({ user });
-
-    if (validateExist !== null) {
-        return res.status(409).json({ message: "ya existe un profile con ese nombre." })
-    }
-
-    if (validate.length > 4) {
-        return res.status(409).json({ message: "no puedes crear mas de 5 profiles" })
-    }
-
-    const newProfile = await Profile.create(
-        {
-            nameSpace,
-            title,
-            header,
-            image,
-            body,
-            user,
-            link,
-            themeId,
-            status: true,
-            lastInitProfile
-        }
-    );
-    res.status(200).json({
-        message: "success",
-        profile: newProfile
-    })
-
-});
-
-
-const findAllProfile = catchAsync(async (req, res, next) => {
-    const { id } = req.params;
-
-    const allProfile = await Profile.find({ user: id }).populate("user link theme") || null;
-
-    if (allProfile === null) {
-        return res.status(409).json({ message: "no tienes perfiles." })
-    }
-
-    res.status(200).json({
-        message: "success",
-        profile: allProfile
-    })
+  const { nameSpace } = req.body
+  try {
+    const { userId } = req.headers.session
+    const newProfile = await createProfileService(nameSpace, userId)
+    const id = newProfile._id.toString()
+    res.status(201).send({ id })
+  } catch (error) {
+    console.log(error)
+    res.status(400).send({ message: error.message })
+  }
 })
 
+const findProfile = catchAsync(async (req, res, next) => {
+  try {
+    const { id } = req.params
+    //! Debo buscar en userProfiles
+    const { userId } = req.headers.session
+    const profile = await findProfileService(id)
+    const token = createToken({ userId, profileId: profile.id })
+    res.status(200).send({ profile, token })
+  } catch (error) {
+    console.log(error)
+    res.status(400).send({ message: error.message })
+  }
+})
+
+const findAllProfile = catchAsync(async (req, res, next) => {
+  const { id } = req.params
+
+  const allProfile = await Profile.find({ user: id }).populate('user link theme') || null
+
+  if (allProfile === null) {
+    return res.status(409).json({ message: 'no tienes perfiles.' })
+  }
+
+  res.status(200).json({
+    message: 'success',
+    profile: allProfile
+  })
+})
 
 module.exports = {
-    createProfile,
-    findAllProfile
+  createProfile,
+  findProfile,
+  findAllProfile
 }
