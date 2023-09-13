@@ -7,13 +7,11 @@ import useSession from '@/hooks/useSession'
 import { APP_URL_ADMIN } from '@/config/constants'
 import Logo from '@/components/Logo'
 import { useNavigate } from 'react-router-dom'
-import { APP_URL_ACCOUNT } from '../../config/constants'
-import { useNavigate } from 'react-router-dom'
 import { APP_URL_ACCOUNT } from '../../config/constants';
 
 export default function Toolbar ({ tab, setTab }) {
   const { user, logout } = useSession()
-  const navigate = useNavigate()  const navigate = useNavigate()
+  const navigate = useNavigate()
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary">

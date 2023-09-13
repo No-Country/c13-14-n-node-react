@@ -17,7 +17,8 @@ const {
   login,
   authToken,
   resendValidationEmail,
-  validateUser
+  validateUser,
+  changeUserPassword
 } = require('../controllers/users.controller')
 
 const { validateToken } = require('../middlewares/auth.middleware');
@@ -42,7 +43,7 @@ router.post('/resend', resendValidationEmail)
 router.post('/auth/:token', authToken)
 
 // Cambio de contraseña
-router.post('/changePassword', changePasswordValidations, validateToken ,changeUserPassword);
+router.post('/changePassword', changePasswordValidations, validateToken, changeUserPassword);
 
 router.post('/updateUser',validateToken ,updateUser);
 
