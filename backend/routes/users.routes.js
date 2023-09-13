@@ -1,11 +1,11 @@
-const express = require('express');
+const express = require('express')
 
 // Middlewares
 const {
   userExists,
   protectToken,
-  protectAccountOwner,
-} = require('../middlewares/users.middlewares');
+  protectAccountOwner
+} = require('../middlewares/users.middlewares')
 
 // Controller
 const {
@@ -17,30 +17,29 @@ const {
   login,
   authToken,
   resendValidationEmail,
-  validateUser,
-  changeUserPassword,
-} = require('../controllers/users.controller');
+  validateUser
+} = require('../controllers/users.controller')
 
 const { validateToken } = require('../middlewares/auth.middleware');
 
-const { createUserValidations, checkValidations, changePasswordValidations } = require('../middlewares/validations.middlewares');
+const { createUserValidations, checkValidations, changePasswordValidations } = require('../middlewares/validations.middlewares')
 
-const router = express.Router();
+const router = express.Router()
 
-//Register
-router.post('/', createUserValidations, checkValidations, createUser);
+// Register
+router.post('/', createUserValidations, checkValidations, createUser)
 
-//Login
-router.post('/login', login);
+// Login
+router.post('/login', login)
 
-//Validate
-router.post('/validate/:token', validateUser )
+// Validate
+router.post('/validate/:token', validateUser)
 
 // Re-send email
-router.post('/resend', resendValidationEmail);
+router.post('/resend', resendValidationEmail)
 
 // Login con token
-router.post('/auth/:token', authToken);
+router.post('/auth/:token', authToken)
 
 // Cambio de contraseña
 router.post('/changePassword', changePasswordValidations, validateToken ,changeUserPassword);
@@ -48,14 +47,14 @@ router.post('/changePassword', changePasswordValidations, validateToken ,changeU
 router.post('/updateUser',validateToken ,updateUser);
 
 // Apply protectToken middleware
-router.use(protectToken);
+router.use(protectToken)
 
-router.get('/', getAllUsers);
+router.get('/', getAllUsers)
 
 router
   .route('/:id')
   .get(userExists, getUserById)
   .patch(userExists, protectAccountOwner, updateUser)
-  .delete(userExists, protectAccountOwner, deleteUser);
+  .delete(userExists, protectAccountOwner, deleteUser)
 
-module.exports = { usersRouter: router };
+module.exports = { usersRouter: router }

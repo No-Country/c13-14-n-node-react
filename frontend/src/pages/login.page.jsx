@@ -1,16 +1,16 @@
 import { Container, Form, Button, Row, Col } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-
-import { loginValidationSchema } from '../validations/auth.shcema'
-
-import Logo from '../components/logo'
-import useLanguage from '../hooks/useLanguage'
 import { Link, useNavigate } from 'react-router-dom'
-import { APP_URL_ADMIN, APP_URL_LANDING } from '../config/constants'
-import useSession from '../hooks/useSession'
+
+import { loginValidationSchema } from '@/validations/auth.shcema'
+
+import Logo from '@/components/logo'
+import useLanguage from '@/hooks/useLanguage'
+import { APP_URL_ADMIN, APP_URL_LANDING } from '@/config/constants'
+import useSession from '@/hooks/useSession'
 import { useState } from 'react'
-import { formatMessageError } from '../libs/errors'
+import { formatMessageError } from '@/libs/errors'
 import toast, { Toaster } from 'react-hot-toast'
 
 export default function LoginPage () {

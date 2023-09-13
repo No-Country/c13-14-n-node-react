@@ -18,6 +18,7 @@ export const API_URL_VALIDATE = API_URL_BASE + '/users/validate'
 export const API_URL_LINKS = API_URL_BASE + '/links'
 export const API_URL_CHANGE_PASSWORD = API_URL_BASE + '/users/changePassword'
 export const API_URL_USERS = API_URL_BASE + '/users/updateUser'
+export const API_URL_PROFILES = API_URL_BASE + '/profiles'
 
 export const APP_URL_LANDING = '/'
 export const APP_URL_LOGIN = '/login'

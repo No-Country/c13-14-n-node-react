@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const { User } = require('./user.model');
-const { Profile } = require('./profile.model');
+const mongoose = require('mongoose')
+const { User } = require('./user.model')
+const { Profile } = require('./profile.model')
 
 const userSchema = new mongoose.Schema({
   user: {
@@ -17,18 +17,17 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ['owner', 'manager'],
     default: 'owner',
-    required: true,
+    required: true
   },
   status: {
     type: String,
     enum: ['accepted', 'pending'],
     default: 'accepted',
-    default: false,
-    required: true,
-  },
+    required: true
+  }
 
-});
+})
 
-const UserProfile = mongoose.model('UserProfile', userSchema);
+const UserProfile = mongoose.model('UserProfile', userSchema)
 
-module.exports = { UserProfile };
+module.exports = { UserProfile }
