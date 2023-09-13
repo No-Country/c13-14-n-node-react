@@ -4,6 +4,7 @@ import { Col, Container, Row } from 'react-bootstrap'
 import LinksList from '../components/LinksList/LinksList'
 import useLoader from '../hooks/useLoader'
 import Previewer from '../components/previewer/Previewer'
+import { ProfileSettings } from '../components/ProfileSettings/ProfileSettings'
 
 export default function AdminPage () {
   const [tab, setTab] = useState(1)
@@ -20,7 +21,7 @@ export default function AdminPage () {
             <Col sm={12} md={8}>
               { tab === 1 && <LinksList/> }
               { tab === 2 && <h2>Apariencia</h2> }
-              { tab === 3 && <h2>Settings</h2> }
+              { tab === 3 && <ProfileSettings/> }
             </Col>
             <Col sm={12} md={4} className='d-flex justify-content-center align-items-center '>
               <Previewer/ >

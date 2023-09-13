@@ -73,7 +73,7 @@ export default function NewLink ({ show, onHide, data }) {
           <Modal.Footer className="mt-3 col-8">
             <div className='col-12'>
               <Button
-                className='buttonsFormAddPatient w-100'
+                className='w-100'
                 variant="primary"
                 type="submit"
                 disabled={!formData.name || !formData.urlEnlace}

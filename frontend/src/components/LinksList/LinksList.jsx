@@ -2,8 +2,7 @@ import { Container, Row } from 'react-bootstrap'
 import { useState } from 'react'
 import './LinksList.css'
 import LinkItem from '../LinkItem/LinkItem'
-import { ButtonPrimary, ButtonSecondary } from '../theme/buttons'
-
+import { ButtonPrimary } from '../theme/buttons'
 import useLinks from '../../hooks/useLinks'
 import NewLink from '../LinksFunctions/NewLink'
 
@@ -19,9 +18,6 @@ export default function LinksList () {
           <ButtonPrimary onClick={() => setShowAddLinkModal(true)}>
             Agregar link +
           </ButtonPrimary>
-          {/* <ButtonSecondary>
-            Agregar Título
-          </ButtonSecondary> */}
         </Row>
         <Row className='d-flex gap-3'>
           {
