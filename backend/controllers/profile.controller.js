@@ -51,8 +51,31 @@ const findAllProfile = catchAsync(async (req, res, next) => {
   })
 })
 
+const deleteProfile = catchAsync(async (req, res) => {
+  const id = req.params.id;
+  try {
+    // Buscar y eliminar el perfil
+    const profile = await Profile.findByIdAndDelete(id);
+    if (!profile) {
+      return res.status(404).send({ mensaje: 'Perfil no encontrado' });
+    }
+    // Buscar y eliminar todos los UserProfiles que tienen el perfil con el mismo ID
+    const deletedUserProfiles = await UserProfile.deleteMany({ profile: id });
+    // Buscar y eliminar todos los Links que tienen el perfil con el mismo ID
+    const deletedLinks = await Link.deleteMany({ profile: id });
+    if (deletedUserProfiles.deletedCount === 0 && deletedLinks.deletedCount === 0) {
+      return res.status(200).send({ mensaje: 'Perfil eliminado exitosamente, pero no se encontraron UserProfiles ni Links asociados' });
+    }
+    res.status(200).send({ mensaje: 'Perfil eliminado exitosamente' });
+  } catch (error) {
+    console.error('Error al eliminar el perfil:', error);
+    res.status(500).send({ error: 'Error interno del servidor' });
+  }
+});
+
 module.exports = {
   createProfile,
   findProfile,
-  findAllProfile
+  findAllProfile,
+  deleteProfile
 }
