@@ -1,7 +1,7 @@
 import { setProfile as setProfileSlice } from '../reducers/profile.slice'
 import { useSelector, useDispatch } from 'react-redux'
 import useLoader from './useLoader'
-import { createProfileService, loadProfileService, deleteProfilefileService } from '../services/profile.service'
+import { createProfileService, loadProfileService, deleteProfilefileService, findPublicProfileService } from '../services/profile.service'
 import { APP_KEY_TOKEN, PROFILE_INICIAL_STATE } from '../config/constants'
 import useUserProfiles from './useUserProfiles'
 import { createUserManagerService } from '../services/userProfile.service'
@@ -56,5 +56,11 @@ export default function useProfile () {
     return res
   }
 
-  return { profile, setProfile, addProfile, profileSelection, addUserManager, deleteProfile }
+  const loadPublicProfile = async (nameSpace) => {
+    const res = await findPublicProfileService(nameSpace)
+    res.solved && setProfile(res.payload)
+    return res
+  }
+
+  return { profile, setProfile, addProfile, profileSelection, addUserManager, deleteProfile, loadPublicProfile }
 }

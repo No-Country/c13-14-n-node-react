@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { API_URL_PROFILES } from '../config/constants'
+import { API_URL_PROFILES, API_URL_PUBLIC_PROFILE } from '../config/constants'
 import { authTokenHeader } from '../libs/api'
 
 export const createProfileService = async (nameSpace) => {
@@ -28,6 +28,16 @@ export const deleteProfilefileService = async (id) => {
   try {
     const headers = authTokenHeader()
     const res = await axios.delete(`${API_URL_PROFILES}/${id}`, { headers })
+    return { solved: true, payload: res.data }
+  } catch (error) {
+    const message = error?.response?.data?.message || 'SERVER_ERROR'
+    return { solved: false, payload: message }
+  }
+}
+
+export const findPublicProfileService = async (nameSpace) => {
+  try {
+    const res = await axios.get(`${API_URL_PUBLIC_PROFILE}/${nameSpace}`)
     return { solved: true, payload: res.data }
   } catch (error) {
     const message = error?.response?.data?.message || 'SERVER_ERROR'

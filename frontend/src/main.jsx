@@ -13,11 +13,22 @@ import router from './router'
 // Redux
 import { Provider } from 'react-redux'
 import store from './store'
+import PublicProfile from './pages/publicProfile'
+
+// Defino cunatos los lugares ver si tiene subdominio
+const locationLength = Number(import.meta.env.VITE_LOCATION_LENGTH) || 3 // perfil.miapp.com
+
+const hostname = window.location.hostname
+const parts = hostname.split('.')
+const subdomain = parts.length === locationLength ? parts[0] : null
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
-        <RouterProvider router={router}/>
+        {subdomain
+          ? <PublicProfile nameSpace={subdomain}/>
+          : <RouterProvider router={router}/>
+        }
       </Provider>
   </React.StrictMode>
 )

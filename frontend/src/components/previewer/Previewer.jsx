@@ -5,6 +5,7 @@ import useProfile from '../../hooks/useProfile'
 import styles from './previewer.module.css'
 
 import defaultImage from '../../assets/user.jpg'
+
 import { ButtonLink } from '../theme/buttons'
 import SocialIcons from '../SocialIcons/SocialIcons'
 

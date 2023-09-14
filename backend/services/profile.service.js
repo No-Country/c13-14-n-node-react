@@ -36,8 +36,30 @@ const findProfileService = async (idProfile) => {
     links,
     profileUsers
   }
-console.log(profileFormater)
+
   return profileFormater
 }
 
-module.exports = { createProfileService, findProfileService }
+const findNameSpaceProfileService = async (nameSpace) =>{
+  const profile = await Profile.findOne({nameSpace})
+
+  if (!profile) throw new Error('PROFILE_NOT_FOUND')
+
+  // Busco los links del perfil
+  const idProfile = profile._id.toString()
+  const links = await linksProfileService(idProfile)
+
+  const profileFormater = {
+    id: idProfile,
+    nameSpace: profile.nameSpace,
+    body: profile.body,
+    status: profile.status,
+    links
+  }
+
+  return profileFormater
+}
+
+
+
+module.exports = { createProfileService, findProfileService, findNameSpaceProfileService }

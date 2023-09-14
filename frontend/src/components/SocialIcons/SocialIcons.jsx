@@ -1,6 +1,6 @@
+import { Link } from 'react-router-dom'
 import { CiFacebook, CiInstagram, CiYoutube } from 'react-icons/ci'
 import { FiTwitch, FiTwitter } from 'react-icons/fi'
-import { Link } from 'react-router-dom'
 
 export default function SocialIcons () {
   return (
