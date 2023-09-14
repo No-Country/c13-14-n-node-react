@@ -7,7 +7,8 @@ export const updatedUserDataService = async (data) => {
     const formData = new FormData();
     formData.append('photo', data.photo);
     formData.append('name', data.name);
-    formData.append('photoName', data.photoName);
+    formData.append('photoName', data.nuevoNombre);
+    formData.append('oldPhoto', data.oldPhoto)
     const headers = authTokenHeader()
     const res = await axios.post(API_URL_USERS, formData, { headers,'Content-Type': 'multipart/form-data' })
     return { solved: true, payload: res.data }

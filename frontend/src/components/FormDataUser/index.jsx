@@ -2,6 +2,7 @@ import { Button, Form, FormGroup, FormLabel, FormText, Image } from "react-boots
 import useUser from '../../hooks/useUser';
 import { useRef } from "react";
 import toast, { Toaster } from 'react-hot-toast';
+import { API_URL_PHOTOS } from "../../config/constants";
 
 export default function FormDataUser (){
   const { user, editUser } = useUser();
@@ -14,23 +15,35 @@ export default function FormDataUser (){
 
   const handleEdit = async (e) =>{
     e.preventDefault()
-    const name = nameUserRef.current.value;
-    const photo = fileInputRef.current.files[0];
+    let name = nameUserRef.current.value;
+    let photo = fileInputRef.current.files[0];
     let nuevoNombre;
-    if (!photo) {
-      return toast.error("Seleccione una foto");
+    if (photo) {
+      if (photo.size > maxSizeInBytes) {
+        return toast.error('El archivo es demasiado grande. Seleccione un archivo más pequeño.');
+      }if (photo.type) { // Verificar que photo y photo.mimetype estén definidos
+        nuevoNombre = `${user.id}_${Date.now()}.${photo.type.split('/')[1]}`;
+      }
     }
-    if (photo.size > maxSizeInBytes) {
-      return toast.error('El archivo es demasiado grande. Seleccione un archivo más pequeño.');
+    let oldPhoto = user.photo;
+    photo = photo?photo:user.photo;
+    name = name?name:user.name;
+    const res = await editUser({ name, photo, nuevoNombre, oldPhoto });
+    if (res) {
+      if (res.payload.name !== undefined && res.payload.photo !== undefined) {
+        if (res.payload.photo !== oldPhoto && res.payload.name === user.name) {
+          toast.success("Foto actualizada con éxito");
+        } else if (res.payload.name !== user.name && res.payload.photo === user.photo) {
+          toast.success("Nombre actualizado con éxito");
+        } else if (res.payload.name !== user.name && res.payload.photo !== oldPhoto) {
+          toast.success("Nombre y foto actualizados con éxito");
+        }
+      } else if (res.payload.name !== undefined) {
+        toast.success("Nombre actualizado con éxito");
+      } else if (res.payload.photo !== undefined) {
+        toast.success("Foto actualizada con éxito");
+      }
     }
-    if(!name){
-      return toast.error("Nuevo nombre no proporcionado");
-    }if (photo && photo.type) { // Verificar que photo y photo.mimetype estén definidos
-      nuevoNombre = `${user.id}_${Date.now()}.${photo.type.split('/')[1]}`;
-    }  
-    console.log(nuevoNombre)
-    const res = await editUser({ name, photo, photoName });
-    console.log(res)
   }
 
   const imageStyle = {
@@ -48,7 +61,7 @@ export default function FormDataUser (){
         <h3 className='mb-4' >Actualizar nombre y foto</h3>
       </div>
       <Image
-        src="http://localhost:4000/uploads/images/64fe508954b7e0fc1c490d18_1694554220408.png"
+        src={`${API_URL_PHOTOS}/${user.photo}`}
         alt={`${user.name}_photo`}
         style={imageStyle}
       />
@@ -68,7 +81,6 @@ export default function FormDataUser (){
                 <Form.Control
                     type="text"
                     ref={nameUserRef}
-                    required
                 />
         </Form.Group>
         <Button

@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv')
 const nodemailer = require('nodemailer')
+const fs = require('fs');
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
@@ -22,7 +23,7 @@ const { UserProfile } = require('../models/userProfile.model')
 // Utils
 const { catchAsync } = require('../utils/catchAsync')
 const { AppError } = require('../utils/appError')
-const { USER_STATUS } = require('../config/constants')
+const { USER_STATUS, APP_IMAGE_FOLDER } = require('../config/constants')
 const { sendRegisterNotification } = require('../services/email.service')
 const { validateUserService, loginUserService, authTokenService, registerService } = require('../services/auth.service')
 const { resendValidationService } = require('../services/auth.service')
@@ -57,28 +58,38 @@ const getUserById = catchAsync(async (req, res, next) => {
 
 const updateUser = catchAsync(async (req, res, next) => {
   const { userId } = req.headers.session
-  const { name, photoName } = req.body;
-  
+  const { name, photoName, oldPhoto } = req.body;
   if (req.files) {
     const photo = req.files.photo;
-    photo.mv(`C:/Users/zhark/Desktop/unilinkk/c13-14-n-node-react/backend/uploads/images/${photoName}`, function(err) {
+    if (fs.existsSync(`${APP_IMAGE_FOLDER}/${oldPhoto}`)) {
+      try {
+        fs.unlinkSync(`${APP_IMAGE_FOLDER}/${oldPhoto}`);
+        console.log('Foto eliminada correctamente');
+      } catch (error) {
+        console.error('Error al eliminar la foto:', error);
+      }
+    
+    }else {
+      console.log('Foto no encontrada');
+    }    
+    photo.mv(`${APP_IMAGE_FOLDER}/${photoName}`, function(err) {
       if (err)
         return res.status(500).send(err);
     });
     if(name){
       try{
-        await User.updateOne({_id: userId}, { name, photo: photoName});
-        res.status(200).json({ status: 'success_photo_name' });
+        await User.updateOne({_id: userId}, { name, photo: photoName });
+        res.status(200).json({ name, photo: photoName });
       }catch(error){
         res.status(200).json({status: 'Fail'})
       }
     }else {
-      res.status(200).json({ status: 'success_photo' });
+      res.status(200).json({ photo: photoName });
     }
   }else if (name) {
     try {
       await User.updateOne({ _id: userId }, { name });
-      res.status(200).json({ status: 'success' });
+      res.status(200).json({ name });
     } catch (error) {
       res.status(500).json({ status: 'Fail' });
     }
