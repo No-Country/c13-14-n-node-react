@@ -1,20 +1,30 @@
-import { ButtonPrimary, ButtonSecondary } from '../theme/buttons'
+import { ButtonSecondary } from '../theme/buttons'
 import Card from 'react-bootstrap/Card'
 import Image from 'react-bootstrap/Image'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
 import FloatingLabel from 'react-bootstrap/FloatingLabel'
 import { Col, Row } from 'react-bootstrap'
+import './profilecard.css'
+import { useState } from 'react'
 
 function ProfileCard () {
+  const [selectedFile, setSelectFile] = useState(null)
+  const handleChange = (event) => {
+    const file = event.target.files[0]
+    setSelectFile(file)
+  }
   return <>
         <Card className='p-4'>
             <Row>
                 {/* <Col style={{ display: 'flex', flexDirection: 'column' }}> */}
                 <Col className='d-flex flex-column align-items-center'>
-                        <Image height={105} width={105} src="https://yt3.googleusercontent.com/vRF8BHREiJ3Y16AbMxEi_oEuoQlnNNqGpgULuZ6zrWSAi24HcxX3Vko42RN8ToctH-G0qlWd=s900-c-k-c0x00ffffff-no-rj" roundedCircle />
+                    {selectedFile && <Image height={105} width={105} src={URL.createObjectURL(selectedFile)} roundedCircle /> }
                         <div className='d-flex gap-2 flex-column w-100 mt-4'>
-                        <ButtonPrimary>Subir imagen</ButtonPrimary>
+                        <div className="custom_file_input">
+                            <input type="file" id="fileInput" accept="image/png, image/jpeg" onChange={handleChange} />
+                            <label htmlFor="fileInput">Cargar archivo</label>
+                        </div>
                         <ButtonSecondary width="100%">Eliminar</ButtonSecondary>
                         </div>
                 </Col>
