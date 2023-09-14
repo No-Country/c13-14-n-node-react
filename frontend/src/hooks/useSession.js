@@ -16,7 +16,7 @@ export default function useSession () {
 
   const setSession = ({ solved, payload }) => {
     dispatch(setUser(solved ? { ...payload.user, userProfiles: payload.userProfiles } : USER_INICIAL_STATE))
-    dispatch(setProfile(solved ? { ...payload.profile, links: payload.links } : PROFILE_INICIAL_STATE))
+    dispatch(setProfile(solved ? payload.profile : PROFILE_INICIAL_STATE))
   }
 
   const authToken = async (token) => {

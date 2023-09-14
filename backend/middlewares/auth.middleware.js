@@ -9,8 +9,8 @@ const validateToken = (req, res, next) => {
     if (token) parts = token.split('.')
     if (parts.length !== 3) token = undefined
   }
-  if (!token) return res.status(406).json({ message: 'AUTH_FALSE' })
   const session = validToken(token)
+  if (!session) throw new Error('INVALID_TOKEN')
   req.headers.session = session
   next()
 }

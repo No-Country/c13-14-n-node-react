@@ -47,7 +47,7 @@ app.use(limiter)
 // Endpoints
 app.use('/api/v1/users', usersRouter)
 app.use('/api/v1/links', linksRouter)
-app.use('/api/v1/profile', profileRouter)
+app.use('/api/v1/profiles', profileRouter)
 app.use('/api/v1/theme', themeRouter)
 app.use('/api/v1/userprofile', userProfileRouter)
 

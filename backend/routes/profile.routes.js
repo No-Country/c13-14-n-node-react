@@ -1,16 +1,10 @@
-const express = require('express');
+const express = require('express')
+const { validateToken } = require('../middlewares/auth.middleware')
+const { createProfile, findProfile } = require('../controllers/profile.controller')
 
-const { protectToken } = require('../middlewares/users.middlewares');
+const router = express.Router()
 
-const {
-    createProfile, findAllProfile,
-} = require('../controllers/profile.controller');
+router.post('/', validateToken, createProfile)
+router.get('/:id', validateToken, findProfile)
 
-
-const router = express.Router();
-//router.use(protectToken);
-
-router.post('/', createProfile);
-router.get('/:id', findAllProfile);
-
-module.exports = { profileRouter: router };
+module.exports = { profileRouter: router }
