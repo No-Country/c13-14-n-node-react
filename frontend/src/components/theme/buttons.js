@@ -22,7 +22,6 @@ export const ButtonSecondary = styled.button`
   cursor: pointer;
   transition: 0.4s ease;
   color: black;
-  margin: 10px;
   &:hover {
     background: ${COLOR_BUTTON_SECONDARY_HOVER};
   }
