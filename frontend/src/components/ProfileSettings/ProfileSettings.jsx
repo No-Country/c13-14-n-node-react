@@ -5,7 +5,7 @@ import NewUserManager from './NewUserManager'
 import { FaTrashAlt } from 'react-icons/fa'
 import { BsCheckCircleFill } from 'react-icons/bs'
 import { BiSolidErrorCircle } from 'react-icons/bi'
-import DeleteProfileDelegation from './DeleteProfileDelegation'
+import DeleteUserManager from './DeleteUserManager'
 import useProfile from '../../hooks/useProfile'
 import DeleteProfile from './DeleteProfile'
 
@@ -15,8 +15,8 @@ export const ProfileSettings = () => {
   const handleCloseFromNew = () => setShowAddNewManagerModal(false)
 
   const { profile } = useProfile()
-  const [showDeleteProfileDelegationModal, setShowDeleteProfileDelegationModal] = useState(false)
-  const handleCloseFromDelete = () => setShowDeleteProfileDelegationModal(false)
+  const [showDeleteUserManagerModal, setShowDeleteUserManagerModal] = useState(false)
+  const handleCloseFromDelete = () => setShowDeleteUserManagerModal(false)
 
   const [showDeleteProfileModal, setShowDeleteProfileModal] = useState(false)
   const handleCloseFromDeleteProfile = () => setShowDeleteProfileModal(false)
@@ -50,7 +50,7 @@ export const ProfileSettings = () => {
                         )}
                   </td>
                   <td>
-                    <Button onClick={() => setShowDeleteProfileDelegationModal(profile._id)} className='btn btn-link'>
+                    <Button onClick={() => setShowDeleteUserManagerModal(profile.id)} className='btn btn-link'>
                       <FaTrashAlt style={{ color: 'black', fontSize: '25px' }} />
                     </Button>
                   </td>
@@ -61,7 +61,7 @@ export const ProfileSettings = () => {
 
         </Row>
         <NewUserManager show={showAddNewManagerModal} onHide={handleCloseFromNew} />
-        <DeleteProfileDelegation show={showDeleteProfileDelegationModal} onHide={handleCloseFromDelete} />
+        <DeleteUserManager show={showDeleteUserManagerModal} onHide={handleCloseFromDelete} profileId={profile.id} />
         <DeleteProfile show={showDeleteProfileModal} onHide={handleCloseFromDeleteProfile} profileId={profile.id} />
       </Container>
       <Container className='d-flex row gap-3 w-100 m-auto linksContainer'>
