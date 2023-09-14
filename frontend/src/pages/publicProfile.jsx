@@ -1,6 +1,6 @@
 import { Col, Container, Image, Row } from 'react-bootstrap'
 import useProfile from '../hooks/useProfile'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 import defaultImage from '../assets/user.jpg'
 
@@ -9,7 +9,6 @@ import SocialIcons from '../components/SocialIcons/SocialIcons'
 import { ButtonLink } from '../components/theme/buttons'
 
 export default function PublicProfile ({ nameSpace }) {
-  const [loader, setLoader] = useState(true)
   const { profile, loadPublicProfile } = useProfile()
 
   // Cargo el profile
@@ -19,12 +18,11 @@ export default function PublicProfile ({ nameSpace }) {
       .then(res => {
         if (!res.solved) window.location.href = 'http://localhost:5173'
       })
-      .finally(setLoader(false))
   }, [])
 
   return (
     <main>
-      {loader && <Loader/>}
+      {!profile && <Loader/>}
       <Container fluid className='public-backgraund min-vh-100'>
         <Row>
           <Col className='d-flex flex-column gap-2 mx-2 align-items-center mt-5'>
