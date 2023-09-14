@@ -4,6 +4,7 @@ import { useState } from 'react'
 import NewUserManager from './NewUserManager'
 import { FaTrashAlt } from 'react-icons/fa'
 import { BsCheckCircleFill } from 'react-icons/bs'
+import { BiSolidErrorCircle } from 'react-icons/bi'
 import DeleteProfileDelegation from './DeleteProfileDelegation'
 import useProfile from '../../hooks/useProfile'
 import DeleteProfile from './DeleteProfile'
@@ -30,31 +31,34 @@ export const ProfileSettings = () => {
         </Row>
         <Row className='d-flex gap-3'>
           {/* Mapear las delegaciones */}
-          <Table striped bordered hover>
+          <Table striped bordered hover className="text-center align-middle">
             <thead>
               <tr>
-                <th className='homeText text-center'>Email</th>
-                <th className='homeText text-center'>Estado</th>
+                <th className='homeText'>Email</th>
+                <th className='homeText'>Estado</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
               {profile.profileUsers.map(user => user.rol === 'manager' && (
                 <tr key={user.email}>
-                  <td className="text-center">{user.email}</td>
-                  <td className="text-center">
+                  <td>{user.email}</td>
+                  <td>
                     {user.status === 'accepted'
-                      ? <BsCheckCircleFill style={{ color: 'green', fontSize: '30px' }} />
-                      : <Button>Aca</Button>
-                    }
+                      ? (<BsCheckCircleFill style={{ color: 'green', fontSize: '30px' }} title="Aceptado" />)
+                      : (<BiSolidErrorCircle style={{ color: 'red', fontSize: '30px' }} title="Pendiente" />
+                        )}
                   </td>
-                  <td className="text-center">
-                    <Button onClick={() => setShowDeleteProfileDelegationModal(profile._id)} className='' variant=''><FaTrashAlt style={{ color: 'red', fontSize: '25px' }} /></Button>
+                  <td>
+                    <Button onClick={() => setShowDeleteProfileDelegationModal(profile._id)} className='btn btn-link'>
+                      <FaTrashAlt style={{ color: 'black', fontSize: '25px' }} />
+                    </Button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </Table>
+
         </Row>
         <NewUserManager show={showAddNewManagerModal} onHide={handleCloseFromNew} />
         <DeleteProfileDelegation show={showDeleteProfileDelegationModal} onHide={handleCloseFromDelete} />
