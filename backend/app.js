@@ -1,3 +1,6 @@
+const path = require('path');
+const fs = require('fs');
+
 const express = require('express');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
@@ -13,25 +16,21 @@ const { linksRouter } = require('./routes/links.routes');
 const { profileRouter } = require('./routes/profile.routes');
 const { themeRouter } = require('./routes/theme.routes');
 const { userProfileRouter } = require('./routes/userProfileRouter.routes');
-const fs = require('fs');
 const fileUpload = require('express-fileupload');
-const path = require('path');
+const { APP_IMAGE_FOLDER } = require('./config/constants');
 
 // Init express app
 const app = express();
 
-const dir = path.join(__dirname, 'uploads', 'images');
-
-app.use(fileUpload({createParentPath: dir}));
+console.log(APP_IMAGE_FOLDER, !fs.existsSync(APP_IMAGE_FOLDER))
+// Creo la carpeta si no existe
+if (!fs.existsSync(APP_IMAGE_FOLDER))  fs.mkdirSync(APP_IMAGE_FOLDER)
+app.use(fileUpload());
 
 // Development Mode
 if (process.env.DEV) {
   const morgan = require('morgan')
   app.use(morgan('dev'))
-}
-
-if (!fs.existsSync(dir)){
-  fs.mkdirSync(dir);
 }
 
 // Enable CORS
