@@ -40,7 +40,8 @@ const findSessionDataService = async (user) => {
     id: user._id.toString(),
     name: user?.name,
     email: user.email,
-    status: user.status
+    status: user.status,
+    photo: user.photo
   }
 
   return {

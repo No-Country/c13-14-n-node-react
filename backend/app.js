@@ -15,20 +15,20 @@ const { themeRouter } = require('./routes/theme.routes');
 const { userProfileRouter } = require('./routes/userProfileRouter.routes');
 const fs = require('fs');
 const fileUpload = require('express-fileupload');
+const path = require('path');
 
 // Init express app
 const app = express();
 
-app.use(fileUpload());
+const dir = path.join(__dirname, 'uploads', 'images');
+
+app.use(fileUpload({createParentPath: dir}));
 
 // Development Mode
 if (process.env.DEV) {
   const morgan = require('morgan')
   app.use(morgan('dev'))
 }
-
-const dir = __dirname + '/uploads/images';
-
 
 if (!fs.existsSync(dir)){
   fs.mkdirSync(dir);
@@ -55,7 +55,7 @@ const limiter = rateLimit({
 
 app.use(limiter);
 
-app.use('/uploads/images', express.static('uploads/images'))
+app.use('/api/v1/uploads/images', express.static('uploads/images'))
 
 // Endpoints
 app.use('/api/v1/users', usersRouter);
