@@ -1,21 +1,19 @@
 import { Button, Modal } from 'react-bootstrap'
-import useLinks from '../../hooks/useLinks'
 import toast, { Toaster } from 'react-hot-toast'
 
-export default function DeleteLink ({ show, onHide, linkId }) {
-  const { deleteLink } = useLinks()
+export default function DeleteProfileDelegation ({ show, onHide }) {
+//   const { deleteDelegation } = useDelegations()
 
   const handleDeleteLink = async (event) => {
     event.preventDefault()
-    const res = await deleteLink(linkId)
-    res.solved ? handleSolved() : toast.error(res.payload.message)
+    // const res = await deleteDelegation()
+    // res.solved ? handleSolved() : toast.error(res.payload.message)
   }
 
-  const handleSolved = () => {
-    console.log('muy bien')
-    toast.success('Link eliminado con éxito...', { position: 'top-center' })
-    setTimeout(onHide, 1000)
-  }
+  //   const handleSolved = () => {
+  //     toast.success('Delegación eliminada con éxito...', { position: 'top-center' })
+  //     setTimeout(onHide, 1000)
+  //   }
 
   return (
     <Modal show={show} onHide={onHide}>
@@ -29,7 +27,7 @@ export default function DeleteLink ({ show, onHide, linkId }) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className='modalBody py-4'>
-        ¿Estás seguro de eliminar este link?
+        ¿Estás seguro de eliminar esta delegación?
       </Modal.Body>
       <Modal.Footer className='modalBody'>
         <Button variant='secondary' onClick={onHide}>

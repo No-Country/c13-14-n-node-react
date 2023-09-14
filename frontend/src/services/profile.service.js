@@ -23,3 +23,14 @@ export const loadProfileService = async (id) => {
     return { solved: false, payload: message }
   }
 }
+
+export const deleteProfilefileService = async (id) => {
+  try {
+    const headers = authTokenHeader()
+    const res = await axios.delete(`${API_URL_PROFILES}/${id}`, { headers })
+    return { solved: true, payload: res.data }
+  } catch (error) {
+    const message = error?.response?.data?.message || 'SERVER_ERROR'
+    return { solved: false, payload: message }
+  }
+}

@@ -1,27 +1,15 @@
-const { UserProfile } = require('../models/userProfile.model')
+// const { UserProfile } = require('../models/userProfile.model')
+const { User } = require('../models/user.model')
+
 const { createToken } = require('../libs/token')
 
 const { findProfileService } = require('./profile.service')
+const { findUserProfilesService } = require('./userProfiles.service')
 
 const findSessionDataService = async (user) => {
   let profile
 
-  // Busco todos los userProfile del usuario que tenga status = accepted
-  let userProfiles = await UserProfile.find({ user: user.id, status: 'accepted' })
-    .populate({
-      path: 'profile',
-      select: 'nameSpace rol status'
-    }).lean()
-
-  // Le doy formato de salida
-  userProfiles = userProfiles.map(item => {
-    return {
-      id: item.profile._id.toString(),
-      nameSpace: item.profile.nameSpace,
-      rol: item.rol,
-      status: item.status
-    }
-  })
+  const userProfiles = await findUserProfilesService({user:user.id, status:'accepted'})
 
   // Verifico que el usuario tenga acceso al perfil
   if (user?.profile) {
@@ -50,5 +38,8 @@ const findSessionDataService = async (user) => {
     token
   }
 }
+// const findUserByEmailService = async (email) =>{
+//   return await User.findOne( {email} )
+// }
 
 module.exports = { findSessionDataService }

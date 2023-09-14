@@ -7,6 +7,7 @@ import Toolbar from '@/components/Toolbar'
 import LinksList from '@/components/LinksList/LinksList'
 import Previewer from '@/components/previewer/Previewer'
 import ListProfiles from '@/components/UserProfiles/ListProfiles'
+import { ProfileSettings } from '../components/ProfileSettings/ProfileSettings'
 
 export default function AdminPage () {
   const [tab, setTab] = useState(1)
@@ -23,8 +24,8 @@ export default function AdminPage () {
             <Col sm={12} lg={8}>
               { tab === 1 && <ListProfiles setTab={setTab} /> }
               { tab === 2 && <LinksList/> }
-              { tab === 3 && <h2>Apariencia</h2> }
-              { tab === 4 && <h2>Settings</h2> }
+              { tab === 3 && <>Apariencia</> }
+              { tab === 4 && <ProfileSettings/> }
             </Col>
             <Col sm={12} lg={4} className='d-flex justify-content-center'>
               <Previewer/>

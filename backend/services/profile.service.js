@@ -4,6 +4,8 @@ const { UserProfile } = require('../models/userProfile.model')
 
 // Services
 const { linksProfileService } = require('./links.service')
+const { findProfileUsersService } = require('./userProfiles.service')
+
 
 const createProfileService = async (nameSpace, user) => {
   const existProfileName = await Profile.findOne({ nameSpace })
@@ -24,14 +26,17 @@ const findProfileService = async (idProfile) => {
   // Busco los links del perfil
   const links = await linksProfileService(idProfile)
 
+  const profileUsers = await findProfileUsersService({ profile: idProfile })
+ 
   const profileFormater = {
     id: profile._id.toString(),
     nameSpace: profile.nameSpace,
     body: profile.body,
     status: profile.status,
-    links
+    links,
+    profileUsers
   }
-
+console.log(profileFormater)
   return profileFormater
 }
 

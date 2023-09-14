@@ -10,7 +10,6 @@ import NewLink from '../LinksFunctions/NewLink'
 export default function LinksList () {
   const { links } = useLinks()
   const [showAddLinkModal, setShowAddLinkModal] = useState(false)
-
   const handleCloseFromNew = () => setShowAddLinkModal(false)
 
   return (
