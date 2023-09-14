@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { API_URL_LOGIN, API_URL_REGISTER, API_URL_RESEND, API_URL_SESSION, API_URL_VALIDATE } from '../config/constants'
+import { authTokenHeader } from '../libs/api'
 
 const validateToken = async (url, token) => {
   try {

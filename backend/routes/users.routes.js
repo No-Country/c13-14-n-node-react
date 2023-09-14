@@ -17,10 +17,13 @@ const {
   login,
   authToken,
   resendValidationEmail,
-  validateUser
+  validateUser,
+  changeUserPassword
 } = require('../controllers/users.controller')
 
-const { createUserValidations, checkValidations } = require('../middlewares/validations.middlewares')
+const { validateToken } = require('../middlewares/auth.middleware');
+
+const { createUserValidations, checkValidations, changePasswordValidations } = require('../middlewares/validations.middlewares')
 
 const router = express.Router()
 
@@ -38,6 +41,11 @@ router.post('/resend', resendValidationEmail)
 
 // Login con token
 router.post('/auth/:token', authToken)
+
+// Cambio de contraseña
+router.post('/changePassword', changePasswordValidations, validateToken, changeUserPassword);
+
+router.post('/updateUser',validateToken ,updateUser);
 
 // Apply protectToken middleware
 router.use(protectToken)

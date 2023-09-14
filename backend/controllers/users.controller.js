@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
 
 // require('crypto').randomBytes(64).toString('hex')
 
-// Models
+// Models 
 const { User } = require('../models/user.model')
 const { Profile } = require('../models/profile.model')
 const { UserProfile } = require('../models/userProfile.model')
@@ -56,17 +56,37 @@ const getUserById = catchAsync(async (req, res, next) => {
 })
 
 const updateUser = catchAsync(async (req, res, next) => {
-  const { user } = req
-  const { name, password } = req.body
-  const id = req.params.id
-
-  try {
-    await user.updateOne({ _id: id }, { name, password })
-    res.status(200).json({ status: 'success' })
-  } catch (error) {
-    res.status(500).json({ status: 'Fail' })
+  const { userId } = req.headers.session
+  const { name, photoName } = req.body;
+  
+  if (req.files) {
+    const photo = req.files.photo;
+    photo.mv(`C:/Users/zhark/Desktop/unilinkk/c13-14-n-node-react/backend/uploads/images/${photoName}`, function(err) {
+      if (err)
+        return res.status(500).send(err);
+    });
+    if(name){
+      try{
+        await User.updateOne({_id: userId}, { name, photo: photoName});
+        res.status(200).json({ status: 'success_photo_name' });
+      }catch(error){
+        res.status(200).json({status: 'Fail'})
+      }
+    }else {
+      res.status(200).json({ status: 'success_photo' });
+    }
+  }else if (name) {
+    try {
+      await User.updateOne({ _id: userId }, { name });
+      res.status(200).json({ status: 'success' });
+    } catch (error) {
+      res.status(500).json({ status: 'Fail' });
+    }
+  } else {
+    // Manejar el caso en el que no se proporcionaron ni una foto ni un nombre
+    res.status(400).json({ status: 'Fail', message: 'Ninguna foto ni nombre proporcionados.' });
   }
-})
+});
 
 const deleteUser = catchAsync(async (req, res, next) => {
   const { user } = req
@@ -123,6 +143,20 @@ const resendValidationEmail = catchAsync(async (req, res, next) => {
   }
 })
 
+const changeUserPassword = catchAsync(async (req, res, next) => {
+  const { userId } = req.headers.session
+  const { password } = req.body;
+  try{
+    const salt = await bcrypt.genSalt(12);
+    const hashPassword = await bcrypt.hash(password, salt);
+    await User.updateOne({ _id: userId }, { password: hashPassword });
+    return res.status(200).json({message:'contraseña cambiada'})
+  }catch (error) {
+    return res.status(404).json({message:'Usuario No Encontrado'})
+  }
+
+});
+
 module.exports = {
   getAllUsers,
   createUser,
@@ -132,5 +166,6 @@ module.exports = {
   login,
   authToken,
   validateUser,
-  resendValidationEmail
+  resendValidationEmail,
+  changeUserPassword
 }
