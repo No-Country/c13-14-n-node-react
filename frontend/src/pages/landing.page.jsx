@@ -1,14 +1,14 @@
-import useLanguage from '../hooks/useLanguage'
 import { useNavigate } from 'react-router-dom'
-
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 
-import Logo from '../components/logo'
-import { APP_KEY_TOKEN, APP_URL_ADMIN, APP_URL_LOGIN, APP_URL_REGISTER } from '../config/constants'
-import useSession from '../hooks/useSession'
+import { APP_KEY_TOKEN, APP_URL_ADMIN, APP_URL_LOGIN, APP_URL_REGISTER } from '@/config/constants'
+import Logo from '@/components/logo'
+
+import useLanguage from '@/hooks/useLanguage'
+import useSession from '@/hooks/useSession'
 
 export default function LandinPage () {
   const { dictionaryWord } = useLanguage('landingPage')
