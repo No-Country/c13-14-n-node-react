@@ -3,8 +3,6 @@ const { catchAsync } = require('../utils/catchAsync')
 
 // models
 const { Profile } = require('../models/profile.model')
-const { UserProfile } = require('../models/userProfile.model')
-const { Link } = require('../models/link.model')
 
 // Services
 const { createProfileService, findProfileService } = require('../services/profile.service')
@@ -74,8 +72,6 @@ const deleteProfile = catchAsync(async (req, res) => {
     res.status(500).send({ error: 'Error interno del servidor' });
   }
 });
-
-
 
 module.exports = {
   createProfile,
