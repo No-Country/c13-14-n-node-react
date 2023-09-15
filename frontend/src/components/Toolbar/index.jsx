@@ -7,7 +7,7 @@ import useSession from '@/hooks/useSession'
 import { APP_URL_ADMIN } from '@/config/constants'
 import Logo from '@/components/Logo'
 import { useNavigate } from 'react-router-dom'
-import { APP_URL_ACCOUNT } from '../../config/constants'
+import { APP_URL_ACCOUNT } from '../../config/constants';
 
 export default function Toolbar ({ tab, setTab }) {
   const { user, logout } = useSession()
