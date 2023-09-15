@@ -8,6 +8,7 @@ import { BiSolidErrorCircle } from 'react-icons/bi'
 import DeleteUserManager from './DeleteUserManager'
 import useProfile from '../../hooks/useProfile'
 import DeleteProfile from './DeleteProfile'
+import './ProfileSettings.css'
 
 export const ProfileSettings = () => {
   // Agregar Perfiles
@@ -22,15 +23,14 @@ export const ProfileSettings = () => {
   const handleCloseFromDeleteProfile = () => setShowDeleteProfileModal(false)
   return (
     <>
-      <Container className='d-flex row gap-3 w-100 m-auto linksContainer'>
         <h2>Delegación de perfil</h2>
+      <Container className='my-5 d-flex row gap-3 w-75 m-auto addManegerContainer'>
         <Row className='col-12'>
           <ButtonPrimary onClick={() => setShowAddNewManagerModal(true)}>
             Agregar +
           </ButtonPrimary>
         </Row>
         <Row className='d-flex gap-3'>
-          {/* Mapear las delegaciones */}
           <Table striped bordered hover className="text-center align-middle">
             <thead>
               <tr>
@@ -64,9 +64,9 @@ export const ProfileSettings = () => {
         <DeleteUserManager show={showDeleteUserManagerModal} onHide={handleCloseFromDelete} profileId={profile.id} />
         <DeleteProfile show={showDeleteProfileModal} onHide={handleCloseFromDeleteProfile} profileId={profile.id} />
       </Container>
-      <Container className='d-flex row gap-3 w-100 m-auto linksContainer'>
         <h2>Eliminar perfil</h2>
-        <h4>Haz click en el siguiente botón para eliminar el perfil actual</h4>
+      <Container className='d-flex row gap-3 w-100 m-auto linksContainer'>
+        <h5>Haz click en el siguiente botón para eliminar el perfil: <b>{profile.nameSpace}</b>.</h5>
         <Button onClick={() => setShowDeleteProfileModal(profile.id)} className="w-50" variant='light' style={{ border: 'solid 1px', borderRadius: '20px' }}><b>Eliminar</b></Button>
       </Container>
     </>

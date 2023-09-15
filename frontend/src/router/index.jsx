@@ -29,7 +29,7 @@ const router = createBrowserRouter([
         element: <ProtectedRoute/>,
         children: [
           { path: '/admin', element: <Admin /> },
-          { path: '/admin/account', element: <Account /> },
+          { path: '/admin/account', element: <Account /> }
         ]
       }
     ]

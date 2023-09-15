@@ -3,13 +3,13 @@ import useProfiles from '../../hooks/useProfile'
 import toast, { Toaster } from 'react-hot-toast'
 
 export default function DeleteUserManager ({ show, onHide, profileId }) {
-  const { deleteUserManager } = useProfiles() // Solo desestructura deleteProfile
+  const { deleteUserManager } = useProfiles()
 
   const handleDeleteProfile = async (event) => {
     event.preventDefault()
     console.log(profileId)
     const res = await deleteUserManager(profileId)
-    console.log(res) // Agrega esta línea para ver la respuesta completa
+    console.log(res)
     if (res.solved) {
       handleSolved()
     } else {
