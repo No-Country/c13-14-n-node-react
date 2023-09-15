@@ -5,7 +5,7 @@ const { catchAsync } = require('../utils/catchAsync')
 const { Profile } = require('../models/profile.model')
 
 // Services
-const { createProfileService, findProfileService } = require('../services/profile.service')
+const { createProfileService, findProfileService, findNameSpaceProfileService, updateProfileService } = require('../services/profile.service')
 const { createToken } = require('../libs/token')
 
 // Crear un nuevo link
@@ -73,9 +73,35 @@ const deleteProfile = catchAsync(async (req, res) => {
   }
 });
 
+const findPublicProfile = catchAsync(async (req, res, next) => {
+  try {
+    const { nameSpace } = req.params
+    const profile = await findNameSpaceProfileService(nameSpace)
+    res.status(200).send(profile)    
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
+})
+
+const updateProfile = catchAsync(async (req, res, next) => {
+  try {
+    const { profileId } = req.headers.session
+
+    //! FALTAN VALIDACIONES
+    const newData = req.body
+    const updatedProfile = await updateProfileService(profileId, newData)
+    res.status(200).send(updatedProfile)    
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
+})
+
+
 module.exports = {
   createProfile,
   findProfile,
   findAllProfile,
-  deleteProfile
+  deleteProfile,
+  findPublicProfile,
+  updateProfile
 }

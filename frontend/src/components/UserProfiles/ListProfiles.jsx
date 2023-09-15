@@ -17,7 +17,7 @@ export default function ListProfiles ({ setTab }) {
   const handleSelection = (id) => {
     if (id === profile.id) return
     profileSelection(id)
-    setTab(2)
+    // setTab(2)
   }
 
   return (

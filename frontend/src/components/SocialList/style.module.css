@@ -1,0 +1,21 @@
+.text{
+  color: #000;
+  font-size: 16px;
+}
+
+.edit{
+  cursor: pointer;
+  transition: ease 0.3s;
+}
+
+
+.delete{
+  font-size: 22px;
+  transition: ease 0.3s;
+  margin-right: 20px;
+}
+
+.delete:hover{
+  cursor: pointer;
+  color: red;
+}

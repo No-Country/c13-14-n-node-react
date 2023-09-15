@@ -28,16 +28,48 @@ const findProfileService = async (idProfile) => {
 
   const profileUsers = await findProfileUsersService({ profile: idProfile })
  
-  const profileFormater = {
-    id: profile._id.toString(),
-    nameSpace: profile.nameSpace,
-    body: profile.body,
-    status: profile.status,
-    links,
-    profileUsers
-  }
-console.log(profileFormater)
-  return profileFormater
+  const formattedProfile = {...formatProfile(profile), links, profileUsers }
+
+  return formattedProfile
 }
 
-module.exports = { createProfileService, findProfileService }
+const findNameSpaceProfileService = async (nameSpace) =>{
+  const profile = await Profile.findOne({nameSpace})
+
+  if (!profile) throw new Error('PROFILE_NOT_FOUND')
+
+  // Busco los links del perfil
+  const idProfile = profile._id.toString()
+  const links = await linksProfileService(idProfile)
+
+  const formattedProfile = {...formatProfile(profile), links }
+
+  return formattedProfile
+}
+
+const updateProfileService = async (idProfile, newData) =>{
+  const profile = await Profile.findOneAndUpdate({_id:idProfile},newData)
+  console.log(idProfile, profile)
+  if(!profile) throw new Error('INVALID_TOKEN')
+  return formatProfile(profile)
+}
+
+const formatProfile = (profile) =>{
+  const idProfile = profile._id.toString()
+  return {
+    id: idProfile,
+    nameSpace: profile.nameSpace,
+    body: profile.body,
+    social: profile.social,
+    status: profile.status
+  }
+}
+
+
+
+module.exports = { 
+  createProfileService,
+  findProfileService,
+  findNameSpaceProfileService,
+  updateProfileService 
+}

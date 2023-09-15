@@ -1,4 +1,5 @@
 .previewer {
+  position: relative;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -10,4 +11,55 @@
   border: 11px solid #000;
   background: linear-gradient(180deg, #3D8488 20.83%, rgba(113, 72, 128, 0.79) 42.26%, rgba(140, 99, 158, 0.56) 53.25%, rgba(174, 152, 187, 0.34) 65.31%, rgba(202, 196, 211, 0.16) 73.98%, rgba(212, 213, 216, 0.04) 79.69%, rgba(212, 213, 216, 0.04) 84.9%, rgba(212, 214, 216, 0.03) 99.99%, rgba(217, 217, 217, 0.00) 100%);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.30);
+}
+
+.shareButton{
+  position: absolute;
+  font-size: 28px;
+  color: white;
+  top: 25px;
+  right: 25px;
+  cursor: pointer;
+}
+
+.shareMenu {
+  position: absolute;
+  top: 70px;
+  right: 10px;
+  width: 252px;
+  height: 105px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.22);
+  background: #FFF;
+  padding: 10px 10px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.menuContainer{
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  gap: 25px;
+  width: 221px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px solid #000;
+  background: #FFF;
+  text-align: center;
+}
+
+.btnCopy{
+  color: #000;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%;
+  background-color: transparent;
+  border: none;
 }

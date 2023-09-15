@@ -6,12 +6,9 @@ import NavDropdown from 'react-bootstrap/NavDropdown'
 import useSession from '@/hooks/useSession'
 import { APP_URL_ADMIN } from '@/config/constants'
 import Logo from '@/components/Logo'
-import { useNavigate } from 'react-router-dom'
-import { APP_URL_ACCOUNT } from '../../config/constants';
 
 export default function Toolbar ({ tab, setTab }) {
   const { user, logout } = useSession()
-  const navigate = useNavigate()
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
@@ -29,7 +26,7 @@ export default function Toolbar ({ tab, setTab }) {
           </Nav>
           <Nav>
             <NavDropdown title={user?.name || 'Usuario'} id="basic-nav-dropdown">
-              <NavDropdown.Item onClick={() => navigate(APP_URL_ACCOUNT)}>Configuración</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => setTab(5)}>Configuración</NavDropdown.Item>
               <NavDropdown.Divider onClick={logout}/>
               <NavDropdown.Item onClick={logout}>Cerrar Sesión</NavDropdown.Item>
             </NavDropdown>
