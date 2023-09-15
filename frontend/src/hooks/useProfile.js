@@ -55,26 +55,19 @@ export default function useProfile () {
   }
 
   const addUserManager = async (email) => {
-    const res = await createUserManagerService(email)
-    console.log(res)
+    try {
+      const res = await createUserManagerService(email)
+      return { solved: true, payload: res }
+    } catch (error) {
+      return { solved: false, payload: { message: error.message } }
+    }
   }
 
   const deleteUserManager = async (profileUserId, profileUserEmail) => {
     const res = await handleService(deleteUserManagerService(profileUserId, profileUserEmail))
-    // if (res.solved) {
-    //   if (userProfile && userProfile.userProfiles && Array.isArray(userProfile.userProfiles)) {
-    //     const updatedUserProfiles = userProfile.userProfiles.filter(userProfile =>
-    //       userProfile._id !== profileUserId || userProfile.email !== profileUserEmail
-    //     )
-
-    //     const newState = {
-    //       ...userProfile,
-    //       userProfiles: updatedUserProfiles
-    //     }
-
-    //     setProfile(newState)
-    //   }
-    // }
+    if (res.solved) {
+      console.log('OK')
+    }
     return res
   }
 
