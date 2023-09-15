@@ -1,14 +1,13 @@
-import SocialIcons from '../SocialIcons/SocialIcons'
-import { ButtonPrimary } from '../theme/buttons'
+import SocialList from '../SocialList'
 import ProfileCard from './ProfileCard'
 
 function Appearance () {
-  return <>
-        <h1>Apariencia</h1>
-        <ProfileCard />
-        <SocialIcons />
-        <ButtonPrimary>Guardar</ButtonPrimary>
-    </>
+  return (
+    <section>
+      <ProfileCard />
+      <SocialList />
+    </section>
+  )
 }
 
 export default Appearance

@@ -31,14 +31,14 @@ export default function PublicProfile ({ nameSpace }) {
                 @{profile.nameSpace}
               </h5>
               <p>{profile.body}</p>
-              {/* <SocialIcons/> */}
+              <SocialIcons/>
           </Col>
         </Row>
         <Row>
           <Col className='d-flex flex-column gap-2 mx-2 align-items-center mt-2'>
           { profile.links.map(link => link.status &&
           (
-            <ButtonLink key={link._id} width='300px'>
+            <ButtonLink key={link._id} width='500px'>
               {link.name}
             </ButtonLink>
           )) }

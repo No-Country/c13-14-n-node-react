@@ -33,6 +33,16 @@ export const APP_URL_VALIDATE = '/validate'
 export const APP_URL_ADMIN = '/admin'
 export const APP_URL_ACCOUNT = '/admin/account'
 
+export const SOCIAL_ICONS_URLS = {
+  instagram: 'https://www.instagram.com/',
+  twitter: 'https://twitter.com/',
+  facebook: 'https://www.facebook.com/',
+  linkedin: 'https://www.linkedin.com/in/',
+  youtube: 'https://www.youtube.com/c/',
+  twitch: 'https://twitch.tv/',
+  tiktok: 'https://www.tiktok.com/@'
+}
+
 // InicialStates
 export const USER_INICIAL_STATE = {
   id: null,
@@ -41,6 +51,16 @@ export const USER_INICIAL_STATE = {
   photo: null,
   userProfiles: []
 }
+
+export const INICIAL_SOCIAL_ICONS = {
+  instagram: '',
+  twitter: '',
+  linkedin: '',
+  youtube: '',
+  twitch: '',
+  tiktok: ''
+}
+
 export const PROFILE_INICIAL_STATE = {
   id: null,
   nameSpace: null,
@@ -48,6 +68,8 @@ export const PROFILE_INICIAL_STATE = {
   photo: null,
   body: null,
   delegateTo: [],
+  social: INICIAL_SOCIAL_ICONS,
   links: []
 }
+
 export const LINK_INICIAL_STATE = { name: '', urlEnlace: '' }

@@ -20,7 +20,10 @@ const locationLength = Number(import.meta.env.VITE_LOCATION_LENGTH) || 3 // perf
 
 const hostname = window.location.hostname
 const parts = hostname.split('.')
+console.log(parts)
 const subdomain = parts.length === locationLength ? parts[0] : null
+
+console.log(subdomain, window.location.hostname)
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

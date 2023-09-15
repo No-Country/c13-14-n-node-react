@@ -8,6 +8,11 @@ import { loginService, loginFromTokenService, validateUserService, resendEmailSe
 import useLoader from './useLoader'
 import { APP_KEY_TOKEN, PROFILE_INICIAL_STATE, USER_INICIAL_STATE } from '../config/constants'
 
+const social = {
+  facebook: 'cordoobez',
+  instagram: 'freiandres'
+}
+
 export default function useSession () {
   const user = useSelector(state => state.user)
   const { handleService } = useLoader()
@@ -16,7 +21,7 @@ export default function useSession () {
 
   const setSession = ({ solved, payload }) => {
     dispatch(setUser(solved ? { ...payload.user, userProfiles: payload.userProfiles } : USER_INICIAL_STATE))
-    dispatch(setProfile(solved ? payload.profile : PROFILE_INICIAL_STATE))
+    dispatch(setProfile(solved ? { ...payload.profile, social } : PROFILE_INICIAL_STATE))
   }
 
   const authToken = async (token) => {
@@ -46,7 +51,7 @@ export default function useSession () {
     setSession({})
   }
 
-  const changePassword = async(password, email) =>{
+  const changePassword = async (password, email) => {
     const res = await handleService(changePasswordService, password, email)
   }
 

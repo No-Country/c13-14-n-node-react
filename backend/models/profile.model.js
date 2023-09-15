@@ -14,6 +14,10 @@ const profileSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
     required: false
+  },
+  social: {
+    type: Array,
+    default: [],
   }
 })
 

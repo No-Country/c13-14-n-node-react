@@ -58,6 +58,7 @@ export default function useProfile () {
 
   const loadPublicProfile = async (nameSpace) => {
     const res = await findPublicProfileService(nameSpace)
+    console.log(res)
     res.solved && setProfile(res.payload)
     return res
   }
