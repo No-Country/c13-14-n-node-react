@@ -14,7 +14,7 @@ export default function useUser () {
     if (res.solved) {
       // Busco el id y reemplazo los nuevos datos recibidos
       const newData = res.payload
-      const newState = {...user, ...newData}
+      const newState = { ...user, ...newData }
       console.log(newState)
       dispatch(setUser(newState))
     }
@@ -22,7 +22,7 @@ export default function useUser () {
   }
 
   const editPassword = async (password) => {
-    return await handleService(changePasswordService, {password})
+    return await handleService(changePasswordService, { password })
   }
 
   const handleService = async (service, param) => {

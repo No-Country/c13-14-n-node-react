@@ -16,8 +16,8 @@ const profileSchema = new mongoose.Schema({
     required: false
   },
   social: {
-    type: Array,
-    default: [],
+    type: Object,
+    default: {},
   }
 })
 

@@ -31,7 +31,7 @@ export default function PublicProfile ({ nameSpace }) {
                 @{profile.nameSpace}
               </h5>
               <p>{profile.body}</p>
-              <SocialIcons/>
+              <SocialIcons social={profile.social}/>
           </Col>
         </Row>
         <Row>

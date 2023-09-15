@@ -6,30 +6,35 @@ import { CiInstagram } from 'react-icons/ci'
 import { FiTwitter } from 'react-icons/fi'
 import { PiTiktokLogoLight } from 'react-icons/pi'
 import { GrEdit } from 'react-icons/gr'
+import { BsFacebook } from 'react-icons/bs'
 import { MdDeleteForever } from 'react-icons/md'
 
 import useProfile from '../../hooks/useProfile'
-import { BsFacebook } from 'react-icons/bs'
 import { useState } from 'react'
 import { ButtonPrimary } from '../theme/buttons'
 import { SOCIAL_ICONS_URLS } from '../../config/constants'
 import { textCapitalize } from '../../libs/text'
 
 export default function SocialList () {
-  const { profile: { social } } = useProfile()
+  const { profile: { social }, updateSocialIcon } = useProfile()
   const [show, setShow] = useState(false)
-  const [selected, setSelected] = useState('')
+  const [socialSelected, setSocialSelected] = useState('')
+  const [socialValue, setSocialValue] = useState('')
   const [link, setLink] = useState('')
 
   const handleEdit = (socialName) => {
     console.log(SOCIAL_ICONS_URLS[socialName])
-    setSelected(socialName)
+    setSocialSelected(socialName)
     setLink(SOCIAL_ICONS_URLS[socialName])
+    setSocialValue(social[socialName])
     setShow(true)
   }
   const handleClose = () => setShow(false)
-  
-  const handleUpdate = ()
+
+  const handleUpdatesocialValue = () => {
+    setShow(false)
+    updateSocialIcon({ socialName: socialSelected, value: socialValue })
+  }
 
   return (
     <section className='mt-4'>
@@ -41,7 +46,12 @@ export default function SocialList () {
               <h5 className={style.text}>Instagram</h5>
             </div>
             <div>
-              {social.instagram && <MdDeleteForever className={style.delete}/>}
+              {social.instagram &&
+                <MdDeleteForever
+                  onClick={() => updateSocialIcon({ socialName: 'instagram', value: '' })}
+                  className={style.delete}
+                />
+              }
               <GrEdit onClick={() => handleEdit('instagram')} className={style.edit} />
             </div>
           </div>
@@ -52,7 +62,12 @@ export default function SocialList () {
               <h5 className={style.text}>Facebook</h5>
             </div>
             <div>
-              {social.facebook && <MdDeleteForever className={style.delete}/>}
+              {social.facebook &&
+                <MdDeleteForever
+                  onClick={() => updateSocialIcon({ socialName: 'facebook', value: '' })}
+                  className={style.delete}
+                />
+              }
               <GrEdit onClick={() => handleEdit('facebook')} className={style.edit} />
             </div>
           </div>
@@ -63,23 +78,34 @@ export default function SocialList () {
               <h5 className={style.text}>Twitter</h5>
             </div>
             <div>
-              {social.twitter && <MdDeleteForever className={style.delete}/>}
+              {social.twitter &&
+                <MdDeleteForever
+                  onClick={() => updateSocialIcon({ socialName: 'twitter', value: '' })}
+                  className={style.delete}
+                  />
+              }
               <GrEdit onClick={() => handleEdit('twitter')} className={style.edit} />
             </div>
           </div>
-
           <div className='d-flex align-items-center justify-content-between  mx-4 gap-2 mx-2'>
             <div className='d-flex align-items-center gap-3'>
               <PiTiktokLogoLight size={36}/>
               <h5 className={style.text}>Tiktok</h5>
             </div>
-            {social.tiktok && <MdDeleteForever className={style.delete}/>}
-            <GrEdit onClick={() => handleEdit('tiktok')} className={style.edit} />
+            <div>
+              {social.tiktok &&
+                <MdDeleteForever
+                  onClick={() => updateSocialIcon({ socialName: 'tiktok', value: '' })}
+                  className={style.delete}
+                />
+              }
+              <GrEdit onClick={() => handleEdit('tiktok')} className={style.edit} />
+            </div>
           </div>
       </Card>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>{textCapitalize(selected)}</Modal.Title>
+          <Modal.Title>{textCapitalize(socialSelected)}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <InputGroup className="mb-3">
@@ -88,12 +114,13 @@ export default function SocialList () {
               type="text"
               placeholder='perfil'
               autoFocus
-              value={social[selected]}
+              value={socialValue}
+              onChange={(e) => setSocialValue(e.target.value)}
             />
           </InputGroup>
         </Modal.Body>
         <Modal.Footer>
-          <ButtonPrimary onClick={handleUpdate}>
+          <ButtonPrimary onClick={handleUpdatesocialValue}>
             Guardar
           </ButtonPrimary>
         </Modal.Footer>

@@ -6,12 +6,7 @@ import { setProfile } from '../reducers/profile.slice'
 import { loginService, loginFromTokenService, validateUserService, resendEmailService, registerService } from '../services/auth.service'
 
 import useLoader from './useLoader'
-import { APP_KEY_TOKEN, PROFILE_INICIAL_STATE, USER_INICIAL_STATE } from '../config/constants'
-
-const social = {
-  facebook: 'cordoobez',
-  instagram: 'freiandres'
-}
+import { APP_KEY_TOKEN, PROFILE_INICIAL_STATE, USER_INICIAL_STATE, INICIAL_SOCIAL_ICONS } from '../config/constants'
 
 export default function useSession () {
   const user = useSelector(state => state.user)
@@ -21,6 +16,7 @@ export default function useSession () {
 
   const setSession = ({ solved, payload }) => {
     dispatch(setUser(solved ? { ...payload.user, userProfiles: payload.userProfiles } : USER_INICIAL_STATE))
+    const social = payload.profile.social || INICIAL_SOCIAL_ICONS
     dispatch(setProfile(solved ? { ...payload.profile, social } : PROFILE_INICIAL_STATE))
   }
 
@@ -52,7 +48,7 @@ export default function useSession () {
   }
 
   const changePassword = async (password, email) => {
-    const res = await handleService(changePasswordService, password, email)
+    // return await handleService(changePasswordService, password, email)
   }
 
   return { user, login, logout, authToken, validateUser, setSession, resendEmail, changePassword, register }

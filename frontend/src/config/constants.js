@@ -54,10 +54,8 @@ export const USER_INICIAL_STATE = {
 
 export const INICIAL_SOCIAL_ICONS = {
   instagram: '',
+  facebook: '',
   twitter: '',
-  linkedin: '',
-  youtube: '',
-  twitch: '',
   tiktok: ''
 }
 

@@ -22,7 +22,6 @@ const { APP_IMAGE_FOLDER } = require('./config/constants');
 // Init express app
 const app = express();
 
-console.log(APP_IMAGE_FOLDER, !fs.existsSync(APP_IMAGE_FOLDER))
 // Creo la carpeta si no existe
 if (!fs.existsSync(APP_IMAGE_FOLDER))  fs.mkdirSync(APP_IMAGE_FOLDER)
 app.use(fileUpload());

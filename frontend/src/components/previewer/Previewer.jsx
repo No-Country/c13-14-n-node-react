@@ -23,7 +23,7 @@ export default function Previewer () {
             </h5>
           </Link>
           <p>Acá va la bio</p>
-          <SocialIcons/>
+          <SocialIcons social={profile.social}/>
         </div>
         <div className='d-flex flex-column gap-2 mx-2 align-items-center mt-2'>
         { links.map(link => link.status &&

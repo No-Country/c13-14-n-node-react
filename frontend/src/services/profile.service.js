@@ -35,6 +35,17 @@ export const deleteProfilefileService = async (id) => {
   }
 }
 
+export const updateProfileService = async (newData) => {
+  try {
+    const headers = authTokenHeader()
+    const res = await axios.put(API_URL_PROFILES, newData, { headers })
+    return { solved: true, payload: res.data }
+  } catch (error) {
+    const message = error?.response?.data?.message || 'SERVER_ERROR'
+    return { solved: false, payload: message }
+  }
+}
+
 export const findPublicProfileService = async (nameSpace) => {
   try {
     const res = await axios.get(`${API_URL_PUBLIC_PROFILE}/${nameSpace}`)
