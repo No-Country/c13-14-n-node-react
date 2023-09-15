@@ -4,11 +4,13 @@ import useLoader from './useLoader'
 import { createProfileService, loadProfileService, deleteProfilefileService, findPublicProfileService, updateProfileService } from '../services/profile.service'
 import { APP_KEY_TOKEN, INICIAL_SOCIAL_ICONS, PROFILE_INICIAL_STATE } from '../config/constants'
 import useUserProfiles from './useUserProfiles'
-import { createUserManagerService } from '../services/userProfile.service'
+import { createUserManagerService, deleteUserManagerService } from '../services/userProfile.service'
 
 export default function useProfile () {
   const profile = useSelector(state => state.profile)
   const { addUserProfile } = useUserProfiles()
+  const userProfile = useSelector(state => state.userProfile)
+
   const { handleService } = useLoader()
   const dispatch = useDispatch()
 
@@ -38,10 +40,7 @@ export default function useProfile () {
     }
     return res
   }
-  const addUserManager = async (email) => {
-    const res = await createUserManagerService(email)
-    console.log(res)
-  }
+
   const deleteProfile = async (id) => {
     const res = await handleService(deleteProfilefileService, id)
     if (res.solved) {
@@ -72,6 +71,26 @@ export default function useProfile () {
     return res
   }
 
+  const addUserManager = async (email) => {
+    const res = await createUserManagerService(email)
+    console.log(res)
+  }
+
+  const deleteUserManager = async (id) => {
+    const res = await handleService(deleteUserManagerService, id)
+    if (res.solved) {
+      // Verificar si la propiedad "profiles" existe en el objeto "profile"
+      if (userProfile && userProfile.userProfiles && Array.isArray(userProfile.userProfiles)) {
+        const newState = {
+          ...userProfile,
+          userProfile: userProfile.userProfiles.filter(userProfile => userProfile._id !== id)
+        }
+        setProfile(newState)
+      }
+    }
+    return res
+  }
+
   return {
     profile,
     setProfile,
@@ -80,6 +99,7 @@ export default function useProfile () {
     addUserManager,
     deleteProfile,
     loadPublicProfile,
-    updateSocialIcon
+    updateSocialIcon,
+    deleteUserManager
   }
 }

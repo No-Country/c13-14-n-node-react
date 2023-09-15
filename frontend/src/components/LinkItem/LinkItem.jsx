@@ -27,10 +27,10 @@ export default function LinkItem ({ link }) {
   return (
     <>
       <Card>
-        <Card.Body className='px-3'>
-          <div className='d-flex justify-content-between border rounded px-3 py-2 tittleContainer'>
+        <Card.Body className='px-3 cardBody'>
+          <div className='d-flex justify-content-between px-1 tittleContainer align-items-center'>
             <Card.Title className='d-flex'>
-              <span className=''>{link.name}</span>
+              <span className='px-3 pt-2 d-flex align-items-center'>{link.name}</span>
               <Button onClick={() => setShowUpdateLinkModal(link)} className='mx-3' variant=''>
                 <MdOutlineModeEditOutline />
               </Button>
@@ -44,7 +44,7 @@ export default function LinkItem ({ link }) {
             />
           </div>
           <div className='d-flex justify-content-between'>
-            <Link to={link.urlEnlace}>
+            <Link className='url-link' to={link.urlEnlace}>
               <Card.Text className='m-2'>{link.urlEnlace.length > 35 ? `${link.urlEnlace.substring(0, 35)}...` : link.urlEnlace}</Card.Text>
             </Link>
             <Button onClick={() => setShowDeleteLinkModal(link._id)} className='' variant=''>

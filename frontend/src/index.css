@@ -128,7 +128,9 @@
 
 .tittleContainer {
   background-color: rgb(187, 187, 187);
-
+  height: 35px;
+  padding: 0px ;
+  border-radius: 15px;
 }
 
 .addTittleButton {
