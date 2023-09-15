@@ -20,6 +20,8 @@ export default function PublicProfile ({ nameSpace }) {
       })
   }, [])
 
+  const handleNavigate = (url) => window.open(url, '_blank')
+
   return (
     <main>
       {!profile && <Loader/>}
@@ -38,7 +40,10 @@ export default function PublicProfile ({ nameSpace }) {
           <Col className='d-flex flex-column gap-2 mx-2 align-items-center mt-2'>
           { profile.links.map(link => link.status &&
           (
-            <ButtonLink key={link._id} width='500px'>
+            <ButtonLink
+              key={link._id} width='500px'
+              onClick={() => handleNavigate(link.urlEnlace)}
+            >
               {link.name}
             </ButtonLink>
           )) }

@@ -19,6 +19,8 @@ export default function Previewer () {
 
   const handleShow = () => setShowShare(!showShare)
 
+  const handleNavigate = (url) => window.open(url, '_blank')
+
   return (
     <div className={styles.previewer}>
         <FiShare2 onClick={handleShow} className={styles.shareButton}/>
@@ -36,7 +38,11 @@ export default function Previewer () {
         <div className='d-flex flex-column gap-2 mx-2 align-items-center mt-2'>
         { links.map(link => link.status &&
           (
-          <ButtonLink key={link._id} width='220px'>
+          <ButtonLink
+            key={link._id}
+            width='220px'
+            onClick={() => handleNavigate(link.urlEnlace)}
+          >
             {link.name}
           </ButtonLink>
           )) }
