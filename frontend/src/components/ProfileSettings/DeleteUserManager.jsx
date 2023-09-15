@@ -2,13 +2,12 @@ import { Button, Modal } from 'react-bootstrap'
 import useProfiles from '../../hooks/useProfile'
 import toast, { Toaster } from 'react-hot-toast'
 
-export default function DeleteUserManager ({ show, onHide, profileId }) {
+export default function DeleteUserManager ({ show, onHide, profileUserId, profileUserEmail }) {
   const { deleteUserManager } = useProfiles()
 
   const handleDeleteProfile = async (event) => {
     event.preventDefault()
-    console.log(profileId)
-    const res = await deleteUserManager(profileId)
+    const res = await deleteUserManager(profileUserId, profileUserEmail)
     console.log(res)
     if (res.solved) {
       handleSolved()

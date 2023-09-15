@@ -17,13 +17,20 @@ export const ProfileSettings = () => {
 
   const { profile } = useProfile()
   const [showDeleteUserManagerModal, setShowDeleteUserManagerModal] = useState(false)
-  const handleCloseFromDelete = () => setShowDeleteUserManagerModal(false)
+  const [selectedUserId, setSelectedUserId] = useState(null)
+  const [selectedUserEmail, setSelectedUserEmail] = useState(null)
+
+  const handleCloseFromDelete = () => {
+    setShowDeleteUserManagerModal(false)
+    setSelectedUserId(null)
+    setSelectedUserEmail(null)
+  }
 
   const [showDeleteProfileModal, setShowDeleteProfileModal] = useState(false)
   const handleCloseFromDeleteProfile = () => setShowDeleteProfileModal(false)
   return (
     <>
-        <h2>Delegación de perfil</h2>
+      <h2>Delegación de perfil</h2>
       <Container className='my-5 d-flex row gap-3 w-75 m-auto addManegerContainer'>
         <Row className='col-12'>
           <ButtonPrimary onClick={() => setShowAddNewManagerModal(true)}>
@@ -50,7 +57,14 @@ export const ProfileSettings = () => {
                         )}
                   </td>
                   <td>
-                    <Button onClick={() => setShowDeleteUserManagerModal(profile.id)} className='btn btn-link'>
+                    <Button
+                      onClick={() => {
+                        setSelectedUserId(user.id)
+                        setSelectedUserEmail(user.email)
+                        setShowDeleteUserManagerModal(true)
+                      }}
+                      className='btn btn-link'
+                    >
                       <FaTrashAlt style={{ color: 'black', fontSize: '25px' }} />
                     </Button>
                   </td>
@@ -61,10 +75,10 @@ export const ProfileSettings = () => {
 
         </Row>
         <NewUserManager show={showAddNewManagerModal} onHide={handleCloseFromNew} />
-        <DeleteUserManager show={showDeleteUserManagerModal} onHide={handleCloseFromDelete} profileId={profile.id} />
+        <DeleteUserManager show={showDeleteUserManagerModal} onHide={handleCloseFromDelete} profileUserId={selectedUserId} profileUserEmail={selectedUserEmail} />
         <DeleteProfile show={showDeleteProfileModal} onHide={handleCloseFromDeleteProfile} profileId={profile.id} />
       </Container>
-        <h2>Eliminar perfil</h2>
+      <h2>Eliminar perfil</h2>
       <Container className='d-flex row gap-3 w-100 m-auto linksContainer'>
         <h5>Haz click en el siguiente botón para eliminar el perfil: <b>{profile.nameSpace}</b>.</h5>
         <Button onClick={() => setShowDeleteProfileModal(profile.id)} className="w-50" variant='light' style={{ border: 'solid 1px', borderRadius: '20px' }}><b>Eliminar</b></Button>

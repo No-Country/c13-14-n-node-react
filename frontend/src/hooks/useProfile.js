@@ -10,7 +10,7 @@ export default function useProfile () {
   const { addUserProfile } = useUserProfiles()
 
   const profile = useSelector(state => state.profile)
-  const userProfile = useSelector(state => state.userProfile)
+  // const userProfile = useSelector(state => state.userProfile)
 
   const { handleService } = useLoader()
 
@@ -59,19 +59,24 @@ export default function useProfile () {
     console.log(res)
   }
 
-  const deleteUserManager = async (id) => {
-    const res = await handleService(deleteUserManagerService, id)
-    if (res.solved) {
-      // Verificar si la propiedad "profiles" existe en el objeto "profile"
-      if (userProfile && userProfile.userProfiles && Array.isArray(userProfile.userProfiles)) {
-        const newState = {
-          ...userProfile,
-          userProfile: userProfile.userProfiles.filter(userProfile => userProfile._id !== id)
-        }
-        setProfile(newState)
-      }
-    }
+  const deleteUserManager = async (profileUserId, profileUserEmail) => {
+    const res = await handleService(deleteUserManagerService(profileUserId, profileUserEmail))
+    // if (res.solved) {
+    //   if (userProfile && userProfile.userProfiles && Array.isArray(userProfile.userProfiles)) {
+    //     const updatedUserProfiles = userProfile.userProfiles.filter(userProfile =>
+    //       userProfile._id !== profileUserId || userProfile.email !== profileUserEmail
+    //     )
+
+    //     const newState = {
+    //       ...userProfile,
+    //       userProfiles: updatedUserProfiles
+    //     }
+
+    //     setProfile(newState)
+    //   }
+    // }
     return res
   }
+
   return { profile, setProfile, addProfile, profileSelection, deleteProfile, addUserManager, deleteUserManager }
 }

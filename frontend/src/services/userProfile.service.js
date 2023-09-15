@@ -12,10 +12,20 @@ export const createUserManagerService = async (email) => {
     return { solved: false, payload: message }
   }
 }
-export const deleteUserManagerService = async (id) => {
+export const deleteUserManagerService = async (profileUserId, profileUserEmail) => {
   try {
     const headers = authTokenHeader()
-    const res = await axios.delete(API_URL_USERPROFILES, { id }, { headers })
+    const data = {
+      profileUserId: profileUserId,
+      profileUserEmail: profileUserEmail
+    }
+
+    // En lugar de enviar los datos como query parameters, envíalos en el cuerpo (body) de la solicitud
+    const res = await axios.delete(API_URL_USERPROFILES, {
+      headers,
+      data
+    })
+
     return { solved: true, payload: res.data }
   } catch (error) {
     const message = error?.response?.data?.message || 'SERVER_ERROR'
