@@ -64,7 +64,7 @@ export default function useProfile () {
   }
 
   const deleteUserManager = async (profileUserId, profileUserEmail) => {
-    const res = await handleService(deleteUserManagerService(profileUserId, profileUserEmail))
+    const res = await deleteUserManagerService(profileUserId, profileUserEmail)
     if (res.solved) {
       console.log('OK')
     }
