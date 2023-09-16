@@ -1,11 +1,11 @@
-const express = require('express');
+const express = require('express')
 
 // Middlewares
 const {
   userExists,
   protectToken,
-  protectAccountOwner,
-} = require('../middlewares/users.middlewares');
+  protectAccountOwner
+} = require('../middlewares/users.middlewares')
 
 // Controller
 const {
@@ -18,37 +18,44 @@ const {
   authToken,
   resendValidationEmail,
   validateUser,
-  changeUserPassword,
-} = require('../controllers/users.controller');
+  changeUserPassword
+} = require('../controllers/users.controller')
 
-const { createUserValidations, checkValidations } = require('../middlewares/validations.middlewares');
+const { validateToken } = require('../middlewares/auth.middleware');
 
-const router = express.Router();
+const { createUserValidations, checkValidations, changePasswordValidations } = require('../middlewares/validations.middlewares')
 
-//Register
-router.post('/', createUserValidations, checkValidations, createUser);
+const router = express.Router()
 
-//Login
-router.post('/login', login);
+// Register
+router.post('/', createUserValidations, checkValidations, createUser)
 
-//Validate
-router.post('/validate/:token', validateUser )
+// Login
+router.post('/login', login)
+
+// Validate
+router.post('/validate/:token', validateUser)
 
 // Re-send email
-router.post('/resend', resendValidationEmail);
+router.post('/resend', resendValidationEmail)
 
 // Login con token
-router.post('/auth/:token', authToken);
+router.post('/auth/:token', authToken)
+
+// Cambio de contraseña
+router.post('/changePassword', changePasswordValidations, validateToken, changeUserPassword);
+
+router.post('/updateUser',validateToken ,updateUser);
 
 // Apply protectToken middleware
-router.use(protectToken);
+router.use(protectToken)
 
-router.get('/', getAllUsers);
+router.get('/', getAllUsers)
 
 router
   .route('/:id')
   .get(userExists, getUserById)
   .patch(userExists, protectAccountOwner, updateUser)
-  .delete(userExists, protectAccountOwner, deleteUser);
+  .delete(userExists, protectAccountOwner, deleteUser)
 
-module.exports = { usersRouter: router };
+module.exports = { usersRouter: router }

@@ -2,7 +2,7 @@ import { Container, Row } from 'react-bootstrap'
 import { useState } from 'react'
 import './LinksList.css'
 import LinkItem from '../LinkItem/LinkItem'
-import { ButtonPrimary, ButtonSecondary } from '../theme/buttons'
+import { ButtonPrimary } from '../theme/buttons'
 
 import useLinks from '../../hooks/useLinks'
 import NewLink from '../LinksFunctions/NewLink'
@@ -10,18 +10,14 @@ import NewLink from '../LinksFunctions/NewLink'
 export default function LinksList () {
   const { links } = useLinks()
   const [showAddLinkModal, setShowAddLinkModal] = useState(false)
-
   const handleCloseFromNew = () => setShowAddLinkModal(false)
 
   return (
-      <Container className='d-flex row gap-3 linksContainer'>
+      <Container className='d-flex row gap-3'>
         <Row className='col-12'>
           <ButtonPrimary onClick={() => setShowAddLinkModal(true)}>
             Agregar link +
           </ButtonPrimary>
-          {/* <ButtonSecondary>
-            Agregar Título
-          </ButtonSecondary> */}
         </Row>
         <Row className='d-flex gap-3'>
           {

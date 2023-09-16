@@ -12,6 +12,7 @@ export default function DeleteLink ({ show, onHide, linkId }) {
   }
 
   const handleSolved = () => {
+    console.log('muy bien')
     toast.success('Link eliminado con éxito...', { position: 'top-center' })
     setTimeout(onHide, 1000)
   }

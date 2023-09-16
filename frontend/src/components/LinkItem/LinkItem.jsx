@@ -6,6 +6,7 @@ import { MdOutlineModeEditOutline } from 'react-icons/md'
 import DeleteLink from '../LinksFunctions/DeleteLink'
 import UpdateLink from '../LinksFunctions/UpdateLink'
 import useLinks from '../../hooks/useLinks'
+import './LinkItem.css'
 
 export default function LinkItem ({ link }) {
   const { updateLink } = useLinks()
@@ -26,10 +27,10 @@ export default function LinkItem ({ link }) {
   return (
     <>
       <Card>
-        <Card.Body className='px-3'>
-          <div className='d-flex justify-content-between border rounded px-3 py-2 tittleContainer'>
+        <Card.Body className='px-3 cardBody'>
+          <div className='d-flex justify-content-between px-1 tittleContainer align-items-center'>
             <Card.Title className='d-flex'>
-              {link.name}
+              <span className='px-3 pt-2 d-flex align-items-center'>{link.name}</span>
               <Button onClick={() => setShowUpdateLinkModal(link)} className='mx-3' variant=''>
                 <MdOutlineModeEditOutline />
               </Button>
@@ -43,8 +44,8 @@ export default function LinkItem ({ link }) {
             />
           </div>
           <div className='d-flex justify-content-between'>
-            <Link to={link.urlEnlace}>
-              <Card.Text className='m-2'>{link.urlEnlace}</Card.Text>
+            <Link className='url-link' to={link.urlEnlace}>
+              <Card.Text className='m-2'>{link.urlEnlace.length > 35 ? `${link.urlEnlace.substring(0, 35)}...` : link.urlEnlace}</Card.Text>
             </Link>
             <Button onClick={() => setShowDeleteLinkModal(link._id)} className='' variant=''>
               <FaTrashAlt />

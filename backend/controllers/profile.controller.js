@@ -1,75 +1,107 @@
 // Utils
-const { catchAsync } = require('../utils/catchAsync');
-const { AppError } = require('../utils/appError');
+const { catchAsync } = require('../utils/catchAsync')
 
-//models
+// models
 const { Profile } = require('../models/profile.model')
 
+// Services
+const { createProfileService, findProfileService, findNameSpaceProfileService, updateProfileService } = require('../services/profile.service')
+const { createToken } = require('../libs/token')
 
+// Crear un nuevo link
 const createProfile = catchAsync(async (req, res, next) => {
-    const {
-        nameSpace,
-        title,
-        header,
-        image,
-        body,
-        user,
-        link,
-        themeId,
-        lastInitProfile
-    } = req.body;
+  const { nameSpace } = req.body
+  try {
+    const { userId } = req.headers.session
+    const newProfile = await createProfileService(nameSpace, userId)
+    const id = newProfile._id.toString()
+    res.status(201).send({ id })
+  } catch (error) {
+    console.log(error)
+    res.status(400).send({ message: error.message })
+  }
+})
 
-
-    const validateExist = await Profile.findOne({ nameSpace }) || null;
-    const validate = await Profile.find({ user });
-
-    if (validateExist !== null) {
-        return res.status(409).json({ message: "ya existe un profile con ese nombre." })
-    }
-
-    if (validate.length > 4) {
-        return res.status(409).json({ message: "no puedes crear mas de 5 profiles" })
-    }
-
-    const newProfile = await Profile.create(
-        {
-            nameSpace,
-            title,
-            header,
-            image,
-            body,
-            user,
-            link,
-            themeId,
-            status: true,
-            lastInitProfile
-        }
-    );
-    res.status(200).json({
-        message: "success",
-        profile: newProfile
-    })
-
-});
-
+const findProfile = catchAsync(async (req, res, next) => {
+  try {
+    const { id } = req.params
+    //! Debo buscar en userProfiles
+    const { userId } = req.headers.session
+    const profile = await findProfileService(id)
+    const token = createToken({ userId, profileId: profile.id })
+    res.status(200).send({ profile, token })
+  } catch (error) {
+    console.log(error)
+    res.status(400).send({ message: error.message })
+  }
+})
 
 const findAllProfile = catchAsync(async (req, res, next) => {
-    const { id } = req.params;
+  const { id } = req.params
 
-    const allProfile = await Profile.find({ user: id }).populate("user link theme") || null;
+  const allProfile = await Profile.find({ user: id }).populate('user link theme') || null
 
-    if (allProfile === null) {
-        return res.status(409).json({ message: "no tienes perfiles." })
+  if (allProfile === null) {
+    return res.status(409).json({ message: 'no tienes perfiles.' })
+  }
+
+  res.status(200).json({
+    message: 'success',
+    profile: allProfile
+  })
+})
+
+const deleteProfile = catchAsync(async (req, res) => {
+  const id = req.params.id;
+  try {
+    // Buscar y eliminar el perfil
+    const profile = await Profile.findByIdAndDelete(id);
+    if (!profile) {
+      return res.status(404).send({ mensaje: 'Perfil no encontrado' });
     }
+    // Buscar y eliminar todos los UserProfiles que tienen el perfil con el mismo ID
+    const deletedUserProfiles = await UserProfile.deleteMany({ profile: id });
+    // Buscar y eliminar todos los Links que tienen el perfil con el mismo ID
+    const deletedLinks = await Link.deleteMany({ profile: id });
+    if (deletedUserProfiles.deletedCount === 0 && deletedLinks.deletedCount === 0) {
+      return res.status(200).send({ mensaje: 'Perfil eliminado exitosamente, pero no se encontraron UserProfiles ni Links asociados' });
+    }
+    res.status(200).send({ mensaje: 'Perfil eliminado exitosamente' });
+  } catch (error) {
+    console.error('Error al eliminar el perfil:', error);
+    res.status(500).send({ error: 'Error interno del servidor' });
+  }
+});
 
-    res.status(200).json({
-        message: "success",
-        profile: allProfile
-    })
+const findPublicProfile = catchAsync(async (req, res, next) => {
+  try {
+    const { nameSpace } = req.params
+    const profile = await findNameSpaceProfileService(nameSpace)
+    res.status(200).send(profile)    
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
+})
+
+const updateProfile = catchAsync(async (req, res, next) => {
+  try {
+    const { profileId } = req.headers.session
+
+    //! FALTAN VALIDACIONES
+    const newData = req.body
+    const updatedProfile = await updateProfileService(profileId, newData)
+    res.status(200).send(updatedProfile)    
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
 })
 
 
 module.exports = {
-    createProfile,
-    findAllProfile
+  createProfile,
+  findProfile,
+  findAllProfile,
+  deleteProfile,
+  findPublicProfile,
+  updateProfile
 }

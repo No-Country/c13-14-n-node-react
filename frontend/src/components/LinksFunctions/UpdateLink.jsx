@@ -63,6 +63,7 @@ export default function UpdateLink ({ show, onHide, link }) {
               isValid={!!formData.name}
               isInvalid={!formData.name}
               onChange={handleChange}
+              maxLength="25"
               value={formData.name} // Use formData.name, not defaultValue
             />
           </Form.Group>

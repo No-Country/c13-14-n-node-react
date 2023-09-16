@@ -1,0 +1,16 @@
+.list{
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.36);
+  background: #FFF;
+}
+
+.group {
+  border-radius: 10px;
+  background-color: #FFF;
+  transition: 0.4s ease;
+}
+
+.group:hover {
+  background-color: #e8e8e8;
+  box-shadow: 0px 3px 3px 1px rgba(0, 0, 0, 0.2);
+}

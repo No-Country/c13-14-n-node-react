@@ -2,19 +2,14 @@ import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import NavDropdown from 'react-bootstrap/NavDropdown'
-import { APP_URL_ADMIN } from '../../config/constants'
-import Logo from '../logo'
-import useSession from '../../hooks/useSession'
-import { useDispatch } from 'react-redux'
-import { setToggle } from '../../reducers/toggles.slice'
 
-export default function AdminNavbar ({ setTab }) {
-  const dispatch = useDispatch()
+import useSession from '@/hooks/useSession'
+import { APP_URL_ADMIN } from '@/config/constants'
+import Logo from '@/components/Logo'
+
+export default function Toolbar ({ tab, setTab }) {
   const { user, logout } = useSession()
 
-  const toggleSideBar = () => {
-    dispatch(setToggle(true))
-  }
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
@@ -23,17 +18,17 @@ export default function AdminNavbar ({ setTab }) {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link onClick={toggleSideBar}>Perfiles</Nav.Link>
-            <Nav.Link onClick={() => setTab(1)} >Links</Nav.Link>
-            <Nav.Link onClick={() => setTab(2)}>Apariencia</Nav.Link>
-            <Nav.Link onClick={() => setTab(3)}>Settings</Nav.Link>
+          <Nav className="nav-underline">
+            <Nav.Link active={tab === 1} onClick={() => setTab(1)}>Perfiles</Nav.Link>
+            <Nav.Link active={tab === 2} onClick={() => setTab(2)} >Links</Nav.Link>
+            <Nav.Link active={tab === 3} onClick={() => setTab(3)}>Apariencia</Nav.Link>
+            <Nav.Link active={tab === 4} onClick={() => setTab(4)}>Configuración</Nav.Link>
           </Nav>
           <Nav>
             <NavDropdown title={user?.name || 'Usuario'} id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.2">Configuración</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.3" onClick={logout}>Cerrar Sesión</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => setTab(5)}>Configuración</NavDropdown.Item>
+              <NavDropdown.Divider onClick={logout}/>
+              <NavDropdown.Item onClick={logout}>Cerrar Sesión</NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

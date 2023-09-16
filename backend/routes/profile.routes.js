@@ -1,16 +1,13 @@
-const express = require('express');
+const express = require('express')
+const { validateToken } = require('../middlewares/auth.middleware')
+const { createProfile, findProfile, deleteProfile, findPublicProfile, updateProfile } = require('../controllers/profile.controller')
 
-const { protectToken } = require('../middlewares/users.middlewares');
+const router = express.Router()
 
-const {
-    createProfile, findAllProfile,
-} = require('../controllers/profile.controller');
+router.get('/public/:nameSpace', findPublicProfile)
 
-
-const router = express.Router();
-//router.use(protectToken);
-
-router.post('/', createProfile);
-router.get('/:id', findAllProfile);
-
-module.exports = { profileRouter: router };
+router.post('/', validateToken, createProfile)
+router.get('/:id', validateToken, findProfile)
+router.put('/', validateToken, updateProfile)
+router.delete('/:id', validateToken, deleteProfile)
+module.exports = { profileRouter: router }
