@@ -17,7 +17,12 @@ const profileSchema = new mongoose.Schema({
   },
   social: {
     type: Object,
-    default: {},
+    default: {
+      instagram:'',
+      facebook:'',
+      twitter:'',
+      tiktok:''
+    },
   }
 })
 

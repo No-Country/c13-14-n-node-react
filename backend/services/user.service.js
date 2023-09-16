@@ -9,7 +9,7 @@ const { findUserProfilesService } = require('./userProfiles.service')
 const findSessionDataService = async (user) => {
   let profile
 
-  const userProfiles = await findUserProfilesService({user:user.id, status:'accepted'})
+  const userProfiles = await findUserProfilesService({user:user.id})
 
   // Verifico que el usuario tenga acceso al perfil
   if (user?.profile) {

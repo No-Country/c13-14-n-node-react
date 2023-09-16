@@ -23,6 +23,7 @@ export default function useSession () {
   const authToken = async (token) => {
     const res = await handleService(loginFromTokenService, token)
     setSession(res)
+    console.log(res)
     !res.solved && window.localStorage.removeItem(APP_KEY_TOKEN)
     return res
   }

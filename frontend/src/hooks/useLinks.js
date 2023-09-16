@@ -3,7 +3,8 @@ import useLoader from './useLoader'
 import useProfile from './useProfile'
 
 export default function useLinks () {
-  const { profile: { links }, setProfile } = useProfile()
+  const { profile, setProfile } = useProfile()
+  const { links } = profile
   const { handleService } = useLoader()
 
   const addLink = async (newLink) => {
@@ -12,7 +13,7 @@ export default function useLinks () {
     if (res.solved) {
       const { idLink } = res.payload
       newLink._id = idLink
-      setProfile({ links: [...links, newLink] })
+      setProfile({ ...profile, links: [...links, newLink] })
     }
     return res
   }
@@ -23,7 +24,7 @@ export default function useLinks () {
       const newState = links.filter(link => {
         return link._id !== id
       })
-      setProfile({ links: newState })
+      setProfile({ ...profile, links: newState })
     }
     return res
   }
@@ -34,8 +35,7 @@ export default function useLinks () {
     const res = await updateLinkService(updatedLink)
     if (res.solved) {
       const newState = links.map(link => link._id === updatedLink._id ? updatedLink : link)
-      setProfile({ links: newState })
-      console.log(setProfile)
+      setProfile({ ...profile, links: newState })
     }
     return res
   }
